@@ -1,359 +1,194 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="hi" translate="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DPSG E-Mitra Mall</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DPSG - Digital Problem Solution Group</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <style>
-        :root {
-            --primary-color: #0d47a1;
-            --secondary-color: #ff9800;
-            --bg-color: #f4f7f6;
-            --text-color: #333;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            color: var(--text-color);
-        }
-        /* Header & Branding */
-        .header {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 20px 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 26px;
-            letter-spacing: 1px;
-        }
-        .header p {
-            margin: 5px 0 0 0;
-            font-size: 16px;
-            color: var(--secondary-color);
-            font-weight: bold;
-            font-style: italic;
-        }
-        /* Main Container */
-        .container {
-            max-width: 600px;
-            margin: 20px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        /* Tabs */
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #ddd;
-        }
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #666;
-            transition: 0.3s;
-        }
-        .tab.active {
-            color: var(--primary-color);
-            border-bottom: 3px solid var(--primary-color);
-        }
-        /* Form Elements */
-        .form-section { display: none; }
-        .form-section.active { display: block; }
-        
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #444;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 5px rgba(13, 71, 161, 0.3);
-        }
-        /* Custom File Upload */
-        .file-upload-box {
-            border: 2px dashed #0d47a1;
-            padding: 20px;
-            text-align: center;
-            margin-top: 10px;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-            cursor: pointer;
-        }
-        .file-upload-box:hover { background-color: #e3f2fd; }
-        .file-upload-box input[type="file"] { display: none; }
-        .file-list { margin-top: 10px; font-size: 14px; color: green; font-weight: bold; }
-        
-        /* Buttons */
-        button {
-            width: 100%;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 14px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: 0.3s;
-        }
-        button:hover { background-color: #08306b; }
-        
-        /* Loading Overlay */
-        #loader {
-            display: none;
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-            color: var(--secondary-color);
-        }
-        /* Result Box */
-        .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-            text-align: center;
-            font-weight: bold;
-        }
-        .success { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
-        .error { background-color: #ffebee; color: #c62828; border: 1px solid #ffcdd2; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Rajdhani:wght@700&display=swap');
+        body { font-family: 'Poppins', sans-serif; background: #000; color: #fff; overflow-x: hidden; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .vip-card { border-radius: 20px; padding: 20px; margin: 10px; background: linear-gradient(135deg, #1a1a1a 0%, #000 100%); border: 1px solid #ffd700; }
+        .btn-gold { background: linear-gradient(90deg, #ffd700, #ff8c00); color: black; font-weight: 900; }
+        .camera-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 9999; display: flex; flex-direction: column; }
+        video { width: 100%; height: 80%; object-fit: cover; }
+        .marquee { background: #ffd700; color: black; font-weight: bold; padding: 5px 0; }
     </style>
 </head>
 <body>
+    <div id="root"></div>
 
-    <div class="header">
-        <h1>🔱 Digital Problem Solution Group (DPSG) 🔱</h1>
-        <p>"आपकी समस्या, समाधान हमारा"</p>
-    </div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-    <div class="container">
-        <div class="tabs">
-            <div class="tab active" onclick="switchTab('bookingTab')">📝 नई सर्विस बुक करें</div>
-            <div class="tab" onclick="switchTab('trackTab')">🔍 अपना काम ट्रैक करें</div>
-        </div>
+        const App = () => {
+            const [view, setView] = useState('HOME'); // HOME, SERVICE_LIST, BOOKING, TRACKING, STAFF
+            const [selectedCategory, setSelectedCategory] = useState(null);
+            const [bookingData, setBookingData] = useState({ name: '', mobile: '', address: '', files: [] });
+            const [isCamOpen, setIsCamOpen] = useState(false);
+            const [camType, setCamType] = useState(''); // Selfie, AadhaarF, AadhaarB, PAN
+            const videoRef = useRef(null);
 
-        <div id="bookingTab" class="form-section active">
-            <form id="bookingForm">
-                <label>📋 सेवा का विभाग चुनें (Category):</label>
-                <select id="category" required onchange="updateServices()">
-                    <option value="">-- विभाग चुनें --</option>
-                    <option value="Airtel">🏦 एयरटेल पेमेंट बैंक (Airtel Bank)</option>
-                    <option value="ID_Cards">🪪 पहचान पत्र (PAN, Voter, Aadhaar)</option>
-                    <option value="Pension">👴 पेंशन सेवाएँ (Pension Services)</option>
-                    <option value="PF">💼 पी.एफ. सेवाएँ (PF Withdrawal/UAN)</option>
-                    <option value="Tech">💻 तकनीकी सेवाएँ (Website, Software)</option>
-                    <option value="Samasya">🆘 अन्य समस्या / हेल्पडेस्क</option>
-                </select>
+            // 🔱 कैटेगरी लिस्ट (नए सिस्टम के हिसाब से)
+            const categories = [
+                { id: 'Central', name: 'केंद्र सरकार सेवाएं', icon: 'fa-landmark', color: '#ff9933' },
+                { id: 'State', name: 'राज्य सरकार सेवाएं', icon: 'fa-map-location-dot', color: '#ffffff' },
+                { id: 'Student', name: 'विद्यार्थी सेवाएं', icon: 'fa-user-graduate', color: '#138808' },
+                { id: 'Bank', name: 'बैंकिंग सेवाएं', icon: 'fa-building-columns', color: '#000080' },
+                { id: 'Other', name: 'अन्य महत्वपूर्ण सेवाएं', icon: 'fa-gears', color: '#ffcc00' }
+            ];
 
-                <label>🔖 कौन सा काम करवाना है?:</label>
-                <select id="serviceName" required>
-                    <option value="">-- पहले विभाग चुनें --</option>
-                </select>
+            // 📸 कैमरा कंट्रोल (पुरानी मशीन जैसा)
+            const openCamera = (type) => {
+                setCamType(type);
+                setIsCamOpen(true);
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                    .then(stream => { videoRef.current.srcObject = stream; })
+                    .catch(err => alert("Camera error: " + err));
+            };
 
-                <label>👤 आपका पूरा नाम (अनिवार्य):</label>
-                <input type="text" id="custName" placeholder="अपना नाम लिखें" required>
+            const capture = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = videoRef.current.videoWidth;
+                canvas.height = videoRef.current.videoHeight;
+                canvas.getContext('2d').drawImage(videoRef.current, 0, 0);
+                const base64 = canvas.toDataURL('image/jpeg');
+                
+                setBookingData(prev => ({
+                    ...prev,
+                    files: [...prev.files, { name: camType, base64: base64, mimeType: 'image/jpeg' }]
+                }));
+                closeCamera();
+            };
 
-                <label>📞 आपका मोबाइल नंबर (अनिवार्य):</label>
-                <input type="number" id="custMobile" placeholder="10 अंकों का नंबर" required>
+            const closeCamera = () => {
+                const stream = videoRef.current.srcObject;
+                stream.getTracks().forEach(track => track.stop());
+                setIsCamOpen(false);
+            };
 
-                <label>💬 अपना संदेश या समस्या यहाँ लिखें (Optional):</label>
-                <textarea id="custMessage" rows="3" placeholder="अगर आपके पास कोई डॉक्यूमेंट नहीं है, तो यहाँ लिख दें..."></textarea>
+            // 📤 बुकिंग सबमिट करें (टेलीग्राम और ड्राइव में जाएगी)
+            const submitBooking = () => {
+                if(!bookingData.name || !bookingData.mobile) return alert("कृपया नाम और मोबाइल भरें!");
+                
+                // यहाँ 'google.script.run' का इस्तेमाल होगा जो Code.gs से जुड़ा है
+                google.script.run.withSuccessHandler((res) => {
+                    alert("🔱 बुकिंग सफल! आपका टोकन: " + res.token);
+                    setView('HOME');
+                }).handleBooking({
+                    action: "BOOK_SERVICE",
+                    ...bookingData,
+                    categoryName: selectedCategory.name,
+                    folderKey: selectedCategory.id,
+                    sheetName: selectedCategory.id === "Central" ? "Central_Govt" : 
+                              selectedCategory.id === "State" ? "State_Govt" : "Other_Services"
+                });
+            };
 
-                <label>📂 डॉक्यूमेंट / फोटो / वीडियो अपलोड करें (Optional):</label>
-                <p style="font-size:12px; color:#666; margin-top:0;">आप एक साथ कई फोटो, PDF या वीडियो सेलेक्ट कर सकते हैं।</p>
-                <div class="file-upload-box" onclick="document.getElementById('fileInput').click()">
-                    📸 <b>यहाँ क्लिक करके फाइलें चुनें</b>
-                    <input type="file" id="fileInput" multiple accept="image/*,application/pdf,video/*" onchange="showFiles()">
+            return (
+                <div className="min-h-screen pb-20">
+                    {/* 📢 नोटिफिकेशन पट्टी */}
+                    <div className="marquee">
+                        <marquee>🔱 DPSG 2026: आपकी समस्या, समाधान हमारा | 24/7 लाइव सपोर्ट उपलब्ध 🚩</marquee>
+                    </div>
+
+                    {/* 🏠 होम स्क्रीन */}
+                    {view === 'HOME' && (
+                        <div className="p-4">
+                            <div className="text-center my-8">
+                                <h1 className="text-4xl font-black text-yellow-500">DPSG 2026</h1>
+                                <p className="text-gray-400">Digital Problem Solution Group</p>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-4">
+                                {categories.map(cat => (
+                                    <div key={cat.id} onClick={() => { setSelectedCategory(cat); setView('SERVICE_LIST'); }}
+                                         className="glass p-6 rounded-3xl flex items-center gap-4 active:scale-95 transition border-l-4"
+                                         style={{borderColor: cat.color}}>
+                                        <div className="text-3xl" style={{color: cat.color}}><i className={`fa-solid ${cat.icon}`}></i></div>
+                                        <div>
+                                            <h3 className="text-xl font-bold">{cat.name}</h3>
+                                            <p className="text-xs text-gray-500">सभी सरकारी काम यहाँ करवाएं</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 📂 सर्विस लिस्ट */}
+                    {view === 'SERVICE_LIST' && (
+                        <div className="p-4">
+                            <button onClick={() => setView('HOME')} className="mb-4 text-yellow-500 font-bold"><i className="fa-solid fa-arrow-left"></i> वापस जाएं</button>
+                            <h2 className="text-2xl font-bold mb-6">{selectedCategory.name}</h2>
+                            {/* यहाँ आप सेवाओं की लिस्ट डाल सकते हैं */}
+                            <div className="glass p-5 rounded-2xl mb-4 flex justify-between items-center" onClick={() => setView('BOOKING')}>
+                                <span>नया रजिस्ट्रेशन / आवेदन</span>
+                                <i className="fa-solid fa-chevron-right"></i>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 📝 बुकिंग फॉर्म (पुराने फोटो सिस्टम के साथ) */}
+                    {view === 'BOOKING' && (
+                        <div className="p-4">
+                            <h2 className="text-2xl font-bold mb-4">आवेदन फॉर्म</h2>
+                            <input type="text" placeholder="पूरा नाम" className="w-full glass p-4 rounded-xl mb-4 outline-none" 
+                                   onChange={(e) => setBookingData({...bookingData, name: e.target.value})} />
+                            <input type="number" placeholder="मोबाइल नंबर" className="w-full glass p-4 rounded-xl mb-4 outline-none" 
+                                   onChange={(e) => setBookingData({...bookingData, mobile: e.target.value})} />
+                            
+                            <h3 className="font-bold mb-2">📸 आवश्यक दस्तावेज (लाइव फोटो)</h3>
+                            <div className="grid grid-cols-2 gap-2 mb-6">
+                                <button onClick={() => openCamera('Selfie')} className="glass p-4 rounded-xl text-xs"><i className="fa-solid fa-camera mb-2 block"></i> सेल्फी</button>
+                                <button onClick={() => openCamera('AadhaarF')} className="glass p-4 rounded-xl text-xs"><i className="fa-solid fa-id-card mb-2 block"></i> आधार (Front)</button>
+                                <button onClick={() => openCamera('AadhaarB')} className="glass p-4 rounded-xl text-xs"><i className="fa-solid fa-id-card-clip mb-2 block"></i> आधार (Back)</button>
+                                <button onClick={() => openCamera('PAN')} className="glass p-4 rounded-xl text-xs"><i className="fa-solid fa-address-card mb-2 block"></i> पैन कार्ड</button>
+                            </div>
+
+                            <button onClick={submitBooking} className="w-full btn-gold p-4 rounded-2xl">आवेदन जमा करें</button>
+                        </div>
+                    )}
+
+                    {/* 📹 कैमरा इंटरफेस */}
+                    {isCamOpen && (
+                        <div className="camera-overlay">
+                            <video ref={videoRef} autoPlay playsInline></video>
+                            <div className="p-8 flex justify-around bg-black">
+                                <button onClick={closeCamera} className="bg-red-600 p-4 rounded-full w-20 h-20">❌</button>
+                                <button onClick={capture} className="bg-white p-4 rounded-full w-24 h-24 border-8 border-gray-400"></button>
+                                <button className="bg-blue-600 p-4 rounded-full w-20 h-20">🔄</button>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 📱 नेविगेशन बार */}
+                    <div className="fixed bottom-0 w-full glass p-4 flex justify-around items-center border-t border-white/10">
+                        <div onClick={() => setView('HOME')} className={`text-center ${view==='HOME'?'text-yellow-500':'text-gray-500'}`}>
+                            <i className="fa-solid fa-house text-xl"></i>
+                            <span className="block text-[10px]">होम</span>
+                        </div>
+                        <div onClick={() => setView('TRACKING')} className="text-center text-gray-500">
+                            <i className="fa-solid fa-magnifying-glass text-xl"></i>
+                            <span className="block text-[10px]">ट्रैक</span>
+                        </div>
+                        <div onClick={() => setView('STAFF')} className="text-center text-gray-500">
+                            <i className="fa-solid fa-user-tie text-xl"></i>
+                            <span className="block text-[10px]">स्टाफ</span>
+                        </div>
+                    </div>
                 </div>
-                <div id="fileList" class="file-list"></div>
-
-                <button type="button" id="submitBtn" onclick="submitBooking()">✅ सुरक्षित जमा करें</button>
-                <div id="bookingLoader" id="loader">⏳ कृपया प्रतीक्षा करें, आपका डेटा सुरक्षित भेजा जा रहा है...</div>
-                <div id="bookingResult" class="result-box"></div>
-            </form>
-        </div>
-
-        <div id="trackTab" class="form-section">
-            <label>📞 अपना रजिस्टर मोबाइल नंबर डालें:</label>
-            <input type="number" id="trackMobile" placeholder="10 अंकों का नंबर दर्ज करें" required>
-            
-            <button type="button" onclick="trackStatus()">🔍 स्थिति (Status) चेक करें</button>
-            <div id="trackLoader" id="loader">⏳ खंगाल रहे हैं...</div>
-            <div id="trackResult" class="result-box"></div>
-        </div>
-    </div>
-
-    <script>
-        // 🛑 मालिक, यहाँ आपकी मास्टर लिंक डली हुई है 🛑
-        const SCRIPT_URL = "Https://script.google.com/macros/s/AKfycbxXyV0oYan5PWI8Y3cv9ByKfYxg5R8jrf5jQIta-PVWBLASMtVydJ6sImkQvxndZONg/exec";
-
-        // सेवाओं की लिस्ट (Sub-categories)
-        const services = {
-            "Airtel": ["नया बैंक खाता खोलना", "खाते की KYC करना", "पैसे निकालना/जमा करना", "अन्य एयरटेल सर्विस"],
-            "ID_Cards": ["नया पैन कार्ड", "पैन कार्ड सुधार", "वोटर आईडी कार्ड", "आधार कार्ड सुधार", "मूल निवास / जाति प्रमाण पत्र"],
-            "Pension": ["पेंशन का वार्षिक सत्यापन (दिसंबर)", "नई पेंशन का फॉर्म", "पेंशन PPO नंबर निकालना", "अन्य पेंशन समस्या"],
-            "PF": ["PF का पैसा निकालना (Advance/Full)", "UAN एक्टिवेट करना", "KYC अपडेट करना", "पासबुक चेक करना"],
-            "Tech": ["नई वेबसाइट बनवाना", "डोमेन / होस्टिंग रिन्यूअल", "सॉफ्टवेयर इंस्टॉलेशन", "मोबाइल अनलॉकिंग / एप्पल आईडी"],
-            "Samasya": ["सरकारी योजना का फॉर्म", "पुलिस वेरिफिकेशन", "बीमा (Insurance)", "कोई अन्य कस्टम कार्य"]
+            );
         };
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.form-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        function updateServices() {
-            const cat = document.getElementById("category").value;
-            const servDropdown = document.getElementById("serviceName");
-            servDropdown.innerHTML = '<option value="">-- कार्य चुनें --</option>';
-            if(cat && services[cat]) {
-                services[cat].forEach(s => {
-                    let opt = document.createElement('option');
-                    opt.value = s; opt.innerText = s;
-                    servDropdown.appendChild(opt);
-                });
-            }
-        }
-
-        function showFiles() {
-            const files = document.getElementById('fileInput').files;
-            const fileList = document.getElementById('fileList');
-            if (files.length > 0) {
-                fileList.innerHTML = "✅ " + files.length + " फाइलें चुन ली गई हैं।";
-            } else {
-                fileList.innerHTML = "";
-            }
-        }
-
-        // फाइल को Base64 (मशीनी भाषा) में बदलने का जादुई कोड
-        function getBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve({ name: file.name, mimeType: file.type, base64: reader.result });
-                reader.onerror = error => reject(error);
-            });
-        }
-
-        async function submitBooking() {
-            const cat = document.getElementById("category").value;
-            const sName = document.getElementById("serviceName").value;
-            const name = document.getElementById("custName").value;
-            const mobile = document.getElementById("custMobile").value;
-            const msg = document.getElementById("custMessage").value;
-            const fileInput = document.getElementById("fileInput");
-
-            if(!cat || !sName || !name || !mobile) {
-                alert("कृपया अपना नाम, नंबर और सेवा का चुनाव ज़रूर करें!");
-                return;
-            }
-
-            document.getElementById("submitBtn").style.display = "none";
-            document.getElementById("bookingLoader").style.display = "block";
-            const resBox = document.getElementById("bookingResult");
-            resBox.style.display = "none";
-
-            try {
-                // सारी फाइलों को प्रोसेस करना
-                let fileArray = [];
-                if (fileInput.files.length > 0) {
-                    for (let i = 0; i < fileInput.files.length; i++) {
-                        let fData = await getBase64(fileInput.files[i]);
-                        fileArray.push(fData);
-                    }
-                }
-
-                const payload = {
-                    action: "BOOK_SERVICE",
-                    categoryType: cat,
-                    serviceName: sName,
-                    name: name,
-                    mobile: mobile,
-                    customerMessage: msg,
-                    files: fileArray
-                };
-
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-
-                if(result.status === "SUCCESS") {
-                    resBox.className = "result-box success";
-                    resBox.innerHTML = `🎉 आपका काम सफलतापूर्वक DPSG को भेज दिया गया है!<br>आपका ट्रैकिंग नंबर है: <b>${result.token}</b><br>हमारा स्टाफ जल्द ही आपसे संपर्क करेगा।`;
-                    document.getElementById("bookingForm").reset();
-                    document.getElementById('fileList').innerHTML = "";
-                } else {
-                    resBox.className = "result-box error";
-                    resBox.innerHTML = "❌ कुछ तकनीकी समस्या आ गई: " + result.message;
-                }
-            } catch (err) {
-                resBox.className = "result-box error";
-                resBox.innerHTML = "❌ इंटरनेट या सर्वर की समस्या। कृपया दोबारा प्रयास करें।";
-            }
-
-            document.getElementById("submitBtn").style.display = "block";
-            document.getElementById("bookingLoader").style.display = "none";
-            resBox.style.display = "block";
-        }
-
-        async function trackStatus() {
-            const mobile = document.getElementById("trackMobile").value;
-            if(!mobile) { alert("कृपया मोबाइल नंबर डालें!"); return; }
-
-            document.getElementById("trackLoader").style.display = "block";
-            const resBox = document.getElementById("trackResult");
-            resBox.style.display = "none";
-
-            try {
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    body: JSON.stringify({ action: "TRACK_STATUS", mobile: mobile })
-                });
-                const result = await response.json();
-
-                if(result.status === "SUCCESS") {
-                    let stColor = result.currentStatus === "Done" ? "green" : "red";
-                    resBox.className = "result-box success";
-                    resBox.innerHTML = `🔖 <b>सेवा:</b> ${result.service}<br>
-                                        📊 <b>वर्तमान स्थिति:</b> <span style="color:${stColor}; font-weight:bold;">${result.currentStatus}</span><br>
-                                        📝 <b>स्टाफ का संदेश:</b> ${result.staffNote}`;
-                } else {
-                    resBox.className = "result-box error";
-                    resBox.innerHTML = "❌ " + result.message;
-                }
-            } catch(e) {
-                resBox.className = "result-box error";
-                resBox.innerHTML = "❌ सर्वर से संपर्क नहीं हो पाया।";
-            }
-            document.getElementById("trackLoader").style.display = "none";
-            resBox.style.display = "block";
-        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
