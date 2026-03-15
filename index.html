@@ -271,4 +271,249 @@
                                 
                                 <div className="glass-gold p-10 mb-8 text-center rounded-3xl shadow-2xl">
                                     <i className={`fa-solid ${selectedDept.icon} text-6xl mb-4 drop-shadow-md`} style={{color: selectedDept.color}}></i>
-                                    <h2 className="text-3xl md:te
+                                    <h2 className="text-3xl md:text-4xl font-black uppercase tracking-widest text-white">{selectedDept.name}</h2>
+                                    <p className="text-[#ffd700] font-bold mt-2 text-sm uppercase tracking-widest">Select a service to proceed</p>
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {selectedDept.services.map((srv, idx) => (
+                                        <div key={idx} onClick={() => { setSelectedService(srv); setView('FORM'); }} className="list-item bg-[#0a0a0a] border border-[#222] p-6 rounded-2xl flex justify-between items-center cursor-pointer shadow-lg hover:shadow-[#ffd700]/20">
+                                            <span className="font-bold text-gray-200 text-sm">{srv}</span>
+                                            <i className="fa-solid fa-chevron-right text-[#ffd700]"></i>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 📝 3. BOOKING FORM (DYNAMIC + UNLIMITED UPLOADS) */}
+                        {view === 'FORM' && (
+                            <div className="p-4 max-w-4xl mx-auto mt-2 fade-in">
+                                <button onClick={() => setView('DEPT')} className="text-[#ffd700] font-black mb-4"><i className="fa-solid fa-arrow-left mr-2"></i> वापस सेवाएं देखें</button>
+                                
+                                <div className="glass-panel p-6 md:p-10 border-t-4 border-[#ffd700] shadow-2xl">
+                                    <h2 className="text-2xl md:text-3xl font-black text-[#ffd700] mb-2 leading-tight">{selectedService}</h2>
+                                    <p className="text-xs text-gray-400 font-bold uppercase tracking-widest border-b border-[#333] pb-4 mb-6"><i className={`fa-solid ${selectedDept.icon} mr-2`}></i> {selectedDept.name}</p>
+
+                                    {/* 🎯 डायनामिक अलर्ट (पैन कार्ड सुधार आदि के लिए) */}
+                                    {renderDynamicWarning()}
+
+                                    <form onSubmit={submitForm} className="space-y-6">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <div>
+                                                <label className="text-xs font-bold text-[#ffd700] ml-1 uppercase tracking-wider">पूरा नाम *</label>
+                                                <input required type="text" value={formData.name} onChange={e=>setFormData({...formData, name:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] transition shadow-inner mt-1" placeholder="ग्राहक का पूरा नाम" />
+                                            </div>
+                                            <div>
+                                                <label className="text-xs font-bold text-[#ffd700] ml-1 uppercase tracking-wider">मोबाइल / व्हाट्सएप *</label>
+                                                <input required type="tel" value={formData.mobile} onChange={e=>setFormData({...formData, mobile:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] transition shadow-inner mt-1" placeholder="10 अंकों का सक्रिय नंबर" />
+                                            </div>
+                                        </div>
+                                        
+                                        <div>
+                                            <label className="text-xs font-bold text-[#ffd700] ml-1 uppercase tracking-wider">गाँव / पूरा पता *</label>
+                                            <input required type="text" value={formData.address} onChange={e=>setFormData({...formData, address:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] transition shadow-inner mt-1" placeholder="मकान नं, गाँव/शहर, तहसील, जिला" />
+                                        </div>
+
+                                        <div className="bg-[#1a0f00] p-3 rounded-2xl border border-[#ff9900] shadow-inner">
+                                            <label className="text-sm font-black text-[#ff9900] ml-1 block mt-1 uppercase tracking-wide">✍️ समस्या या कार्य का पूरा विवरण * (अनिवार्य)</label>
+                                            <p className="text-[10px] text-gray-400 ml-1 mb-3">यहाँ अपनी पूरी बात विस्तार से लिखें। अगर कोई कागज़ कम है, या पुराने खाते में पैसे फँसे हैं, तो सब यहाँ बता दें।</p>
+                                            <textarea required rows="4" value={formData.problemDesc} onChange={e=>setFormData({...formData, problemDesc:e.target.value})} className="w-full bg-black/40 p-4 rounded-xl text-white outline-none text-sm placeholder-gray-600 border border-[#ff9900]/30 focus:border-[#ff9900]" placeholder="अपनी पूरी समस्या या काम का विवरण यहाँ टाइप करें..."></textarea>
+                                        </div>
+
+                                        <div>
+                                            <label className="text-xs font-bold text-gray-500 ml-1 uppercase tracking-wider">VIP Membership ID (Optional)</label>
+                                            <input type="text" value={formData.vipId} onChange={e=>setFormData({...formData, vipId:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-gray-300 outline-none text-sm mt-1" placeholder="यदि आपके पास DPSG कार्ड है तो ID डालें" />
+                                        </div>
+
+                                        {/* 🛑 अनलिमिटेड मल्टीपल फाइल और वीडियो अपलोडर 🛑 */}
+                                        <div className="mt-8 pt-6 border-t border-[#333]">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <h3 className="font-black text-lg text-white uppercase tracking-wide"><i className="fa-solid fa-folder-open text-[#ffd700] mr-2"></i> दस्तावेज़ / वीडियो अपलोड</h3>
+                                                <span className="bg-[#111] px-4 py-1 rounded-full text-xs font-black text-[#ffd700] border border-[#ffd700]/30">Selected: {uploadedFiles.length}</span>
+                                            </div>
+                                            <p className="text-[10px] md:text-xs text-gray-400 mb-5">नीचे <b>(+)</b> बटन पर क्लिक करके आप एक साथ कितने भी फोटो, PDF या <b>वीडियो (Video)</b> सेलेक्ट कर सकते हैं। हर फाइल का अलग डिब्बा अपने आप बन जाएगा!</p>
+                                            
+                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                                {uploadedFiles.map((file) => (
+                                                    <div key={file.id} className="file-box group shadow-lg">
+                                                        {file.type.includes('image') ? (
+                                                            <img src={file.base64} className="w-full h-full object-cover opacity-90" />
+                                                        ) : file.type.includes('video') ? (
+                                                            <div className="text-center"><i className="fa-solid fa-file-video text-5xl text-blue-500 mb-2 drop-shadow-md"></i></div>
+                                                        ) : (
+                                                            <div className="text-center"><i className="fa-solid fa-file-pdf text-5xl text-red-500 mb-2 drop-shadow-md"></i></div>
+                                                        )}
+                                                        <button type="button" onClick={()=>removeFile(file.id)} className="absolute top-2 right-2 bg-red-600 rounded-full w-7 h-7 flex items-center justify-center text-white shadow-xl transform group-hover:scale-110 transition border border-white/20"><i className="fa-solid fa-times"></i></button>
+                                                        <span className="absolute bottom-0 w-full bg-black/80 text-[10px] text-center truncate px-2 py-1 text-gray-200 font-bold">{file.name}</span>
+                                                    </div>
+                                                ))}
+                                                
+                                                {/* ➕ महा-प्लस बटन */}
+                                                <div className="file-box cursor-pointer hover:bg-[#ff9900]/20 transition-all border-dashed border-2 shadow-inner group" onClick={()=>fileInputRef.current.click()}>
+                                                    <div className="text-center">
+                                                        <i className="fa-solid fa-plus text-5xl text-[#ff9900] drop-shadow-[0_0_10px_rgba(255,153,0,0.5)] group-hover:scale-110 transition-transform"></i>
+                                                        <p className="text-[11px] font-black uppercase text-[#ff9900] mt-2 tracking-widest bg-black/50 px-2 rounded-full">Add Files</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <input type="file" multiple accept="image/*,video/*,application/pdf" ref={fileInputRef} onChange={handleFileSelect} className="hidden" />
+                                        </div>
+
+                                        <button type="submit" disabled={isUploading} className="w-full btn-gold py-5 rounded-xl text-xl mt-8 shadow-[0_0_25px_rgba(255,215,0,0.4)] tracking-wider">
+                                            {isUploading ? <><i className="fa-solid fa-spinner fa-spin mr-3"></i> डेटा सर्वर पर जा रहा है...</> : <><i className="fa-solid fa-rocket mr-3"></i> सुरक्षित काम बुक करें</>}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 🔍 4. SECURE TRACKING (100% FREE - NO OTP) */}
+                        {view === 'TRACK' && (
+                            <div className="p-4 max-w-lg mx-auto mt-8 fade-in">
+                                <div className="glass-panel p-8 text-center border-t-4 border-blue-500 shadow-[0_10px_40px_rgba(37,99,235,0.2)]">
+                                    <div className="w-20 h-20 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-blue-500 shadow-[0_0_15px_rgba(37,99,235,0.5)]">
+                                        <i className="fa-solid fa-satellite-dish text-4xl text-blue-400 animate-pulse"></i>
+                                    </div>
+                                    <h2 className="text-2xl font-black mb-2 uppercase tracking-widest text-white">Live Tracking</h2>
+                                    <p className="text-xs text-gray-400 mb-8 font-bold">बिना OTP के अपना स्टेटस 1 सेकंड में देखें!</p>
+                                    
+                                    <div className="space-y-4">
+                                        <input type="tel" placeholder="रजिस्टर्ड मोबाइल नंबर" onChange={e=>setTrackMobile(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] text-center font-black text-white outline-none focus:border-blue-500 transition shadow-inner tracking-widest" />
+                                        <input type="text" placeholder="टोकन नंबर (DPSG-...)" onChange={e=>setTrackToken(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] text-center font-black text-white outline-none focus:border-blue-500 transition shadow-inner uppercase tracking-widest" />
+                                        
+                                        <button onClick={verifyAndTrack} disabled={isTracking} className="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-black py-5 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.5)] text-lg uppercase tracking-wider mt-2">
+                                            {isTracking ? <><i className="fa-solid fa-circle-notch fa-spin mr-2"></i> खोजा जा रहा है...</> : <><i className="fa-solid fa-magnifying-glass mr-2"></i> स्टेटस चेक करें</>}
+                                        </button>
+                                    </div>
+
+                                    {/* 🔴 ट्रैकिंग रिज़ल्ट (पेंशन डिटेल के साथ) */}
+                                    {trackResult && (
+                                        <div className="mt-8 bg-[#050505] p-6 rounded-2xl border border-[#222] text-left shadow-2xl relative overflow-hidden">
+                                            <div className="absolute top-0 right-0 w-16 h-16 bg-blue-600/10 rounded-bl-full border-b border-l border-blue-500/30"></div>
+                                            
+                                            <p className="text-xs font-black text-blue-400 uppercase tracking-widest mb-1 border-b border-[#222] pb-2">Ticket Status</p>
+                                            
+                                            <div className="mt-4 space-y-2">
+                                                <p className="text-sm font-bold text-gray-400">सर्विस: <span className="text-white ml-2">{trackResult.service}</span></p>
+                                                <p className="text-sm font-bold text-gray-400">तारीख: <span className="text-white ml-2">{trackResult.appliedOn}</span></p>
+                                                <div className="flex items-center mt-2">
+                                                    <p className="text-sm font-bold text-gray-400 mr-2">वर्तमान स्थिति:</p> 
+                                                    <span className={`px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${trackResult.status==='Done'?'bg-green-900/40 text-green-400 border-green-500':'bg-yellow-900/40 text-yellow-400 border-yellow-500'}`}>
+                                                        {trackResult.status}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="p-4 bg-[#111] rounded-xl text-sm font-bold text-gray-300 border border-[#333] mt-5 shadow-inner">
+                                                <span className="text-[#ffd700] block mb-1 uppercase text-xs tracking-widest"><i className="fa-solid fa-comment-dots mr-1"></i> स्टाफ का नोट:</span> 
+                                                <span className="text-white font-normal">{trackResult.note}</span>
+                                            </div>
+
+                                            {/* ⏰ पेंशन की असली तारीखें */}
+                                            {trackResult.lastPension && trackResult.lastPension !== 'लागू नहीं' && (
+                                                <div className="p-4 bg-red-900/20 rounded-xl border border-red-500/50 mt-4 shadow-inner">
+                                                    <p className="text-xs font-black text-red-400 uppercase tracking-widest mb-2"><i className="fa-solid fa-clock-rotate-left mr-1"></i> पेंशन सत्यापन विवरण</p>
+                                                    <p className="text-xs text-gray-300 font-bold mb-1">पिछला सत्यापन: <span className="text-white ml-1">{trackResult.lastPension}</span></p>
+                                                    <p className="text-xs text-gray-300 font-bold">अगला सत्यापन दिनाँक: <span className="text-[#ffd700] ml-1">{trackResult.nextPension}</span></p>
+                                                </div>
+                                            )}
+                                            
+                                            {/* 🔴 वीडियो कॉल का इमरजेंसी बटन */}
+                                            <button onClick={requestVideoCall} className="w-full bg-red-600 hover:bg-red-700 transition text-white font-black py-4 rounded-xl mt-6 flex items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.5)] border border-red-400">
+                                                <i className="fa-solid fa-video text-2xl mr-3 animate-bounce"></i> लाइव वीडियो कॉल करें (Support)
+                                            </button>
+                                            
+                                            {trackResult.status==='Done' && (
+                                                <button className="w-full bg-green-500 hover:bg-green-600 transition text-black font-black py-4 rounded-xl mt-3 flex items-center justify-center shadow-[0_0_15px_rgba(34,197,94,0.4)]">
+                                                    <i className="fa-solid fa-cloud-arrow-down text-xl mr-2"></i> सर्टिफिकेट डाउनलोड करें
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 👨‍💻 5. STAFF CONTROL ROOM (LIVE DASHBOARD) */}
+                        {view === 'STAFF' && (
+                            <div className="p-4 max-w-4xl mx-auto mt-8 fade-in">
+                                {!isStaffLoggedIn ? (
+                                    <div className="glass-panel p-8 max-w-md mx-auto text-center border-t-4 border-red-600 shadow-[0_10px_40px_rgba(220,38,38,0.2)]">
+                                        <div className="w-24 h-24 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.5)]">
+                                            <i className="fa-solid fa-shield-halved text-5xl text-red-500"></i>
+                                        </div>
+                                        <h2 className="text-2xl font-black mb-8 uppercase tracking-widest text-white">Secure Staff Login</h2>
+                                        
+                                        <div className="space-y-4">
+                                            <input type="text" placeholder="Staff ID (e.g. Jorawar@DPS)" onChange={e=>setStaffId(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] font-bold text-white outline-none text-center focus:border-red-500 transition shadow-inner tracking-widest" />
+                                            <input type="password" placeholder="Password" onChange={e=>setStaffPass(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] font-bold text-white outline-none text-center focus:border-red-500 transition shadow-inner tracking-widest" />
+                                            <button onClick={handleLogin} className="w-full bg-red-600 hover:bg-red-700 transition text-white font-black py-5 rounded-xl text-lg shadow-[0_0_20px_rgba(220,38,38,0.6)] uppercase tracking-wider mt-2">Login to Server</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="glass-panel p-8 border-t-4 border-red-600 shadow-2xl relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/10 rounded-bl-full border-b border-l border-red-500/30"></div>
+                                        
+                                        <div className="flex justify-between items-center border-b border-[#333] pb-6 mb-8 relative z-10">
+                                            <div>
+                                                <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-wider">Control <span className="text-red-500">Room</span></h2>
+                                                <p className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest">Welcome, {staffId}</p>
+                                            </div>
+                                            <button onClick={()=>setIsStaffLoggedIn(false)} className="bg-[#111] hover:bg-red-900/40 border border-[#333] hover:border-red-500 px-4 py-2 rounded-lg text-gray-400 font-bold hover:text-red-400 transition flex items-center shadow-lg"><i className="fa-solid fa-power-off mr-2"></i>Logout</button>
+                                        </div>
+                                        
+                                        {/* 📊 असली लाइव डैशबोर्ड */}
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-black text-white uppercase tracking-widest"><i className="fa-solid fa-chart-line text-red-500 mr-2"></i> Live Status</h3>
+                                            <button onClick={fetchLiveDashboard} className="text-xs bg-[#111] border border-[#333] px-3 py-1 rounded text-gray-400 hover:text-white transition"><i className="fa-solid fa-rotate mr-1"></i> Refresh</button>
+                                        </div>
+                                        
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                                            <div className="bg-[#050505] p-8 rounded-2xl text-center border-l-4 border-[#ffd700] shadow-xl relative overflow-hidden">
+                                                <i className="fa-solid fa-clock-rotate-left absolute opacity-5 text-8xl -right-4 -bottom-4 text-[#ffd700]"></i>
+                                                <p className="text-gray-400 text-xs font-black uppercase tracking-widest mb-2 relative z-10">Total Pending Tasks</p>
+                                                <p className="text-7xl font-black text-[#ffd700] drop-shadow-[0_0_15px_rgba(255,215,0,0.4)] relative z-10">{dashboardData.pending}</p>
+                                            </div>
+                                            <div className="bg-[#050505] p-8 rounded-2xl text-center border-l-4 border-green-500 shadow-xl relative overflow-hidden">
+                                                <i className="fa-solid fa-check-double absolute opacity-5 text-8xl -right-4 -bottom-4 text-green-500"></i>
+                                                <p className="text-gray-400 text-xs font-black uppercase tracking-widest mb-2 relative z-10">Completed Today</p>
+                                                <p className="text-7xl font-black text-green-500 drop-shadow-[0_0_15px_rgba(34,197,94,0.4)] relative z-10">{dashboardData.doneToday}</p>
+                                            </div>
+                                        </div>
+
+                                        {/* 💬 VIP व्हाट्सएप जनरेटर */}
+                                        <div className="bg-[#0a0a0a] p-6 md:p-8 rounded-2xl border border-[#222] shadow-2xl">
+                                            <p className="text-green-500 text-sm font-black uppercase tracking-widest mb-4 border-b border-[#222] pb-3"><i className="fa-brands fa-whatsapp mr-2 text-xl"></i> VIP WhatsApp Broadcast</p>
+                                            <textarea value={whatsappMsg} onChange={e=>setWhatsappMsg(e.target.value)} className="w-full bg-[#111] p-5 rounded-xl border border-[#333] text-white outline-none text-sm mb-5 shadow-inner focus:border-green-500 transition" rows="4" placeholder="यहाँ मैसेज टाइप करें... यह ऑटोमैटिक DPSG के कॉर्पोरेट डिजाइन में बदल जाएगा।"></textarea>
+                                            <button onClick={sendWhatsapp} className="bg-green-600 hover:bg-green-700 transition text-white px-6 py-4 rounded-xl font-black w-full text-lg shadow-[0_0_20px_rgba(34,197,94,0.5)] uppercase tracking-wider">
+                                                <i className="fa-solid fa-paper-plane mr-2"></i> Generate & Share
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* 📱 VIP BOTTOM NAVIGATION (Glassmorphism) */}
+                    <div className="fixed bottom-0 w-full bg-[#000000]/80 backdrop-blur-2xl border-t border-[#222] p-3 flex justify-around items-center z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.9)]">
+                        <div onClick={() => setView('HOME')} className={`text-center cursor-pointer py-2 px-6 rounded-2xl transition-all duration-300 ${view==='HOME'||view==='DEPT'||view==='FORM'?'text-[#000] bg-gradient-to-r from-[#ffd700] to-[#ff8c00] shadow-[0_0_20px_rgba(255,215,0,0.5)] transform scale-110':'text-gray-500 hover:text-gray-300 hover:bg-[#111]'}`}>
+                            <i className="fa-solid fa-house text-xl md:text-2xl mb-1 block"></i><span className="text-[10px] md:text-xs font-black uppercase tracking-widest">Home</span>
+                        </div>
+                        <div onClick={() => setView('TRACK')} className={`text-center cursor-pointer py-2 px-6 rounded-2xl transition-all duration-300 ${view==='TRACK'?'text-[#fff] bg-gradient-to-r from-blue-500 to-blue-700 shadow-[0_0_20px_rgba(37,99,235,0.5)] transform scale-110':'text-gray-500 hover:text-gray-300 hover:bg-[#111]'}`}>
+                            <i className="fa-solid fa-satellite-dish text-xl md:text-2xl mb-1 block"></i><span className="text-[10px] md:text-xs font-black uppercase tracking-widest">Track</span>
+                        </div>
+                        <div onClick={() => setView('STAFF')} className={`text-center cursor-pointer py-2 px-6 rounded-2xl transition-all duration-300 ${view==='STAFF'?'text-[#fff] bg-gradient-to-r from-red-600 to-red-800 shadow-[0_0_20px_rgba(220,38,38,0.5)] transform scale-110':'text-gray-500 hover:text-gray-300 hover:bg-[#111]'}`}>
+                            <i className="fa-solid fa-user-shield text-xl md:text-2xl mb-1 block"></i><span className="text-[10px] md:text-xs font-black uppercase tracking-widest">Staff</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
