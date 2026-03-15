@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="hi" translate="no">
 <head>
     <meta charset="UTF-8">
@@ -19,16 +19,16 @@
         .glass-panel { background: rgba(20, 20, 20, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 1.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.9); }
         .glass-gold { background: linear-gradient(135deg, rgba(255,215,0,0.15) 0%, rgba(0,0,0,0.95) 100%); border: 1px solid #ffd700; }
         
-        /* 🔴 असली 'टच और रेड' इफ़ेक्ट (हुकुम का आदेश) 🔴 */
-        .click-red { transition: all 0.1s ease-in-out; }
+        /* 🔴 Click & Red Effect 🔴 */
+        .click-red { transition: all 0.1s ease-in-out; cursor: pointer; }
         .click-red:active { 
-            background-color: #991b1b !important; /* गहरा लाल रंग */
+            background-color: #991b1b !important; 
             border-color: #ef4444 !important; 
             transform: scale(0.95); 
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
         }
 
-        /* Submit Button */
+        /* Buttons */
         .btn-gold { background: linear-gradient(90deg, #ffd700, #ff8c00); color: #000; font-weight: 900; transition: all 0.1s ease; text-transform: uppercase; }
         .btn-gold:active { transform: scale(0.95); box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); }
         
@@ -49,6 +49,9 @@
     <script type="text/babel">
         const { useState, useRef, useEffect } = React;
 
+        // 🛑 Hukum ka naya API URL (Isi se GitHub par kaam karega)
+        const API_URL = "https://script.google.com/macros/s/AKfycbzlNZs6DsD1ZXOPnkR4xval7RLfpG0qNm1ESu3HiW2vwf01ia2S6Bo3UHEE0ID-wlSwsA/exec";
+
         const STAFF_CREDS = {
             "Jorawar@DPS": "Jorawar@6020",
             "Parkash@DPS": "Parkash@6020",
@@ -57,18 +60,18 @@
         };
 
         const DEPARTMENTS = [
-            { id: 'Central', name: 'केंद्र सरकार सेवाएं', icon: 'fa-landmark-flag', color: '#ff9933', 
-              services: ['नया पैन कार्ड', 'पैन कार्ड में सुधार (Correction)', 'खोया हुआ पैन कार्ड वापस मंगाना', 'पैन कार्ड को आधार से लिंक करना', 'आधार कार्ड डाउनलोड', 'PVC प्लास्टिक आधार कार्ड ऑर्डर', 'PM किसान सम्मान निधि (KYC/नया)', 'KCC (किसान क्रेडिट कार्ड)', 'ई-श्रम कार्ड (नया/अपडेट)', 'PM विश्वकर्मा योजना आवेदन', 'नया वोटर ID कार्ड', 'वोटर ID में सुधार / डाउनलोड', 'आयुष्मान कार्ड (ABHA ID)', 'पासपोर्ट सेवा (नया/रिन्यूअल)', 'उज्ज्वला योजना (गैस कनेक्शन)', 'ITR (इनकम टैक्स रिटर्न) फाइलिंग', 'PF (Provident Fund) का काम'] },
-            { id: 'State', name: 'राज्य सरकार / ई-मित्र', icon: 'fa-map-location-dot', color: '#ffffff', 
-              services: ['जन्म प्रमाण पत्र (Birth Certificate)', 'मृत्यु प्रमाण पत्र (Death Certificate)', 'विवाह पंजीयन (Marriage Certificate)', 'जाति प्रमाण पत्र (OBC/SC/ST)', 'मूल निवास प्रमाण पत्र', 'EWS (आर्थिक पिछड़ा वर्ग) प्रमाण पत्र', 'अल्पसंख्यक प्रमाण पत्र', 'पुलिस वेरिफिकेशन (PCC)', 'पेंशन का वार्षिक भौतिक सत्यापन ⏰', 'नई पेंशन चालू करना (वृद्धावस्था/विधवा/विकलांग)', 'आय का शपथ पत्र', 'नाम सुधार का शपथ पत्र', 'जन्म/मृत्यु में देरी का शपथ पत्र', 'गैप सर्टिफिकेट (Gap Affidavit)', 'नया जन-आधार कार्ड बनाना', 'जन-आधार में नाम जोड़ना/E-KYC', 'नया राशन कार्ड', 'राशन कार्ड सुधार/सरेंडर', 'जमाबंदी / नकल निकालना', 'नामांतरण (Mutation)', 'सीमाज्ञान (Simagyan)', 'गिरदावरी रिपोर्ट', 'मजदूर डायरी (शुभ शक्ति)', 'RISL कियोस्क के लिए आवेदन'] },
-            { id: 'Student', name: 'विद्यार्थी सेवाएं', icon: 'fa-user-graduate', color: '#138808', 
-              services: ['उत्तर मैट्रिक छात्रवृत्ति (समाज कल्याण)', 'CM उच्च शिक्षा छात्रवृत्ति', 'देवनारायण / स्कूटी योजना', 'RPSC / RSMSSB भर्ती फॉर्म', 'SSC / UPSC / Army / Police फॉर्म', 'कॉलेज एडमिशन (BA/BSc/BCom)', 'यूनिवर्सिटी मुख्य परीक्षा फॉर्म', 'रिवेल्यूएशन / सप्लीमेंट्री फॉर्म', 'RTE (फ्री स्कूल एडमिशन) फॉर्म', 'नवोदय / सैनिक स्कूल प्रवेश फॉर्म', 'एडमिट कार्ड प्रिंट', 'रिजल्ट प्रिंट'] },
-            { id: 'Bank', name: 'महा-बैंकिंग व फाइनेंस', icon: 'fa-building-columns', color: '#00ccff', 
-              services: ['Airtel Payments Bank (जीरो बैलेंस खाता)', 'Kotak Mahindra 811 खाता', 'Fino Payments Bank खाता', 'SBI / BoB / PNB बैंक खाता खोलना', 'HDFC / ICICI / Axis बैंक खाता', 'India Post Payments Bank', 'खाते में मोबाइल नंबर/आधार जोड़ना', 'पुराने फँसे हुए खाते/पैसे की समस्या', 'नए ATM (Debit Card) के लिए अप्लाई', 'AEPS (आधार से पैसे निकालना/जमा करना)', 'DMT (मनी ट्रांसफर)', 'नया क्रेडिट कार्ड अप्लाई करना', 'सिबिल स्कोर (CIBIL) चेक करना', 'मुद्रा / पर्सनल / होम लोन फाइल', 'वाहन बीमा (Bike/Car/Tractor)', 'स्वास्थ्य बीमा (Health) / LIC जीवन बीमा'] },
-            { id: 'Tech', name: 'टेक, एडिशनल व मोबाइल', icon: 'fa-mobile-screen-button', color: '#ff3366', 
-              services: ['iPhone (एप्पल) अनलॉक करना', 'Android (Pattern/Pin/FRP) अनलॉक करना', 'फोन की लोकेशन चेंज (Spoofing) करना', 'डेटा रिकवरी (डिलीट फोटो/वीडियो वापस लाना)', 'चैट ट्रांसफर (पुराने से नए फोन में WhatsApp)', 'नया सिम कार्ड चालू करना', 'सिम पोर्ट (MNP) करना', 'मोबाइल / DTH छतरी रिचार्ज', 'फास्टैग (FASTag) नया बनाना / रिचार्ज', 'बिजली / पानी का बिल जमा करना', 'मोबाइल रिपेयरिंग बुकिंग (हार्डवेयर/सॉफ्टवेयर)'] },
-            { id: 'Other', name: 'अन्य महत्वपूर्ण सेवाएं', icon: 'fa-briefcase', color: '#ffd700', 
-              services: ['नरेगा (NREGA) जॉब कार्ड / मस्टररोल', 'किरायानामा (Rent Agreement) तैयार करना', 'जीवन प्रमाण पत्र (Jeevan Pramaan)', 'टाइपिंग वर्क (हिंदी/इंग्लिश)', 'रेज़्यूमे (Biodata / CV) बनाना', 'ट्रेन टिकट (IRCTC) बुकिंग', 'बस / फ्लाइट टिकट बुकिंग', 'कलर प्रिंटआउट / लेमिनेशन / अर्जेंट फोटो'] }
+            { id: 'Central', name: 'Kendra Sarkar Sevayein', icon: 'fa-landmark-flag', color: '#ff9933', 
+              services: ['Naya PAN Card', 'PAN Card Sudhar (Correction)', 'Khoya PAN Card Reprint', 'PAN-Aadhaar Link', 'Aadhaar Download / PVC', 'PM Kisan Samman Nidhi (KYC)', 'KCC (Kisan Credit Card)', 'E-Shram Card', 'PM Vishwakarma Yojana', 'Naya Voter ID', 'Voter ID Sudhar', 'Ayushman Card (ABHA)', 'Passport Aavedan', 'Ujjwala Gas Connection', 'ITR (Income Tax)', 'PF (Provident Fund)'] },
+            { id: 'State', name: 'Rajya Sarkar / E-Mitra', icon: 'fa-map-location-dot', color: '#ffffff', 
+              services: ['Janam Praman Patra', 'Mrityu Praman Patra', 'Vivah Panjiyan', 'Jati Praman Patra (OBC/SC/ST)', 'Mool Niwas Praman Patra', 'EWS Praman Patra', 'Police Verification (PCC)', 'Pension - Varshik Bhautik Satyapan ⏰', 'Nayi Pension (Vridhavastha/Vidhwa)', 'Aay ka Shapath Patra', 'Naam Sudhar Shapath Patra', 'Gap Certificate', 'Jan-Aadhaar (Naya/E-KYC)', 'Ration Card (Naya/Sudhar)', 'Jamabandi / Nakal', 'Namantaran (Mutation)', 'Simagyan', 'Mazdoor Diary', 'RISL Kiosk'] },
+            { id: 'Student', name: 'Vidhyarthi Sevayein', icon: 'fa-user-graduate', color: '#138808', 
+              services: ['Uttar Matric Scholarship', 'CM Uchha Shiksha / Scooty Yojana', 'RPSC / RSMSSB Bharti', 'SSC / UPSC / Army Form', 'College Admission Form', 'University Exam Form', 'RTE (Free Admission)', 'Navodaya / Sainik School', 'Admit Card / Result'] },
+            { id: 'Bank', name: 'Maha-Banking & Finance', icon: 'fa-building-columns', color: '#00ccff', 
+              services: ['Airtel Payments Bank (Khata)', 'Kotak Mahindra 811', 'Fino Payments Bank', 'SBI / PNB / BoB Khata', 'HDFC / ICICI / Axis Khata', 'India Post Payments Bank', 'Khate me Mobile/Aadhaar Jodna', 'Purane Fanse Paise ki Samasya', 'Naya ATM Card Apply', 'AEPS (Paise Nikalna)', 'DMT (Money Transfer)', 'Naya Credit Card Apply', 'CIBIL Score Check', 'Mudra / Home Loan File', 'Vahan Bima (Insurance)', 'Swasthya / LIC Bima'] },
+            { id: 'Tech', name: 'Tech, Mobile & Unlocking', icon: 'fa-mobile-screen-button', color: '#ff3366', 
+              services: ['iPhone (Apple) Unlock', 'Android (Pattern/FRP) Unlock', 'Phone Location Change (Spoofing)', 'Data Recovery (Photo/Video Wapas)', 'Chat Transfer (WhatsApp)', 'Naya Sim Chalu / MNP', 'Mobile / DTH Recharge', 'FASTag Recharge/Naya', 'Bijli / Pani Bill', 'Mobile Repairing Booking'] },
+            { id: 'Other', name: 'Anya Mahatvapurna Sevayein', icon: 'fa-briefcase', color: '#ffd700', 
+              services: ['NREGA Job Card', 'Kirayanama (Rent Agreement)', 'Jeevan Pramaan (Life Certificate)', 'Typing Work (Hindi/English)', 'Resume (Biodata) Banana', 'Train (IRCTC) Ticket Booking', 'Bus / Flight Ticket', 'Color Printout / Urgent Photo'] }
         ];
 
         const App = () => {
@@ -92,11 +95,11 @@
             const [dashboardData, setDashboardData] = useState({ pending: '...', doneToday: '...' });
             const [whatsappMsg, setWhatsappMsg] = useState('');
 
-            // 📂 फाइल सेलेक्ट
+            // 📂 File Handle (Unlimited Photo/Video)
             const handleFileSelect = (e) => {
                 const files = Array.from(e.target.files);
                 files.forEach(file => {
-                    if (file.size > 25 * 1024 * 1024) { alert(`फाइल ${file.name} बहुत बड़ी है।`); return; }
+                    if (file.size > 25 * 1024 * 1024) { alert(`File ${file.name} bahut badi hai (25MB se kam rakhein).`); return; }
                     const reader = new FileReader();
                     reader.onload = (ev) => {
                         setUploadedFiles(prev => [...prev, { id: Date.now() + Math.random(), name: file.name, base64: ev.target.result, type: file.type }]);
@@ -107,10 +110,25 @@
 
             const removeFile = (idToRemove) => { setUploadedFiles(prev => prev.filter(f => f.id !== idToRemove)); };
 
-            // 🚀 100% असली फॉर्म जमा (बिना फोटो के भी चलेगा)
-            const submitForm = (e) => {
+            // 🚀 Fetch API Engine (GitHub Ke Liye 100% Asli)
+            const callAPI = async (payload) => {
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error("API Error:", error);
+                    return { status: "ERROR", message: "Server se connection toot gaya. Net check karein!" };
+                }
+            };
+
+            // 🟢 Form Submit
+            const submitForm = async (e) => {
                 e.preventDefault();
-                if(!formData.name || !formData.mobile || !formData.problemDesc) { alert("कृपया नाम, मोबाइल और समस्या विवरण अनिवार्य रूप से भरें!"); return; }
+                if(!formData.name || !formData.mobile || !formData.problemDesc) { alert("Kripya Naam, Mobile aur Samasya anivarya roop se bharein!"); return; }
                 
                 setIsUploading(true);
                 const payload = {
@@ -118,82 +136,81 @@
                     sheetName: selectedDept.id === 'Central' ? 'Central_Govt' : selectedDept.id === 'State' ? 'State_Govt' : selectedDept.id === 'Bank' ? 'Banking' : selectedDept.id === 'Tech' ? 'Tech_Mobile' : selectedDept.id === 'Student' ? 'Student_Services' : 'Other_Services',
                     folderKey: selectedDept.id, categoryName: selectedDept.name, serviceName: selectedService,
                     vipId: formData.vipId, name: formData.name, mobile: formData.mobile, address: formData.address, specificDetails: formData.problemDesc,
-                    files: uploadedFiles.map(f => ({ name: f.name, base64: f.base64, mimeType: f.type })) // Empty array is completely fine!
+                    files: uploadedFiles.map(f => ({ name: f.name, base64: f.base64, mimeType: f.type }))
                 };
 
-                google.script.run.withSuccessHandler((res) => {
-                    setIsUploading(false);
-                    if(res.status === "SUCCESS") {
-                        alert("✅ शानदार! आपका काम सुरक्षित रूप से बुक हो गया है।\nआपका टोकन नंबर: " + res.token);
-                        setView('HOME'); setFormData({name:'', mobile:'', address:'', vipId:'', problemDesc:''}); setUploadedFiles([]);
-                    } else alert("Error: " + res.message);
-                }).withFailureHandler((err) => {
-                    setIsUploading(false); alert("सर्वर से संपर्क टूट गया। कृपया फिर कोशिश करें।");
-                }).processRequest(payload);
+                const res = await callAPI(payload);
+                setIsUploading(false);
+
+                if(res.status === "SUCCESS") {
+                    alert("✅ Shandaar! Aapka kaam surakshit book ho gaya hai.\nAapka Token Number: " + res.token);
+                    setView('HOME'); setFormData({name:'', mobile:'', address:'', vipId:'', problemDesc:''}); setUploadedFiles([]);
+                } else alert("Error: " + res.message);
             };
 
-            // ❌ कैंसिल बटन फंक्शन
+            // ❌ Cancel Button
             const handleCancel = () => {
-                if(window.confirm("क्या आप सच में इस फॉर्म को रद्द करना चाहते हैं?")) {
+                if(window.confirm("Kya aap sach mein is form ko radd (Cancel) karna chahte hain?")) {
                     setFormData({name:'', mobile:'', address:'', vipId:'', problemDesc:''});
                     setUploadedFiles([]);
                     setView('DEPT');
                 }
             };
 
-            // 🔍 फ्री ट्रैकिंग 
-            const verifyAndTrack = () => {
-                if(!trackMobile || !trackToken) { alert("कृपया मोबाइल नंबर और टोकन नंबर दोनों डालें!"); return; }
+            // 🔍 Free Tracking (Token + Mobile)
+            const verifyAndTrack = async () => {
+                if(!trackMobile || !trackToken) { alert("Kripya Mobile aur Token dono dalein!"); return; }
                 setIsTracking(true);
-                google.script.run.withSuccessHandler((res) => {
-                    setIsTracking(false);
-                    if(res.status === "SUCCESS") setTrackResult(res);
-                    else alert("❌ " + res.message);
-                }).withFailureHandler(() => { setIsTracking(false); alert("सर्वर एरर!"); }).processRequest({action: "TRACK_STATUS", mobile: trackMobile, token: trackToken});
+                
+                const res = await callAPI({action: "TRACK_STATUS", mobile: trackMobile, token: trackToken});
+                setIsTracking(false);
+
+                if(res.status === "SUCCESS") setTrackResult(res);
+                else alert("❌ " + res.message);
             };
 
-            // 🔴 वीडियो कॉल सायरन
-            const requestVideoCall = () => {
-                google.script.run.processRequest({action: "VIDEO_CALL_REQ", mobile: trackMobile || "ग्राहक", token: trackToken || "Unknown"});
-                alert("🔴 लाइव वीडियो कॉल का सायरन DPSG स्टाफ को भेज दिया गया है! कृपया इंतज़ार करें।");
+            // 🔴 Video Call
+            const requestVideoCall = async () => {
+                alert("🔴 Live Video Call ka alert DPSG Staff ko bheja jaa raha hai...");
+                await callAPI({action: "VIDEO_CALL_REQ", mobile: trackMobile || "Grahak", token: trackToken || "Unknown"});
+                alert("Alert bhej diya gaya hai! Kripya intezaar karein.");
             };
 
-            // 👨‍💻 स्टाफ लॉगिन
-            const handleLogin = () => {
+            // 👨‍💻 Staff Login & Dashboard
+            const handleLogin = async () => {
                 if(STAFF_CREDS[staffId] && STAFF_CREDS[staffId] === staffPass) {
                      setIsStaffLoggedIn(true);
-                     google.script.run.processRequest({ action: "STAFF_LOGIN", userId: staffId });
+                     await callAPI({ action: "STAFF_LOGIN", userId: staffId });
                      fetchLiveDashboard();
-                } else alert("❌ ID या पासवर्ड गलत है!");
+                } else alert("❌ ID ya Password galat hai!");
             };
 
-            const fetchLiveDashboard = () => {
+            const fetchLiveDashboard = async () => {
                 setDashboardData({ pending: '...', doneToday: '...' });
-                google.script.run.withSuccessHandler((res) => {
-                    if(res.status === "SUCCESS") setDashboardData({ pending: res.pending, doneToday: res.doneToday });
-                }).processRequest({ action: "GET_LIVE_DASHBOARD" });
+                const res = await callAPI({ action: "GET_LIVE_DASHBOARD" });
+                if(res.status === "SUCCESS") setDashboardData({ pending: res.pending, doneToday: res.doneToday });
             };
 
             const sendWhatsapp = () => {
-                if(!whatsappMsg) { alert("पहले मैसेज लिखें!"); return; }
-                let finalMsg = encodeURIComponent(`🏛️ *DIGITAL PROBLEM SOLUTION GROUP* 🏛️\n━━━━━━━━━━━━━━━━━━━━━━\n${whatsappMsg}\n━━━━━━━━━━━━━━━━━━━━━━\n🌟 *"आपकी समस्या, समाधान हमारा"* 🌟`);
+                if(!whatsappMsg) { alert("Pehle Message likhein!"); return; }
+                let finalMsg = encodeURIComponent(`🏛️ *DIGITAL PROBLEM SOLUTION GROUP* 🏛️\n━━━━━━━━━━━━━━━━━━━━━━\n${whatsappMsg}\n━━━━━━━━━━━━━━━━━━━━━━\n🌟 *"Aapki Samasya, Samadhan Hamara"* 🌟`);
                 window.open(`https://wa.me/?text=${finalMsg}`, '_blank');
             };
 
-            // 🎯 डायनामिक वार्निंग
+            // 🎯 Dynamic Warning
             const renderDynamicWarning = () => {
-                if (selectedService.includes('सुधार') || selectedService.includes('Correction') || selectedService.includes('वापस मंगाना') || selectedService.includes('रिन्यूअल')) {
+                if (selectedService.includes('Sudhar') || selectedService.includes('Correction') || selectedService.includes('Reprint')) {
                     return (
                         <div className="bg-red-900/50 border-l-4 border-red-500 p-4 rounded-r-lg mb-6 shadow-inner animate-pulse">
-                            <h4 className="text-red-400 font-black text-sm uppercase"><i className="fa-solid fa-triangle-exclamation mr-2"></i>अति आवश्यक सूचना</h4>
-                            <p className="text-xs text-red-200 mt-1 font-bold">चूँकि आप सुधार/रिप्रिंट/रिन्यूअल करवा रहे हैं, इसलिए <b>अपना पुराना दस्तावेज़/प्रमाण पत्र</b> नीचे (+) बटन दबाकर अनिवार्य रूप से अपलोड करें!</p>
+                            <h4 className="text-red-400 font-black text-sm uppercase"><i className="fa-solid fa-triangle-exclamation mr-2"></i>Ati Aavashyak Suchna</h4>
+                            <p className="text-xs text-red-200 mt-1 font-bold">Kyunki aap Sudhar/Reprint karwa rahe hain, kripya <b>apna purana document/Praman Patra</b> niche (+) daba kar zarur upload karein!</p>
                         </div>
                     );
                 }
-                if (selectedService.includes('लिंक') || selectedService.includes('AEPS') || selectedService.includes('चेक करना')) {
+                if (selectedService.includes('Link') || selectedService.includes('AEPS') || selectedService.includes('Check')) {
                     return (
                         <div className="bg-green-900/30 border-l-4 border-green-500 p-4 rounded-r-lg mb-6">
-                            <p className="text-xs text-green-400 font-bold"><i className="fa-solid fa-circle-check mr-2"></i>इस सर्विस में फोटो या दस्तावेज़ अपलोड करने की ज़रूरत नहीं है। सीधा फॉर्म जमा करें।</p>
+                            <p className="text-xs text-green-400 font-bold"><i className="fa-solid fa-circle-check mr-2"></i>Is service me photo dalne ki zarurat nahi hai. Sidha form jama karein.</p>
                         </div>
                     );
                 }
@@ -202,9 +219,9 @@
 
             return (
                 <div className="min-h-screen pb-32 relative">
-                    {/* 📢 Marquee */}
+                    {/* 📢 Marquee (Full Branding) */}
                     <div className="marquee-alert fixed top-0 w-full z-50 shadow-lg">
-                        <marquee>🏛️ DIGITAL PROBLEM SOLUTION GROUP (DPSG) : "आपकी समस्या, समाधान हमारा" | सभी बैंकों के खाते, आईफोन अनलॉक, डेटा रिकवरी चालू | ⏰ महा-अलर्ट: दिसंबर आ रहा है, अपना पेंशन भौतिक सत्यापन (Life Certificate) तुरंत करवाएं! 🚩</marquee>
+                        <marquee>🏛️ DIGITAL PROBLEM SOLUTION GROUP (DPSG) : "Aapki Samasya, Samadhan Hamara" | Sabhi Bank Khate, iPhone Unlock, Data Recovery Chalu Hai | ⏰ Maha-Alert: December aa raha hai, apna Pension Satyapan (Life Certificate) turant karwayein! 🚩</marquee>
                     </div>
 
                     <div className="pt-20">
@@ -217,14 +234,14 @@
                                     <h1 className="text-7xl md:text-9xl font-black italic text-[#ffd700] drop-shadow-[0_0_30px_rgba(255,215,0,0.6)] mt-2">DPSG</h1>
                                     <div className="mt-6">
                                         <p className="text-[#ff9900] font-black tracking-widest text-sm md:text-2xl bg-[#0a0a0a] inline-block px-10 py-4 rounded-full border border-[#ff9900]/50 shadow-[0_0_20px_rgba(255,153,0,0.4)] uppercase">
-                                            "आपकी समस्या, समाधान हमारा"
+                                            "Aapki Samasya, Samadhan Hamara"
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {DEPARTMENTS.map(dept => (
-                                        <div key={dept.id} onClick={() => { setSelectedDept(dept); setView('DEPT'); }} className="click-red glass-panel p-6 flex flex-col items-center text-center cursor-pointer shadow-xl group">
+                                        <div key={dept.id} onClick={() => { setSelectedDept(dept); setView('DEPT'); }} className="click-red glass-panel p-6 flex flex-col items-center text-center shadow-xl group">
                                             <div className="text-5xl w-24 h-24 flex items-center justify-center rounded-3xl bg-black border-2 shadow-2xl mb-4 group-hover:scale-110 transition-transform" style={{borderColor: dept.color, color: dept.color}}>
                                                 <i className={`fa-solid ${dept.icon}`}></i>
                                             </div>
@@ -241,7 +258,7 @@
                         {/* 📋 2. SERVICE LIST VIEW */}
                         {view === 'DEPT' && selectedDept && (
                             <div className="p-4 max-w-5xl mx-auto mt-2 fade-in">
-                                <button onClick={() => setView('HOME')} className="click-red text-[#ffd700] font-black mb-6 bg-[#111] px-6 py-3 rounded-xl border border-[#333] shadow-lg"><i className="fa-solid fa-arrow-left mr-2"></i> वापस होम पर जाएं</button>
+                                <button onClick={() => setView('HOME')} className="click-red text-[#ffd700] font-black mb-6 bg-[#111] px-6 py-3 rounded-xl border border-[#333] shadow-lg"><i className="fa-solid fa-arrow-left mr-2"></i> Wapas Home Par Jayein</button>
                                 
                                 <div className="glass-gold p-10 mb-8 text-center rounded-3xl shadow-2xl">
                                     <i className={`fa-solid ${selectedDept.icon} text-6xl mb-4`} style={{color: selectedDept.color}}></i>
@@ -250,7 +267,7 @@
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {selectedDept.services.map((srv, idx) => (
-                                        <div key={idx} onClick={() => { setSelectedService(srv); setView('FORM'); }} className="click-red bg-[#0a0a0a] border border-[#222] p-6 rounded-2xl flex justify-between items-center cursor-pointer shadow-lg">
+                                        <div key={idx} onClick={() => { setSelectedService(srv); setView('FORM'); }} className="click-red bg-[#0a0a0a] border border-[#222] p-6 rounded-2xl flex justify-between items-center shadow-lg">
                                             <span className="font-bold text-gray-200 text-sm">{srv}</span>
                                             <i className="fa-solid fa-chevron-right text-[#ffd700]"></i>
                                         </div>
@@ -259,55 +276,220 @@
                             </div>
                         )}
 
-                        {/* 📝 3. BOOKING FORM (NO PHOTO FORCED + CANCEL BUTTON) */}
+                        {/* 📝 3. BOOKING FORM */}
                         {view === 'FORM' && (
                             <div className="p-4 max-w-4xl mx-auto mt-2 fade-in">
-                                <button onClick={() => setView('DEPT')} className="click-red text-[#ffd700] font-black mb-4"><i className="fa-solid fa-arrow-left mr-2"></i> वापस सेवाएं देखें</button>
+                                <button onClick={() => setView('DEPT')} className="click-red text-[#ffd700] font-black mb-4"><i className="fa-solid fa-arrow-left mr-2"></i> Wapas Sevayein Dekhein</button>
                                 
                                 <div className="glass-panel p-6 md:p-10 border-t-4 border-[#ffd700] shadow-2xl">
                                     <h2 className="text-2xl md:text-4xl font-black text-[#ffd700] mb-2">{selectedService}</h2>
                                     <p className="text-xs text-gray-400 font-bold uppercase tracking-widest border-b border-[#333] pb-4 mb-6"><i className={`fa-solid ${selectedDept.icon} mr-2`}></i> {selectedDept.name}</p>
 
-                                    {/* 🎯 डायनामिक अलर्ट */}
                                     {renderDynamicWarning()}
 
                                     <form onSubmit={submitForm} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                             <div>
-                                                <label className="text-xs font-bold text-[#ffd700] uppercase tracking-wider">पूरा नाम *</label>
-                                                <input required type="text" value={formData.name} onChange={e=>setFormData({...formData, name:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] shadow-inner mt-1" placeholder="ग्राहक का पूरा नाम" />
+                                                <label className="text-xs font-bold text-[#ffd700] uppercase tracking-wider">Pura Naam *</label>
+                                                <input required type="text" value={formData.name} onChange={e=>setFormData({...formData, name:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] shadow-inner mt-1" placeholder="Grahak ka Pura Naam" />
                                             </div>
                                             <div>
-                                                <label className="text-xs font-bold text-[#ffd700] uppercase tracking-wider">मोबाइल / व्हाट्सएप *</label>
-                                                <input required type="tel" value={formData.mobile} onChange={e=>setFormData({...formData, mobile:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] shadow-inner mt-1" placeholder="10 अंकों का सक्रिय नंबर" />
+                                                <label className="text-xs font-bold text-[#ffd700] uppercase tracking-wider">Mobile / WhatsApp *</label>
+                                                <input required type="tel" value={formData.mobile} onChange={e=>setFormData({...formData, mobile:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] shadow-inner mt-1" placeholder="10 Anko ka Number" />
                                             </div>
                                         </div>
                                         
                                         <div>
-                                            <label className="text-xs font-bold text-[#ffd700] uppercase tracking-wider">गाँव / पूरा पता *</label>
-                                            <input required type="text" value={formData.address} onChange={e=>setFormData({...formData, address:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] shadow-inner mt-1" placeholder="मकान नं, गाँव/शहर, तहसील, जिला" />
+                                            <label className="text-xs font-bold text-[#ffd700] uppercase tracking-wider">Gaon / Pura Pata *</label>
+                                            <input required type="text" value={formData.address} onChange={e=>setFormData({...formData, address:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none focus:border-[#ffd700] shadow-inner mt-1" placeholder="Makan No, Gaon, Tehsil, Jila" />
                                         </div>
 
                                         <div className="bg-[#1a0f00] p-4 rounded-2xl border border-[#ff9900] shadow-inner">
-                                            <label className="text-sm font-black text-[#ff9900] uppercase tracking-wide">✍️ समस्या या कार्य का पूरा विवरण * (अनिवार्य)</label>
-                                            <p className="text-[10px] text-gray-400 mb-3">यहाँ अपनी पूरी बात विस्तार से लिखें। अगर कोई कागज़ कम है, तो यहाँ बता दें।</p>
-                                            <textarea required rows="4" value={formData.problemDesc} onChange={e=>setFormData({...formData, problemDesc:e.target.value})} className="w-full bg-black/50 p-4 rounded-xl text-white outline-none text-sm placeholder-gray-600 border border-[#ff9900]/30 focus:border-[#ff9900]" placeholder="अपनी पूरी समस्या या काम का विवरण यहाँ टाइप करें..."></textarea>
+                                            <label className="text-sm font-black text-[#ff9900] uppercase tracking-wide">✍️ Samasya ya Kaam ka Vivaran *</label>
+                                            <p className="text-[10px] text-gray-400 mb-3">Apni puri baat vistar se likhein. Agar document kam hai toh yaha batayein.</p>
+                                            <textarea required rows="4" value={formData.problemDesc} onChange={e=>setFormData({...formData, problemDesc:e.target.value})} className="w-full bg-black/50 p-4 rounded-xl text-white outline-none text-sm placeholder-gray-600 border border-[#ff9900]/30 focus:border-[#ff9900]" placeholder="Yaha type karein..."></textarea>
                                         </div>
 
                                         <div>
                                             <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">VIP Membership ID (Optional)</label>
-                                            <input type="text" value={formData.vipId} onChange={e=>setFormData({...formData, vipId:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none text-sm mt-1" placeholder="DPSG कार्ड ID" />
+                                            <input type="text" value={formData.vipId} onChange={e=>setFormData({...formData, vipId:e.target.value})} className="w-full bg-[#0a0a0a] p-4 rounded-xl border border-[#333] text-white outline-none text-sm mt-1" placeholder="DPSG Card ID" />
                                         </div>
 
-                                        {/* 🛑 दस्तावेज़ अपलोड (100% ऐच्छिक) 🛑 */}
+                                        {/* 🛑 File Upload 🛑 */}
                                         <div className="mt-8 pt-6 border-t border-[#333]">
                                             <div className="flex justify-between items-center mb-2">
-                                                <h3 className="font-black text-lg text-white uppercase"><i className="fa-solid fa-folder-open text-[#ffd700] mr-2"></i> दस्तावेज़ / वीडियो अपलोड <span className="text-gray-500 text-xs ml-2">(ऐच्छिक)</span></h3>
+                                                <h3 className="font-black text-lg text-white uppercase"><i className="fa-solid fa-folder-open text-[#ffd700] mr-2"></i> Documents / Video Upload <span className="text-gray-500 text-xs ml-2">(Optional)</span></h3>
                                                 <span className="bg-[#111] px-4 py-1 rounded-full text-xs font-black text-[#ffd700] border border-[#ffd700]/30">Selected: {uploadedFiles.length}</span>
                                             </div>
-                                            <p className="text-[10px] md:text-xs text-green-400 mb-5">अगर आपके पास फोटो/कागज़ नहीं हैं, तो आप इसे <b>खाली छोड़कर</b> सीधा नीचे जाकर 'सबमिट' बटन दबा सकते हैं। फॉर्म जमा हो जाएगा!</p>
+                                            <p className="text-[10px] md:text-xs text-green-400 mb-5">Agar kagaz nahi hain, toh khali chhod kar sidha Submit karein. Form jama ho jayega!</p>
                                             
                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                                {uploadedFiles.map((file) => (
+                                                    <div key={file.id} className="file-box group shadow-lg">
+                                                        {file.type.includes('image') ? (
+                                                            <img src={file.base64} className="w-full h-full object-cover opacity-90" />
+                                                        ) : file.type.includes('video') ? (
+                                                            <div className="text-center"><i className="fa-solid fa-file-video text-5xl text-blue-500 mb-2"></i></div>
+                                                        ) : (
+                                                            <div className="text-center"><i className="fa-solid fa-file-pdf text-5xl text-red-500 mb-2"></i></div>
+                                                        )}
+                                                        <button type="button" onClick={()=>removeFile(file.id)} className="click-red absolute top-2 right-2 bg-red-600 rounded-full w-7 h-7 flex items-center justify-center text-white shadow-xl"><i className="fa-solid fa-times"></i></button>
+                                                        <span className="absolute bottom-0 w-full bg-black/80 text-[10px] text-center truncate px-2 py-1 text-gray-200 font-bold">{file.name}</span>
+                                                    </div>
+                                                ))}
+                                                
+                                                <div className="click-red file-box border-dashed border-2 shadow-inner group" onClick={()=>fileInputRef.current.click()}>
+                                                    <div className="text-center">
+                                                        <i className="fa-solid fa-plus text-5xl text-[#ff9900] group-hover:scale-110 transition-transform"></i>
+                                                        <p className="text-[11px] font-black uppercase text-[#ff9900] mt-2 tracking-widest bg-black/50 px-2 rounded-full">Add Files</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <input type="file" multiple accept="image/*,video/*,application/pdf" ref={fileInputRef} onChange={handleFileSelect} className="hidden" />
+                                        </div>
+
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                                            <button type="button" onClick={handleCancel} disabled={isUploading} className="click-red w-full bg-red-900 hover:bg-red-800 border-2 border-red-600 text-white font-black py-5 rounded-xl text-xl uppercase tracking-wider shadow-lg">
+                                                <i className="fa-solid fa-ban mr-2"></i> Radd Karein (Cancel)
+                                            </button>
+                                            <button type="submit" disabled={isUploading} className="click-red w-full btn-gold py-5 rounded-xl text-xl shadow-[0_0_25px_rgba(255,215,0,0.4)] tracking-wider">
+                                                {isUploading ? <><i className="fa-solid fa-spinner fa-spin mr-3"></i> Uploading...</> : <><i className="fa-solid fa-rocket mr-3"></i> Surakshit Book Karein</>}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 🔍 4. TRACKING & VIDEO CALL */}
+                        {view === 'TRACK' && (
+                            <div className="p-4 max-w-lg mx-auto mt-8 fade-in">
+                                <div className="glass-panel p-8 text-center border-t-4 border-blue-500 shadow-[0_10px_40px_rgba(37,99,235,0.2)]">
+                                    <h2 className="text-2xl font-black mb-2 uppercase tracking-widest text-white">Live Tracking</h2>
+                                    <p className="text-xs text-gray-400 mb-8 font-bold">Bina OTP apna status 1 second me dekhein!</p>
+                                    
+                                    <div className="space-y-4">
+                                        <input type="tel" placeholder="Mobile Number" onChange={e=>setTrackMobile(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] text-center font-black text-white outline-none focus:border-blue-500 shadow-inner tracking-widest" />
+                                        <input type="text" placeholder="Token Number (DPSG-...)" onChange={e=>setTrackToken(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] text-center font-black text-white outline-none focus:border-blue-500 shadow-inner uppercase tracking-widest" />
+                                        
+                                        <button onClick={verifyAndTrack} disabled={isTracking} className="click-red w-full bg-blue-600 text-white font-black py-5 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.5)] text-lg uppercase mt-2">
+                                            {isTracking ? <><i className="fa-solid fa-circle-notch fa-spin mr-2"></i> Khoja jaa raha hai...</> : <><i className="fa-solid fa-magnifying-glass mr-2"></i> Status Check Karein</>}
+                                        </button>
+                                    </div>
+
+                                    {/* 🔴 Video Call Button */}
+                                    <div className="mt-6 border-t border-[#333] pt-6">
+                                        <button onClick={requestVideoCall} className="click-red w-full bg-red-600 text-white font-black py-5 rounded-xl flex items-center justify-center shadow-[0_0_25px_rgba(220,38,38,0.7)] border-2 border-red-400">
+                                            <i className="fa-solid fa-video text-2xl mr-3 animate-pulse"></i> Live Video Call (Support)
+                                        </button>
+                                    </div>
+
+                                    {trackResult && (
+                                        <div className="mt-8 bg-[#050505] p-6 rounded-2xl border border-[#222] text-left shadow-2xl relative overflow-hidden fade-in">
+                                            <p className="text-xs font-black text-blue-400 uppercase tracking-widest mb-1 border-b border-[#222] pb-2">Ticket Status</p>
+                                            
+                                            <div className="mt-4 space-y-2">
+                                                <p className="text-sm font-bold text-gray-400">Service: <span className="text-white ml-2">{trackResult.service}</span></p>
+                                                <p className="text-sm font-bold text-gray-400">Date: <span className="text-white ml-2">{trackResult.appliedOn}</span></p>
+                                                <div className="flex items-center mt-2">
+                                                    <p className="text-sm font-bold text-gray-400 mr-2">Status:</p> 
+                                                    <span className={`px-4 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${trackResult.status==='Done'?'bg-green-900/40 text-green-400 border-green-500':'bg-yellow-900/40 text-yellow-400 border-yellow-500'}`}>{trackResult.status}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div className="p-4 bg-[#111] rounded-xl text-sm font-bold text-gray-300 border border-[#333] mt-5 shadow-inner">
+                                                <span className="text-[#ffd700] block mb-1 uppercase text-xs tracking-widest">Staff Note:</span> 
+                                                <span className="text-white font-normal">{trackResult.note}</span>
+                                            </div>
+
+                                            {/* Pension Tracking */}
+                                            {trackResult.lastPension && trackResult.lastPension !== 'लागू नहीं' && (
+                                                <div className="p-4 bg-red-900/20 rounded-xl border border-red-500/50 mt-4 shadow-inner">
+                                                    <p className="text-xs font-black text-red-400 uppercase tracking-widest mb-2"><i className="fa-solid fa-clock-rotate-left mr-1"></i> Pension Satyapan Detail</p>
+                                                    <p className="text-xs text-gray-300 font-bold mb-1">Pichla Satyapan: <span className="text-white ml-1">{trackResult.lastPension}</span></p>
+                                                    <p className="text-xs text-gray-300 font-bold">Agla Satyapan: <span className="text-[#ffd700] ml-1">{trackResult.nextPension}</span></p>
+                                                </div>
+                                            )}
+                                            
+                                            {trackResult.status==='Done' && (
+                                                <button className="click-red w-full bg-green-500 text-black font-black py-4 rounded-xl mt-5 flex items-center justify-center shadow-[0_0_15px_rgba(34,197,94,0.4)]">
+                                                    <i className="fa-solid fa-cloud-arrow-down text-xl mr-2"></i> Certificate Download
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 👨‍💻 5. STAFF CONTROL ROOM */}
+                        {view === 'STAFF' && (
+                            <div className="p-4 max-w-4xl mx-auto mt-8 fade-in">
+                                {!isStaffLoggedIn ? (
+                                    <div className="glass-panel p-8 max-w-md mx-auto text-center border-t-4 border-red-600 shadow-[0_10px_40px_rgba(220,38,38,0.2)]">
+                                        <div className="w-24 h-24 bg-red-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.5)]">
+                                            <i className="fa-solid fa-shield-halved text-5xl text-red-500"></i>
+                                        </div>
+                                        <h2 className="text-2xl font-black mb-8 uppercase tracking-widest text-white">Staff Login</h2>
+                                        
+                                        <div className="space-y-4">
+                                            <input type="text" placeholder="Staff ID (Jorawar@DPS)" onChange={e=>setStaffId(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] font-bold text-white outline-none text-center focus:border-red-500 shadow-inner tracking-widest" />
+                                            <input type="password" placeholder="Password" onChange={e=>setStaffPass(e.target.value)} className="w-full bg-[#0a0a0a] p-5 rounded-xl border border-[#333] font-bold text-white outline-none text-center focus:border-red-500 shadow-inner tracking-widest" />
+                                            <button onClick={handleLogin} className="click-red w-full bg-red-600 text-white font-black py-5 rounded-xl text-lg shadow-[0_0_20px_rgba(220,38,38,0.6)] uppercase">Login</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="glass-panel p-8 border-t-4 border-red-600 shadow-2xl">
+                                        <div className="flex justify-between items-center border-b border-[#333] pb-6 mb-8">
+                                            <div>
+                                                <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-wider">Control <span className="text-red-500">Room</span></h2>
+                                                <p className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest">Welcome, {staffId}</p>
+                                            </div>
+                                            <button onClick={()=>setIsStaffLoggedIn(false)} className="click-red bg-[#111] border border-[#333] px-4 py-2 rounded-lg text-gray-400 font-bold shadow-lg"><i className="fa-solid fa-power-off mr-2"></i>Logout</button>
+                                        </div>
+                                        
+                                        <div className="flex justify-between items-center mb-4">
+                                            <h3 className="text-lg font-black text-white uppercase tracking-widest"><i className="fa-solid fa-chart-line text-red-500 mr-2"></i> Live Status</h3>
+                                            <button onClick={fetchLiveDashboard} className="click-red text-xs bg-[#111] border border-[#333] px-3 py-1 rounded text-gray-400"><i className="fa-solid fa-rotate mr-1"></i> Refresh</button>
+                                        </div>
+                                        
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                                            <div className="bg-[#050505] p-8 rounded-2xl text-center border-l-4 border-[#ffd700] shadow-xl">
+                                                <p className="text-gray-400 text-xs font-black uppercase tracking-widest mb-2">Pending Tasks</p>
+                                                <p className="text-7xl font-black text-[#ffd700] drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]">{dashboardData.pending}</p>
+                                            </div>
+                                            <div className="bg-[#050505] p-8 rounded-2xl text-center border-l-4 border-green-500 shadow-xl">
+                                                <p className="text-gray-400 text-xs font-black uppercase tracking-widest mb-2">Completed Today</p>
+                                                <p className="text-7xl font-black text-green-500 drop-shadow-[0_0_15px_rgba(34,197,94,0.4)]">{dashboardData.doneToday}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* 📱 BOTTOM NAVIGATION */}
+                    <div className="fixed bottom-0 w-full bg-[#000000]/90 backdrop-blur-2xl border-t border-[#222] p-3 flex justify-around items-center z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.9)]">
+                        <div onClick={() => setView('HOME')} className={`click-red text-center py-2 px-6 rounded-2xl ${view==='HOME'||view==='DEPT'||view==='FORM'?'text-[#000] bg-gradient-to-r from-[#ffd700] to-[#ff8c00] shadow-[0_0_20px_rgba(255,215,0,0.5)] transform scale-105':'text-gray-500'}`}>
+                            <i className="fa-solid fa-house text-xl md:text-2xl mb-1 block"></i><span className="text-[10px] md:text-xs font-black uppercase tracking-widest">Home</span>
+                        </div>
+                        <div onClick={() => setView('TRACK')} className={`click-red text-center py-2 px-6 rounded-2xl ${view==='TRACK'?'text-[#fff] bg-gradient-to-r from-blue-500 to-blue-700 shadow-[0_0_20px_rgba(37,99,235,0.5)] transform scale-105':'text-gray-500'}`}>
+                            <i className="fa-solid fa-satellite-dish text-xl md:text-2xl mb-1 block"></i><span className="text-[10px] md:text-xs font-black uppercase tracking-widest">Track</span>
+                        </div>
+                        <div onClick={() => setView('STAFF')} className={`click-red text-center py-2 px-6 rounded-2xl ${view==='STAFF'?'text-[#fff] bg-gradient-to-r from-red-600 to-red-800 shadow-[0_0_20px_rgba(220,38,38,0.5)] transform scale-105':'text-gray-500'}`}>
+                            <i className="fa-solid fa-user-shield text-xl md:text-2xl mb-1 block"></i><span className="text-[10px] md:text-xs font-black uppercase tracking-widest">Staff</span>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+                                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                                 {uploadedFiles.map((file) => (
                                                     <div key={file.id} className="file-box group shadow-lg">
                                                         {file.type.includes('image') ? (
