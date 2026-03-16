@@ -45,12 +45,16 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbzXkKyBI6Dr7v9o_w9k7TRiKsO9wsUHiSasETE3i4EOO9GxprHOGaY3VCqSnTQA0sP97A/exec";
         
         const WHATSAPP_NUMBER = "918788418737"; 
-        const GOOGLE_MEET_LINK = "https://meet.google.com/fdd-nbiw-ejb";
+        
+        // 🛑 हुकुम के आदेशानुसार: वेब लिंक (स्टाफ के लिए) और टेक्स्ट लिंक (ग्राहक के व्हाट्सएप मैसेज के लिए)
+        const GOOGLE_MEET_WEB_LINK = "https://meet.google.com/fdd-nbiw-ejb"; 
+        const GOOGLE_MEET_TEXT_LINK = "Meet.google.com/fdd-nbiw-ejb"; // इसमें https:// नहीं है
+        
         const WHATSAPP_MSG = encodeURIComponent("जय महादेव! 🚩 DPSG ई-मित्र, मुझे सरकारी सर्विस के बारे में जानकारी चाहिए। मेरा नाम ______ है।");
 
         const STAFF_CREDS = { "Jorawar@DPS": "Jorawar@6020", "Parkash@DPS": "Parkash@6020", "Rajkumar@DPS": "Rajkumar@6020", "Chanchal@DPS": "Chanchal@6020" };
 
-        // 🛑 ई-मित्र की 100% पूरी सेवाएं (आयुष्मान कार्ड सहित)
+        // 🛑 ई-मित्र की 100% पूरी सेवाएं
         const DEPARTMENTS = [
             { 
                 id: 'Central', name: 'केंद्र सरकार सेवाएं', icon: 'fa-landmark-flag', color: '#ff9933', 
@@ -77,6 +81,16 @@
                 services: ['किरायानामा (Rent Agreement)', 'शपथ पत्र (Affidavit)', 'टाइपिंग वर्क (हिंदी/English)', 'प्रोफेशनल रेज़्यूमे (Biodata)', 'ट्रेन टिकट (IRCTC)', 'फ्लाइट टिकट बुकिंग', 'वाहन RC/DL प्रिंट'] 
             }
         ];
+
+        const SERVICE_REQUIREMENTS = {
+            'नया पैन कार्ड': { texts: ['पिता का नाम', 'आधार नंबर'], docs: ['पासपोर्ट फोटो', 'हस्ताक्षर (Sign)', 'आधार फोटो'], askDate: false },
+            'पेंशन का वार्षिक भौतिक सत्यापन ⏰': { texts: ['PPO नंबर', 'जन-आधार नंबर', 'आधार नंबर'], docs: ['पीपीओ डायरी की फोटो'], askDate: true },
+            'Airtel Payments Bank (खाता)': { texts: ['आधार नंबर', 'नॉमिनी का नाम'], docs: ['आधार दोनों तरफ', 'लाइव फोटो'], askDate: false },
+            'गाड़ी/बाइक का इंश्योरेंस ⏰': { texts: ['गाड़ी नंबर', 'आधार नंबर'], docs: ['पुरानी पॉलिसी की फोटो', 'RC बुक'], askDate: true },
+            'स्वास्थ्य बीमा (Health Insurance) ⏰': { texts: ['पॉलिसी नंबर', 'आधार नंबर'], docs: ['पुरानी पॉलिसी की फोटो'], askDate: true },
+            'जाति प्रमाण पत्र (OBC/SC/ST)': { texts: ['जन-आधार नंबर', 'राशन कार्ड नंबर'], docs: ['राशन कार्ड'], askDate: false },
+            'उत्तर मैट्रिक छात्रवृत्ति': { texts: ['जन-आधार नंबर', 'मार्कशीट रोल नंबर'], docs: ['आय प्रमाण पत्र', 'मार्कशीट'], askDate: false }
+        };
 
         const App = () => {
             const [view, setView] = useState('HOME'); 
@@ -210,6 +224,8 @@
                 return match ? match[1] : null;
             };
 
+            const reqs = SERVICE_REQUIREMENTS[selectedService] || { texts: [], docs: ['अतिरिक्त दस्तावेज़'], askDate: false };
+
             return (
                 <div className="min-h-screen pb-32">
                     <div className="marquee-alert fixed top-0 w-full">
@@ -292,20 +308,23 @@
                                         <input required type="text" placeholder="पूरा पता (Address) *" onChange={e=>setFormData({...formData, address:e.target.value})} className="w-full bg-[#111] p-5 rounded-xl text-white border border-[#333] text-lg" />
 
                                         {/* 📅 सत्यापन तिथि */}
-                                        {(selectedService.includes('पेंशन') || selectedService.includes('इंश्योरेंस')) && (
+                                        {reqs.askDate && (
                                             <div className="bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/50">
                                                 <label className="text-yellow-400 font-black mb-2 block uppercase text-sm"><i className="fa-regular fa-calendar-check mr-2"></i> पिछली सत्यापन/पॉलिसी तिथि चुनें (यदि याद हो)</label>
                                                 <input type="date" onChange={e=>setFormData({...formData, lastDate:e.target.value})} className="w-full bg-[#000] p-5 rounded-xl text-white border border-[#333] font-bold text-lg" />
                                             </div>
                                         )}
 
-                                        <div className="bg-blue-900/20 p-6 rounded-2xl border border-blue-500/50">
-                                            <h3 className="text-blue-400 font-black mb-4 uppercase text-lg"><i className="fa-solid fa-circle-info mr-2"></i> पक्की जानकारी डालें:</h3>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                                <input type="text" placeholder="आधार कार्ड नंबर *" onChange={e=>setDynamicTextData({...dynamicTextData, "आधार नंबर": e.target.value})} className="w-full bg-[#000] p-5 rounded-xl text-white border border-[#333] font-bold text-lg" />
-                                                <input type="text" placeholder="जन-आधार नंबर / PPO (यदि हो)" onChange={e=>setDynamicTextData({...dynamicTextData, "अन्य नंबर": e.target.value})} className="w-full bg-[#000] p-5 rounded-xl text-white border border-[#333] font-bold text-lg" />
+                                        {reqs.texts.length > 0 && (
+                                            <div className="bg-blue-900/20 p-6 rounded-2xl border border-blue-500/50">
+                                                <h3 className="text-blue-400 font-black mb-4 uppercase text-lg"><i className="fa-solid fa-circle-info mr-2"></i> पक्की जानकारी डालें:</h3>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                                    {reqs.texts.map(lbl => (
+                                                        <input required key={lbl} type="text" placeholder={`${lbl} डालें *`} onChange={e=>setDynamicTextData({...dynamicTextData, [lbl]: e.target.value})} className="w-full bg-[#000] p-5 rounded-xl text-white border border-[#333] font-bold text-lg" />
+                                                    ))}
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
 
                                         <textarea required rows="4" placeholder="✍️ समस्या या कार्य का विवरण... *" onChange={e=>setFormData({...formData, problemDesc:e.target.value})} className="w-full bg-[#111] p-5 rounded-xl text-white outline-none border border-[#333] text-lg"></textarea>
 
@@ -370,7 +389,7 @@
                             </div>
                         )}
 
-                        {/* 👨‍💻 STAFF PANEL (WITH WHATSAPP AUTO-MSG & URGENT CALL) */}
+                        {/* 👨‍💻 STAFF PANEL (WITH WHATSAPP AUTO-MSG FIX) */}
                         {view === 'STAFF' && (
                             <div className="max-w-6xl mx-auto">
                                 {!isStaffLoggedIn ? (
@@ -425,18 +444,18 @@
                                                         </div>
                                                     </div>
 
-                                                    {/* 🚨 URGENT & COMMUNICATION ACTIONS */}
+                                                    {/* 🚨 URGENT & COMMUNICATION ACTIONS (FIXED LINK) */}
                                                     <div className="bg-[#111] p-8 rounded-2xl border border-[#333]">
                                                         <h3 className="text-white font-black text-xl uppercase mb-6"><i className="fa-solid fa-bolt text-red-500 mr-2"></i> Communication Panel</h3>
                                                         
                                                         <div className="space-y-4 mb-8">
-                                                            {/* 🚨 JOIN VIDEO CALL NOW BUTTON */}
-                                                            <a href={GOOGLE_MEET_LINK} target="_blank" className="click-red flex justify-center items-center w-full bg-red-600 text-white py-4 rounded-xl font-black text-lg shadow-[0_0_15px_rgba(220,38,38,0.5)]">
+                                                            {/* 🚨 JOIN VIDEO CALL NOW BUTTON (Staff Browser Link with HTTPS) */}
+                                                            <a href={GOOGLE_MEET_WEB_LINK} target="_blank" className="click-red flex justify-center items-center w-full bg-red-600 text-white py-4 rounded-xl font-black text-lg shadow-[0_0_15px_rgba(220,38,38,0.5)]">
                                                                 <i className="fa-solid fa-video mr-3 animate-pulse"></i> 🔴 JOIN VIDEO CALL NOW
                                                             </a>
                                                             
-                                                            {/* 🟢 WHATSAPP AUTO-MSG BUTTON */}
-                                                            <a href={`https://wa.me/91${editingRow.data[5]}?text=${encodeURIComponent(`जय महादेव! 🚩 प्रिय ग्राहक, DPSG ई-मित्र से आपकी समस्या के समाधान के लिए लाइव वीडियो कॉल का समय ${staffUpdateData.vcTime || 'तय'} किया गया है। कृपया इस लिंक से जुड़ें: ${GOOGLE_MEET_LINK}`)}`} target="_blank" className="click-red flex justify-center items-center w-full bg-green-600 text-white py-4 rounded-xl font-black text-lg">
+                                                            {/* 🟢 WHATSAPP AUTO-MSG BUTTON (Customer Text Link without HTTPS) */}
+                                                            <a href={`https://wa.me/91${editingRow.data[5]}?text=${encodeURIComponent(`जय महादेव! 🚩 प्रिय ग्राहक, DPSG ई-मित्र से आपकी समस्या के समाधान के लिए लाइव वीडियो कॉल का समय ${staffUpdateData.vcTime || 'तय'} किया गया है। कृपया इस लिंक से जुड़ें: ${GOOGLE_MEET_TEXT_LINK}`)}`} target="_blank" className="click-red flex justify-center items-center w-full bg-green-600 text-white py-4 rounded-xl font-black text-lg">
                                                                 <i className="fa-brands fa-whatsapp mr-3"></i> WhatsApp Auto-Msg (VC Link)
                                                             </a>
                                                         </div>
