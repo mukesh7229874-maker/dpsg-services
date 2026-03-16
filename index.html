@@ -29,6 +29,7 @@
         .float-vc { background: #dc2626; animation: pulseRed 2s infinite; }
         .float-wa { background: #25D366; }
         .float-call { background: #2563eb; }
+        .float-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         
         @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.8); } 70% { box-shadow: 0 0 0 25px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
         .fade-in { animation: fadeIn 0.3s ease-in-out; }
@@ -41,20 +42,20 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // 🛑 हुकुम का पक्का API लिंक
-        const API_URL = "https://script.google.com/macros/s/AKfycbzXkKyBI6Dr7v9o_w9k7TRiKsO9wsUHiSasETE3i4EOO9GxprHOGaY3VCqSnTQA0sP97A/exec";
+        // 🛑 हुकुम का नया और 100% पक्का API लिंक
+        const API_URL = "https://script.google.com/macros/s/AKfycbwlnAS6oHXq00q7ZCDhSIR8ISHjJkNhrVf2QafYnJcNc6lL5konEGE-k7667GShsN1pqw/exec";
         
         const WHATSAPP_NUMBER = "918788418737"; 
         
-        // 🛑 हुकुम के आदेशानुसार: वेब लिंक (स्टाफ के लिए) और टेक्स्ट लिंक (ग्राहक के व्हाट्सएप मैसेज के लिए)
+        // 🛑 लिंक्स: स्टाफ के लिए वेब लिंक और ग्राहक (व्हाट्सएप) के लिए शुद्ध टेक्स्ट लिंक
         const GOOGLE_MEET_WEB_LINK = "https://meet.google.com/fdd-nbiw-ejb"; 
-        const GOOGLE_MEET_TEXT_LINK = "Meet.google.com/fdd-nbiw-ejb"; // इसमें https:// नहीं है
+        const GOOGLE_MEET_TEXT_LINK = "Meet.google.com/fdd-nbiw-ejb"; 
         
         const WHATSAPP_MSG = encodeURIComponent("जय महादेव! 🚩 DPSG ई-मित्र, मुझे सरकारी सर्विस के बारे में जानकारी चाहिए। मेरा नाम ______ है।");
 
         const STAFF_CREDS = { "Jorawar@DPS": "Jorawar@6020", "Parkash@DPS": "Parkash@6020", "Rajkumar@DPS": "Rajkumar@6020", "Chanchal@DPS": "Chanchal@6020" };
 
-        // 🛑 ई-मित्र की 100% पूरी सेवाएं
+        // 🛑 ई-मित्र की 100% पूरी 60+ सेवाएं
         const DEPARTMENTS = [
             { 
                 id: 'Central', name: 'केंद्र सरकार सेवाएं', icon: 'fa-landmark-flag', color: '#ff9933', 
@@ -82,14 +83,18 @@
             }
         ];
 
+        // 🛑 जिस सर्विस में जो डिब्बा चाहिए, सिर्फ वही खुलेगा। (फालतू PPO नहीं मांगेगा)
         const SERVICE_REQUIREMENTS = {
             'नया पैन कार्ड': { texts: ['पिता का नाम', 'आधार नंबर'], docs: ['पासपोर्ट फोटो', 'हस्ताक्षर (Sign)', 'आधार फोटो'], askDate: false },
+            'पैन कार्ड में सुधार': { texts: ['पुराना पैन नंबर', 'पिता का नाम', 'आधार नंबर'], docs: ['पासपोर्ट फोटो', 'हस्ताक्षर', 'पुराना पैन कार्ड'], askDate: false },
             'पेंशन का वार्षिक भौतिक सत्यापन ⏰': { texts: ['PPO नंबर', 'जन-आधार नंबर', 'आधार नंबर'], docs: ['पीपीओ डायरी की फोटो'], askDate: true },
             'Airtel Payments Bank (खाता)': { texts: ['आधार नंबर', 'नॉमिनी का नाम'], docs: ['आधार दोनों तरफ', 'लाइव फोटो'], askDate: false },
             'गाड़ी/बाइक का इंश्योरेंस ⏰': { texts: ['गाड़ी नंबर', 'आधार नंबर'], docs: ['पुरानी पॉलिसी की फोटो', 'RC बुक'], askDate: true },
             'स्वास्थ्य बीमा (Health Insurance) ⏰': { texts: ['पॉलिसी नंबर', 'आधार नंबर'], docs: ['पुरानी पॉलिसी की फोटो'], askDate: true },
-            'जाति प्रमाण पत्र (OBC/SC/ST)': { texts: ['जन-आधार नंबर', 'राशन कार्ड नंबर'], docs: ['राशन कार्ड'], askDate: false },
-            'उत्तर मैट्रिक छात्रवृत्ति': { texts: ['जन-आधार नंबर', 'मार्कशीट रोल नंबर'], docs: ['आय प्रमाण पत्र', 'मार्कशीट'], askDate: false }
+            'जाति प्रमाण पत्र (OBC/SC/ST)': { texts: ['जन-आधार नंबर', 'राशन कार्ड नंबर'], docs: ['राशन कार्ड', 'पुराना रिकॉर्ड'], askDate: false },
+            'मूल निवास प्रमाण पत्र': { texts: ['जन-आधार नंबर'], docs: ['राशन कार्ड', 'आधार कार्ड'], askDate: false },
+            'उत्तर मैट्रिक छात्रवृत्ति': { texts: ['जन-आधार नंबर', 'मार्कशीट रोल नंबर'], docs: ['आय प्रमाण पत्र', 'मार्कशीट'], askDate: false },
+            'आयुष्मान कार्ड (Ayushman Bharat)': { texts: ['जन-आधार नंबर', 'आधार नंबर'], docs: ['आधार कार्ड की फोटो'], askDate: false }
         };
 
         const App = () => {
@@ -101,6 +106,7 @@
             const [dynamicTextData, setDynamicTextData] = useState({});
             const [uploadedFiles, setUploadedFiles] = useState([]);
             const [isUploading, setIsUploading] = useState(false);
+            const [successToken, setSuccessToken] = useState(''); // टोकन सेव करने के लिए
             const fileInputRef = useRef(null);
 
             const [trackMobile, setTrackMobile] = useState('');
@@ -148,9 +154,13 @@
                 const res = await callAPI(payload);
                 setIsUploading(false);
                 if(res.status === "SUCCESS") {
-                    alert("✅ शानदार! काम बुक हो गया। आपका टोकन: " + res.token);
-                    setView('HOME'); setFormData({name:'', mobile:'', address:'', problemDesc:'', lastDate:'', vipId:''}); setDynamicTextData({}); setUploadedFiles([]);
+                    setSuccessToken(res.token); // टोकन सेव पेज पर भेजें
+                    setView('SUCCESS'); 
                 } else alert("❌ Error: " + res.message);
+            };
+
+            const resetAndGoHome = () => {
+                setView('HOME'); setSuccessToken(''); setFormData({name:'', mobile:'', address:'', problemDesc:'', lastDate:'', vipId:''}); setDynamicTextData({}); setUploadedFiles([]);
             };
 
             const trackStatus = async () => {
@@ -224,12 +234,13 @@
                 return match ? match[1] : null;
             };
 
-            const reqs = SERVICE_REQUIREMENTS[selectedService] || { texts: [], docs: ['अतिरिक्त दस्तावेज़'], askDate: false };
+            // 🛑 फालतू डिब्बे रोकने का स्मार्ट लॉजिक
+            const reqs = SERVICE_REQUIREMENTS[selectedService] || { texts: [], docs: ['अतिरिक्त दस्तावेज़ (यदि हो)'], askDate: false };
 
             return (
                 <div className="min-h-screen pb-32">
                     <div className="marquee-alert fixed top-0 w-full">
-                        <marquee>🏛️ DIGITAL PROBLEM SOLUTION GROUP : "आपकी समस्या, समाधान हमारा" | ⏰ महा-अलर्ट: पेंशन भौतिक सत्यापन शुरू हो गया है! 🚩</marquee>
+                        <marquee>🏢 DIGITAL PROBLEM SOLUTION GROUP : "आपकी समस्या, समाधान हमारा" | ⏰ महा-अलर्ट: पेंशन भौतिक सत्यापन शुरू हो गया है! 🚩</marquee>
                     </div>
 
                     {/* 📞 HUGE FLOATING BUTTONS */}
@@ -237,6 +248,7 @@
                         <div onClick={()=>setShowVCModal(true)} className="float-btn float-vc" title="Live Video Call"><i className="fa-solid fa-video"></i></div>
                         <a href={`tel:+${WHATSAPP_NUMBER}`} className="float-btn float-call" title="Call Us"><i className="fa-solid fa-phone-volume"></i></a>
                         <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`} target="_blank" className="float-btn float-wa" title="WhatsApp Message"><i className="fa-brands fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/mahadev_ji_ka_daas?igsh=ZXJlOHh5ZDllZTBs" target="_blank" className="float-btn float-insta" title="Instagram"><i className="fa-brands fa-instagram"></i></a>
                     </div>
 
                     {/* 📹 DIRECT VC MODAL */}
@@ -315,6 +327,7 @@
                                             </div>
                                         )}
 
+                                        {/* 🎯 डायनामिक टेक्स्ट (फालतू डिब्बे नहीं खुलेंगे) */}
                                         {reqs.texts.length > 0 && (
                                             <div className="bg-blue-900/20 p-6 rounded-2xl border border-blue-500/50">
                                                 <h3 className="text-blue-400 font-black mb-4 uppercase text-lg"><i className="fa-solid fa-circle-info mr-2"></i> पक्की जानकारी डालें:</h3>
@@ -330,6 +343,7 @@
 
                                         <div className="border-t border-[#333] pt-8 mt-8">
                                             <h3 className="text-white font-black uppercase mb-4 text-xl"><i className="fa-solid fa-folder-open text-[#ffd700] mr-2"></i> दस्तावेज़ अपलोड करें</h3>
+                                            <p className="text-xs text-gray-400 mb-4">ज़रूरी: {reqs.docs.join(", ")}</p>
                                             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
                                                 {uploadedFiles.map((f, i) => (
                                                     <div key={i} className="bg-green-900/30 p-5 rounded-xl border border-green-500 text-center truncate"><i className="fa-solid fa-check text-green-500 text-2xl mb-2"></i><p className="text-xs">{f.name}</p></div>
@@ -346,6 +360,32 @@
                                         </button>
                                     </form>
                                 </div>
+                            </div>
+                        )}
+
+                        {/* ✅ SUCCESS & AUTO-SAVE TOKEN SCREEN */}
+                        {view === 'SUCCESS' && (
+                            <div className="max-w-2xl mx-auto glass-panel p-10 text-center border-t-4 border-green-500 shadow-2xl fade-in">
+                                <div className="w-24 h-24 bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-green-500">
+                                    <i className="fa-solid fa-check-double text-5xl text-green-400"></i>
+                                </div>
+                                <h2 className="text-4xl font-black mb-4 uppercase text-white">Application Submitted!</h2>
+                                <p className="text-gray-400 text-lg mb-6">आपका काम सफलतापूर्वक बुक हो गया है।</p>
+                                
+                                <div className="bg-[#111] p-6 rounded-2xl border border-[#333] mb-8">
+                                    <p className="text-sm text-gray-500 font-bold uppercase mb-2">आपका ट्रैकिंग टोकन नंबर:</p>
+                                    <p className="text-4xl font-black text-[#ffd700] tracking-widest">{successToken}</p>
+                                </div>
+
+                                <div className="bg-green-900/20 p-6 rounded-2xl border border-dashed border-green-500 mb-8">
+                                    <p className="text-lg text-green-400 font-bold mb-4">⚠️ महत्वपूर्ण: अपना टोकन नंबर सुरक्षित करें!</p>
+                                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`जय महादेव! 🚩 DPSG ई-मित्र, मैंने अभी वेबसाइट पर फॉर्म भरा है। मेरा नाम ${formData.name} है और मेरा ट्रैकिंग टोकन: *${successToken}* है। कृपया इसे चेक करें।`)}`} target="_blank" className="click-red block w-full bg-green-600 text-white font-black py-5 rounded-xl text-xl uppercase shadow-[0_0_20px_rgba(22,163,74,0.6)]">
+                                        <i className="fa-brands fa-whatsapp mr-3 text-2xl"></i> 🟢 इस टोकन को WhatsApp पर सेव करें
+                                    </a>
+                                    <p className="text-xs text-gray-400 mt-4">इसे दबाने से आपका टोकन सीधा DPSG ई-मित्र और आपके व्हाट्सएप में सेव हो जाएगा ताकि आप इसे कभी न भूलें।</p>
+                                </div>
+
+                                <button onClick={resetAndGoHome} className="click-red text-gray-400 font-bold hover:text-white underline"><i className="fa-solid fa-arrow-left mr-2"></i> होम पेज पर वापस जाएं</button>
                             </div>
                         )}
 
@@ -389,7 +429,7 @@
                             </div>
                         )}
 
-                        {/* 👨‍💻 STAFF PANEL (WITH WHATSAPP AUTO-MSG FIX) */}
+                        {/* 👨‍💻 STAFF PANEL */}
                         {view === 'STAFF' && (
                             <div className="max-w-6xl mx-auto">
                                 {!isStaffLoggedIn ? (
@@ -424,12 +464,12 @@
                                                 <button onClick={()=>setEditingRow(null)} className="text-[#ffd700] font-black mb-6 text-lg"><i className="fa-solid fa-arrow-left mr-2"></i> वापस लिस्ट पर</button>
                                                 
                                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                                                    {/* BIO DATA & LINKS */}
+                                                    {/* BIO DATA */}
                                                     <div className="bg-[#050505] p-8 rounded-2xl border border-[#222]">
                                                         <h3 className="text-[#ffd700] font-black text-xl uppercase mb-6"><i className="fa-solid fa-address-card mr-2"></i> Bio-Data</h3>
                                                         <div className="text-base space-y-3 mb-6">
                                                             <p><span className="text-gray-500 font-bold uppercase block text-xs">Customer Name & Mobile:</span> <span className="text-white font-bold">{editingRow.data[4]} | {editingRow.data[5]}</span></p>
-                                                            <p><span className="text-gray-500 font-bold uppercase block text-xs">Aadhaar/PPO:</span> <span className="text-white font-bold">{editingRow.data[9]} / {editingRow.data[11]}</span></p>
+                                                            <p><span className="text-gray-500 font-bold uppercase block text-xs">Aadhaar/PPO/Other:</span> <span className="text-white font-bold">{editingRow.data[9]} / {editingRow.data[11]} / {editingRow.data[12]}</span></p>
                                                             <p><span className="text-gray-500 font-bold uppercase block text-xs">Problem:</span> <span className="text-white">{editingRow.data[14]}</span></p>
                                                             <p><span className="text-gray-500 font-bold uppercase block text-xs">VC Request:</span> <span className="text-red-400 font-bold">{editingRow.data[22]} ({editingRow.data[23]})</span></p>
                                                         </div>
@@ -444,17 +484,15 @@
                                                         </div>
                                                     </div>
 
-                                                    {/* 🚨 URGENT & COMMUNICATION ACTIONS (FIXED LINK) */}
+                                                    {/* 🚨 COMMUNICATION PANEL */}
                                                     <div className="bg-[#111] p-8 rounded-2xl border border-[#333]">
                                                         <h3 className="text-white font-black text-xl uppercase mb-6"><i className="fa-solid fa-bolt text-red-500 mr-2"></i> Communication Panel</h3>
                                                         
                                                         <div className="space-y-4 mb-8">
-                                                            {/* 🚨 JOIN VIDEO CALL NOW BUTTON (Staff Browser Link with HTTPS) */}
                                                             <a href={GOOGLE_MEET_WEB_LINK} target="_blank" className="click-red flex justify-center items-center w-full bg-red-600 text-white py-4 rounded-xl font-black text-lg shadow-[0_0_15px_rgba(220,38,38,0.5)]">
                                                                 <i className="fa-solid fa-video mr-3 animate-pulse"></i> 🔴 JOIN VIDEO CALL NOW
                                                             </a>
                                                             
-                                                            {/* 🟢 WHATSAPP AUTO-MSG BUTTON (Customer Text Link without HTTPS) */}
                                                             <a href={`https://wa.me/91${editingRow.data[5]}?text=${encodeURIComponent(`जय महादेव! 🚩 प्रिय ग्राहक, DPSG ई-मित्र से आपकी समस्या के समाधान के लिए लाइव वीडियो कॉल का समय ${staffUpdateData.vcTime || 'तय'} किया गया है। कृपया इस लिंक से जुड़ें: ${GOOGLE_MEET_TEXT_LINK}`)}`} target="_blank" className="click-red flex justify-center items-center w-full bg-green-600 text-white py-4 rounded-xl font-black text-lg">
                                                                 <i className="fa-brands fa-whatsapp mr-3"></i> WhatsApp Auto-Msg (VC Link)
                                                             </a>
@@ -462,11 +500,10 @@
                                                     </div>
                                                 </div>
 
-                                                {/* UPDATE SECTION (WITH DATE) */}
+                                                {/* UPDATE SECTION */}
                                                 <div className="bg-[#050505] p-8 rounded-2xl border border-[#222]">
                                                     <h3 className="text-[#ffd700] font-black text-xl uppercase mb-8"><i className="fa-solid fa-pen-to-square mr-2"></i> Update Status & Date</h3>
                                                     
-                                                    {/* 📅 नई सत्यापन तिथि */}
                                                     <div className="mb-6 bg-yellow-900/20 p-5 rounded-xl border border-yellow-500/50">
                                                         <label className="text-yellow-400 font-bold text-sm uppercase block mb-3">नई सत्यापन/रिन्यूअल तिथि डालें (आज का काम):</label>
                                                         <input type="date" value={staffUpdateData.newVerifyDate} onChange={e=>setStaffUpdateData({...staffUpdateData, newVerifyDate:e.target.value})} className="w-full bg-[#000] p-5 rounded-xl text-white border border-[#333] outline-none font-bold text-lg" />
@@ -503,7 +540,7 @@
 
                     {/* 📱 BOTTOM NAV */}
                     <div className="fixed bottom-0 w-full bg-[#000]/95 border-t border-[#222] p-4 flex justify-around items-center z-50">
-                        <div onClick={() => setView('HOME')} className={`cursor-pointer py-3 px-8 rounded-2xl flex flex-col items-center ${view==='HOME'||view==='DEPT'||view==='FORM'?'bg-[#ffd700] text-black':'text-gray-500'}`}><i className="fa-solid fa-house text-2xl"></i></div>
+                        <div onClick={() => setView('HOME')} className={`cursor-pointer py-3 px-8 rounded-2xl flex flex-col items-center ${view==='HOME'||view==='DEPT'||view==='FORM'||view==='SUCCESS'?'bg-[#ffd700] text-black':'text-gray-500'}`}><i className="fa-solid fa-house text-2xl"></i></div>
                         <div onClick={() => setView('TRACK')} className={`cursor-pointer py-3 px-8 rounded-2xl flex flex-col items-center ${view==='TRACK'?'bg-blue-600 text-white':'text-gray-500'}`}><i className="fa-solid fa-satellite-dish text-2xl"></i></div>
                         <div onClick={() => setView('STAFF')} className={`cursor-pointer py-3 px-8 rounded-2xl flex flex-col items-center ${view==='STAFF'?'bg-red-600 text-white':'text-gray-500'}`}><i className="fa-solid fa-user-shield text-2xl"></i></div>
                     </div>
