@@ -22,7 +22,7 @@
         
         .marquee-alert { background: linear-gradient(90deg, #aa0000, #ff0000); color: #fff; font-weight: 900; padding: 10px 0; border-bottom: 2px solid #ffd700; font-size: 14px; letter-spacing: 1px; z-index: 100000;}
         
-        /* 📞 HUGE FLOATING BUTTONS (विशाल बटन) */
+        /* 📞 HUGE FLOATING BUTTONS */
         .floating-bar { position: fixed; right: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 20px; z-index: 9999; }
         .float-btn { width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: white; box-shadow: 0 0 25px rgba(0,0,0,0.9); cursor: pointer; transition: 0.2s; border: 3px solid rgba(255,255,255,0.3); }
         .float-btn:hover { transform: scale(1.1); }
@@ -42,20 +42,17 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // 🛑 हुकुम का नया और 100% पक्का API लिंक
-        const API_URL = "https://script.google.com/macros/s/AKfycbwlnAS6oHXq00q7ZCDhSIR8ISHjJkNhrVf2QafYnJcNc6lL5konEGE-k7667GShsN1pqw/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbz6ApHB-Rqe18DouWfN_4eoMbBnBA_uiI3p16vCm_xG30RzuL6D1RB5gyWswe99G6bsbQ/exec";
+        const WHATSAPP_NUMBER = "917229874128"; 
         
-        const WHATSAPP_NUMBER = "918788418737"; 
-        
-        // 🛑 लिंक्स: स्टाफ के लिए वेब लिंक और ग्राहक (व्हाट्सएप) के लिए शुद्ध टेक्स्ट लिंक
         const GOOGLE_MEET_WEB_LINK = "https://meet.google.com/fdd-nbiw-ejb"; 
         const GOOGLE_MEET_TEXT_LINK = "Meet.google.com/fdd-nbiw-ejb"; 
         
-        const WHATSAPP_MSG = encodeURIComponent("जय महादेव! 🚩 DPSG ई-मित्र, मुझे सरकारी सर्विस के बारे में जानकारी चाहिए। मेरा नाम ______ है।");
+        // 🛑 फ्लोटिंग बटन के लिए प्रोफेशनल मैसेज
+        const GENERAL_WA_MSG = encodeURIComponent(`🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार! मुझे आपकी सेवाओं के बारे में कुछ जानकारी चाहिए।`);
 
         const STAFF_CREDS = { "Jorawar@DPS": "Jorawar@6020", "Parkash@DPS": "Parkash@6020", "Rajkumar@DPS": "Rajkumar@6020", "Chanchal@DPS": "Chanchal@6020" };
 
-        // 🛑 ई-मित्र की 100% पूरी 60+ सेवाएं
         const DEPARTMENTS = [
             { 
                 id: 'Central', name: 'केंद्र सरकार सेवाएं', icon: 'fa-landmark-flag', color: '#ff9933', 
@@ -83,7 +80,6 @@
             }
         ];
 
-        // 🛑 जिस सर्विस में जो डिब्बा चाहिए, सिर्फ वही खुलेगा। (फालतू PPO नहीं मांगेगा)
         const SERVICE_REQUIREMENTS = {
             'नया पैन कार्ड': { texts: ['पिता का नाम', 'आधार नंबर'], docs: ['पासपोर्ट फोटो', 'हस्ताक्षर (Sign)', 'आधार फोटो'], askDate: false },
             'पैन कार्ड में सुधार': { texts: ['पुराना पैन नंबर', 'पिता का नाम', 'आधार नंबर'], docs: ['पासपोर्ट फोटो', 'हस्ताक्षर', 'पुराना पैन कार्ड'], askDate: false },
@@ -106,7 +102,7 @@
             const [dynamicTextData, setDynamicTextData] = useState({});
             const [uploadedFiles, setUploadedFiles] = useState([]);
             const [isUploading, setIsUploading] = useState(false);
-            const [successToken, setSuccessToken] = useState(''); // टोकन सेव करने के लिए
+            const [successToken, setSuccessToken] = useState(''); 
             const fileInputRef = useRef(null);
 
             const [trackMobile, setTrackMobile] = useState('');
@@ -154,7 +150,7 @@
                 const res = await callAPI(payload);
                 setIsUploading(false);
                 if(res.status === "SUCCESS") {
-                    setSuccessToken(res.token); // टोकन सेव पेज पर भेजें
+                    setSuccessToken(res.token); 
                     setView('SUCCESS'); 
                 } else alert("❌ Error: " + res.message);
             };
@@ -234,7 +230,26 @@
                 return match ? match[1] : null;
             };
 
-            // 🛑 फालतू डिब्बे रोकने का स्मार्ट लॉजिक
+            // 🛑 स्टाफ के लिए जादुई प्रोफेशनल मैसेज जनरेटर
+            const getDynamicStaffWhatsAppMsg = () => {
+                if(!editingRow) return "";
+                let cName = editingRow.data[4];
+                let cToken = editingRow.data[1];
+                let cService = editingRow.data[8];
+                let msg = "";
+
+                if(staffUpdateData.status === "Send Back") {
+                    msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा" | "उचित मूल्य, बेहतरीन सेवा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n⚠️ *[ ACTION REQUIRED: फॉर्म में कमी पाई गई है ]*\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n👤 *प्रिय ${cName} जी,*\nआपके आवेदन (टोकन: ${cToken}) की हमारी टीम द्वारा जाँच की गई है।\n\n❌ *वर्तमान स्थिति:* SEND BACK (दस्तावेज़ अपर्याप्त हैं)\n🛑 *:: कमी का कारण (Reason) ::*\n_"${staffUpdateData.sendBackReason || editingRow.data[19] || 'दस्तावेज़ सही नहीं हैं'}"_\n\n🔄 *:: आपको क्या करना है? ::*\nकृपया हमारी वेबसाइट पर जाएं, 'Track' विकल्प में अपना टोकन नंबर डालें, और लाल रंग के (+) बटन को दबाकर सही दस्तावेज़ तुरंत अपलोड करें।\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *असुविधा के लिए खेद है। DPSG टीम आपकी सहायता के लिए तत्पर है।*`;
+                } else if(staffUpdateData.status === "Done") {
+                    msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा" | "उचित मूल्य, बेहतरीन सेवा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✅ *[ WORK SUCCESSFULLY COMPLETED ]*\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n👤 *प्रिय ${cName} जी,*\nआपको यह सूचित करते हुए हर्ष हो रहा है कि आपके आवेदन का कार्य सफलतापूर्वक पूर्ण कर दिया गया है।\n\n📋 *:: कार्य की पूरी रिपोर्ट ::*\n🔹 *टोकन नंबर:* ${cToken}\n🔹 *सेवा का नाम:* ${cService}\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${staffUpdateData.note || 'आपका कार्य पूर्ण हो गया है।'}"_\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *DPSG पर भरोसा जताने के लिए आपका धन्यवाद!*`;
+                } else if(staffUpdateData.vcTime && staffUpdateData.vcTime !== "N/A" && staffUpdateData.vcTime !== "") {
+                    msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा" | "उचित मूल्य, बेहतरीन सेवा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📹 *[ VIDEO CALL SCHEDULED - समय तय किया गया ]*\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n👤 *प्रिय ${cName} जी,*\nआपकी वीडियो कॉल की रिक्वेस्ट प्राप्त हो गई है। DPSG ई-मित्र द्वारा आपकी समस्या के समाधान हेतु वीडियो कॉल का समय तय कर दिया गया है।\n\n⏰ *वीडियो कॉल का तय समय:* आज ${staffUpdateData.vcTime}\n\n🌐 *:: जुड़ने का सुरक्षित लिंक (Google Meet) ::*\n👉 ${GOOGLE_MEET_TEXT_LINK}\n\n_(नोट: कृपया तय समय पर लिंक पर क्लिक करके जुड़ें, हमारे अधिकारी आपका इंतज़ार करेंगे।)_\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *DPSG पर भरोसा जताने के लिए आपका धन्यवाद!*`;
+                } else {
+                    msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा" | "उचित मूल्य, बेहतरीन सेवा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n👤 *प्रिय ${cName} जी,*\nआपके आवेदन (टोकन: ${cToken}) पर कार्य प्रगति पर है।\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${staffUpdateData.note || 'हम आपके आवेदन की जाँच कर रहे हैं।'}"_\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *DPSG टीम*`;
+                }
+                return encodeURIComponent(msg);
+            };
+
             const reqs = SERVICE_REQUIREMENTS[selectedService] || { texts: [], docs: ['अतिरिक्त दस्तावेज़ (यदि हो)'], askDate: false };
 
             return (
@@ -247,7 +262,7 @@
                     <div className="floating-bar fade-in">
                         <div onClick={()=>setShowVCModal(true)} className="float-btn float-vc" title="Live Video Call"><i className="fa-solid fa-video"></i></div>
                         <a href={`tel:+${WHATSAPP_NUMBER}`} className="float-btn float-call" title="Call Us"><i className="fa-solid fa-phone-volume"></i></a>
-                        <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`} target="_blank" className="float-btn float-wa" title="WhatsApp Message"><i className="fa-brands fa-whatsapp"></i></a>
+                        <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${GENERAL_WA_MSG}`} target="_blank" className="float-btn float-wa" title="WhatsApp Message"><i className="fa-brands fa-whatsapp"></i></a>
                         <a href="https://www.instagram.com/mahadev_ji_ka_daas?igsh=ZXJlOHh5ZDllZTBs" target="_blank" className="float-btn float-insta" title="Instagram"><i className="fa-brands fa-instagram"></i></a>
                     </div>
 
@@ -306,12 +321,19 @@
                             </div>
                         )}
 
-                        {/* 📝 FORM */}
+                        {/* 📝 FORM (WITH VIP ID BOX) */}
                         {view === 'FORM' && (
                             <div className="max-w-4xl mx-auto">
                                 <button onClick={() => setView('DEPT')} className="click-red text-[#ffd700] font-black mb-6"><i className="fa-solid fa-arrow-left mr-2"></i> वापस</button>
                                 <div className="glass-panel p-10 border-t-4 border-[#ffd700] shadow-2xl">
                                     <h2 className="text-3xl font-black text-[#ffd700] mb-8 border-b border-[#333] pb-4">{selectedService}</h2>
+                                    
+                                    {/* 👑 VIP MEMBERSHIP BOX */}
+                                    <div className="bg-[#111] p-5 rounded-xl border border-[#ffd700]/50 mb-6 shadow-inner">
+                                        <label className="text-[#ffd700] font-black mb-2 block uppercase text-sm"><i className="fa-solid fa-crown mr-2"></i> VIP Membership ID (प्रीमियम ग्राहकों के लिए)</label>
+                                        <input type="text" placeholder="अपना मेंबरशिप नंबर डालें (यदि हो)" onChange={e=>setFormData({...formData, vipId:e.target.value})} className="w-full bg-[#000] p-4 rounded-xl text-[#ffd700] border border-[#333] font-bold text-lg outline-none focus:border-[#ffd700]" />
+                                    </div>
+
                                     <form onSubmit={submitForm} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <input required type="text" placeholder="पूरा नाम *" onChange={e=>setFormData({...formData, name:e.target.value})} className="bg-[#111] p-5 rounded-xl text-white outline-none border border-[#333] text-lg" />
@@ -319,7 +341,6 @@
                                         </div>
                                         <input required type="text" placeholder="पूरा पता (Address) *" onChange={e=>setFormData({...formData, address:e.target.value})} className="w-full bg-[#111] p-5 rounded-xl text-white border border-[#333] text-lg" />
 
-                                        {/* 📅 सत्यापन तिथि */}
                                         {reqs.askDate && (
                                             <div className="bg-yellow-900/20 p-6 rounded-2xl border border-yellow-500/50">
                                                 <label className="text-yellow-400 font-black mb-2 block uppercase text-sm"><i className="fa-regular fa-calendar-check mr-2"></i> पिछली सत्यापन/पॉलिसी तिथि चुनें (यदि याद हो)</label>
@@ -327,7 +348,6 @@
                                             </div>
                                         )}
 
-                                        {/* 🎯 डायनामिक टेक्स्ट (फालतू डिब्बे नहीं खुलेंगे) */}
                                         {reqs.texts.length > 0 && (
                                             <div className="bg-blue-900/20 p-6 rounded-2xl border border-blue-500/50">
                                                 <h3 className="text-blue-400 font-black mb-4 uppercase text-lg"><i className="fa-solid fa-circle-info mr-2"></i> पक्की जानकारी डालें:</h3>
@@ -363,7 +383,7 @@
                             </div>
                         )}
 
-                        {/* ✅ SUCCESS & AUTO-SAVE TOKEN SCREEN */}
+                        {/* ✅ SUCCESS & AUTO-SAVE TOKEN SCREEN (Professional WhatsApp MSG) */}
                         {view === 'SUCCESS' && (
                             <div className="max-w-2xl mx-auto glass-panel p-10 text-center border-t-4 border-green-500 shadow-2xl fade-in">
                                 <div className="w-24 h-24 bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-green-500">
@@ -379,10 +399,10 @@
 
                                 <div className="bg-green-900/20 p-6 rounded-2xl border border-dashed border-green-500 mb-8">
                                     <p className="text-lg text-green-400 font-bold mb-4">⚠️ महत्वपूर्ण: अपना टोकन नंबर सुरक्षित करें!</p>
-                                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`जय महादेव! 🚩 DPSG ई-मित्र, मैंने अभी वेबसाइट पर फॉर्म भरा है। मेरा नाम ${formData.name} है और मेरा ट्रैकिंग टोकन: *${successToken}* है। कृपया इसे चेक करें।`)}`} target="_blank" className="click-red block w-full bg-green-600 text-white font-black py-5 rounded-xl text-xl uppercase shadow-[0_0_20px_rgba(22,163,74,0.6)]">
+                                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार! मैंने अभी आपके पोर्टल पर एक नया आवेदन किया है।\n\n👤 *मेरा नाम:* ${formData.name}\n📞 *मोबाइल:* ${formData.mobile}\n🎯 *आवेदन की सेवा:* ${selectedService}\n🔖 *मेरा ट्रैकिंग टोकन:* \`${successToken}\`\n\nकृपया मेरे आवेदन की जाँच करें। धन्यवाद!`)}`} target="_blank" className="click-red block w-full bg-green-600 text-white font-black py-5 rounded-xl text-xl uppercase shadow-[0_0_20px_rgba(22,163,74,0.6)]">
                                         <i className="fa-brands fa-whatsapp mr-3 text-2xl"></i> 🟢 इस टोकन को WhatsApp पर सेव करें
                                     </a>
-                                    <p className="text-xs text-gray-400 mt-4">इसे दबाने से आपका टोकन सीधा DPSG ई-मित्र और आपके व्हाट्सएप में सेव हो जाएगा ताकि आप इसे कभी न भूलें।</p>
+                                    <p className="text-xs text-gray-400 mt-4">इसे दबाने से आपका टोकन सीधा DPSG ई-मित्र और आपके व्हाट्सएप में पूरी डिटेल के साथ सेव हो जाएगा।</p>
                                 </div>
 
                                 <button onClick={resetAndGoHome} className="click-red text-gray-400 font-bold hover:text-white underline"><i className="fa-solid fa-arrow-left mr-2"></i> होम पेज पर वापस जाएं</button>
@@ -484,7 +504,7 @@
                                                         </div>
                                                     </div>
 
-                                                    {/* 🚨 COMMUNICATION PANEL */}
+                                                    {/* 🚨 COMMUNICATION PANEL (DYNAMIC WHATSAPP MESSAGE) */}
                                                     <div className="bg-[#111] p-8 rounded-2xl border border-[#333]">
                                                         <h3 className="text-white font-black text-xl uppercase mb-6"><i className="fa-solid fa-bolt text-red-500 mr-2"></i> Communication Panel</h3>
                                                         
@@ -493,8 +513,8 @@
                                                                 <i className="fa-solid fa-video mr-3 animate-pulse"></i> 🔴 JOIN VIDEO CALL NOW
                                                             </a>
                                                             
-                                                            <a href={`https://wa.me/91${editingRow.data[5]}?text=${encodeURIComponent(`जय महादेव! 🚩 प्रिय ग्राहक, DPSG ई-मित्र से आपकी समस्या के समाधान के लिए लाइव वीडियो कॉल का समय ${staffUpdateData.vcTime || 'तय'} किया गया है। कृपया इस लिंक से जुड़ें: ${GOOGLE_MEET_TEXT_LINK}`)}`} target="_blank" className="click-red flex justify-center items-center w-full bg-green-600 text-white py-4 rounded-xl font-black text-lg">
-                                                                <i className="fa-brands fa-whatsapp mr-3"></i> WhatsApp Auto-Msg (VC Link)
+                                                            <a href={`https://wa.me/91${editingRow.data[5]}?text=${getDynamicStaffWhatsAppMsg()}`} target="_blank" className="click-red flex justify-center items-center w-full bg-green-600 text-white py-4 rounded-xl font-black text-lg">
+                                                                <i className="fa-brands fa-whatsapp mr-3"></i> 📲 ग्राहक को WhatsApp पर सूचित करें
                                                             </a>
                                                         </div>
                                                     </div>
