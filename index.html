@@ -63,7 +63,8 @@
         const GOOGLE_MEET_TEXT_LINK = "meet.google.com/fdd-nbiw-ejb"; 
         const GOOGLE_MEET_WEB_LINK = "https://meet.google.com/fdd-nbiw-ejb"; 
         
-        const GENERAL_WA_MSG = encodeURIComponent(`🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार! मुझे आपकी सेवाओं के बारे में कुछ जानकारी चाहिए।`);
+        // 🌟 PROFESSIONAL WA MESSAGE
+        const GENERAL_WA_MSG = encodeURIComponent(`🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार! मुझे आपकी ई-मित्र सेवाओं के बारे में कुछ जानकारी चाहिए।\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *धन्यवाद!*\n*DPSG टीम*`);
 
         const DEPARTMENTS = [
             { id: 'Central', name: 'केंद्र सरकार सेवाएं', icon: 'fa-landmark-flag', color: '#ea580c', services: ['आयुष्मान कार्ड (Ayushman Bharat)', 'नया पैन कार्ड', 'पैन कार्ड में सुधार', 'पैन-आधार लिंक', 'PM किसान सम्मान निधि', 'ई-श्रम कार्ड (E-Shram)', 'वोटर ID कार्ड (नया/सुधार)', 'पासपोर्ट आवेदन', 'PF (UAN) निकालना/केवाईसी'] },
@@ -169,7 +170,6 @@
                 setView('HOME'); setSuccessToken(''); setFormData({name:'', mobile:'', address:'', problemDesc:'', lastDate:'', vipId:''}); setDynamicTextData({}); setUploadedFiles([]);
             };
 
-            // 🔍 TRACKING FIX: Space Trim & UpperCase Logic
             const trackStatus = async () => {
                 if(!trackToken) return alert("टोकन नंबर डालें!");
                 setIsTracking(true);
@@ -199,7 +199,6 @@
                 if(res.status === "SUCCESS") { alert("✅ रिक्वेस्ट भेज दी गई है!"); setShowVCModal(false); }
             };
 
-            // 🔐 100% SECURE OTP LOGIN LOGIC
             const requestStaffOTP = async () => {
                 if(!staffId || !staffPass) return alert("ID और Password डालें!");
                 const res = await callAPI({action: "STAFF_LOGIN", userId: staffId, password: staffPass});
@@ -213,7 +212,6 @@
                 else alert("❌ गलत OTP!");
             };
 
-            // 📊 DAILY REPORT LOGIC
             const triggerDailyReport = async () => {
                 if(confirm("क्या आप आज की गल्ला व कार्य रिपोर्ट टेलीग्राम पर भेजना चाहते हैं?")) {
                     const res = await callAPI({action: "DAILY_REPORT"});
@@ -230,7 +228,6 @@
 
             const openStaffEdit = (item) => {
                 setEditingRow(item);
-                // 🛑 Restoring ALL Old Fields exactly as they were
                 setStaffUpdateData({
                     status: item.data[2], 
                     vcTime: item.data[24] === "N/A" ? "" : item.data[24], 
@@ -242,7 +239,6 @@
                 setPayMode('Cash'); setPayAmt(''); setUpiId(''); setPayVerified(false);
             };
 
-            // 💸 PAYMENT LOCK LOGIC
             const isPaymentLocked = () => {
                 if(!editingRow) return false;
                 const amt = editingRow.data[30];
@@ -256,15 +252,15 @@
                 return false;
             };
 
-            // 📲 WhatsApp Payment Request Generator
+            // 🌟 PROFESSIONAL PAYMENT REQUEST MESSAGE
             const sendPaymentRequest = () => {
                 if(!payAmt) return alert("पहले अमाउंट दर्ज करें!");
-                let msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार ${editingRow.data[4]} जी,\nआपके फॉर्म (टोकन: ${editingRow.data[1]}) की जाँच हो गई है।\n\n💸 *इस कार्य की फीस:* ₹${payAmt}\n`;
+                let msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार ${editingRow.data[4]} जी,\nआपके आवेदन (टोकन: ${editingRow.data[1]}) की जाँच सफलतापूर्वक कर ली गई है।\n\n💸 *इस कार्य की कुल फीस:* ₹${payAmt}\n`;
                 if(payMode === 'UPI') {
                     if(!upiId) return alert("कृपया UPI ID भी डालें!");
-                    msg += `\nकृपया नीचे दी गई UPI ID पर पेमेंट करें:\n👉 *UPI ID:* ${upiId}\n\n_(पेमेंट करने के बाद कृपया स्क्रीनशॉट भेजें)_`;
-                } else { msg += `\nकृपया अपनी फीस ई-मित्र केंद्र पर जमा कराएं।`; }
-                msg += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 धन्यवाद!`;
+                    msg += `\nकृपया नीचे दी गई UPI ID पर अपना भुगतान करें:\n👉 *UPI ID:* ${upiId}\n\n_(नोट: भुगतान करने के बाद कृपया स्क्रीनशॉट इसी नंबर पर भेजें।)_`;
+                } else { msg += `\nकृपया अपनी फीस जल्द से जल्द हमारे ई-मित्र केंद्र पर नकद (Cash) जमा कराएं।`; }
+                msg += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *धन्यवाद!*\n*DPSG टीम*`;
                 window.open(`https://wa.me/91${editingRow.data[5]}?text=${encodeURIComponent(msg)}`, '_blank');
             };
 
@@ -310,24 +306,26 @@
                 return match ? match[1] : null;
             };
 
+            // 🌟 PROFESSIONAL FULL DETAIL MESSAGE
             const getFullDetailMessage = (target) => {
                 let d = finalMsgData;
-                let header = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा" | "उचित मूल्य, बेहतरीन सेवा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+                let header = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
                 let title = d.status === "Send Back" ? `⚠️ *[ ACTION REQUIRED: फॉर्म में कमी पाई गई है ]*` : d.status === "Done" ? `✅ *[ WORK SUCCESSFULLY COMPLETED ]*` : d.vcTime ? `📹 *[ VIDEO CALL SCHEDULED - समय तय किया गया ]*` : `🔄 *[ WORK STATUS UPDATED ]*`;
-                let bio = `\n👤 *:: ग्राहक का विवरण ::*\n🔹 *टोकन नंबर:* ${d.token}\n🔹 *नाम:* ${d.name}\n🔹 *मोबाइल:* ${d.mobile}\n🔹 *सेवा:* ${d.service}\n🔹 *Membership ID:* ${d.vip || 'सामान्य ग्राहक'}\n🔹 *अन्य जानकारी:* ${d.extra || 'N/A'}`;
+                let bio = `\n\n👤 *:: ग्राहक का विवरण ::*\n🔹 *टोकन नंबर:* ${d.token}\n🔹 *नाम:* ${d.name}\n🔹 *मोबाइल:* ${d.mobile}\n🔹 *सेवा:* ${d.service}\n🔹 *Membership ID:* ${d.vip || 'सामान्य ग्राहक'}\n🔹 *अन्य जानकारी:* ${d.extra || 'N/A'}`;
                 let body = "";
                 if(d.status === "Send Back") body = `\n\n🛑 *:: कमी का कारण (Reason) ::*\n_"${d.reason || 'दस्तावेज़ सही नहीं हैं'}"_\n\n🔄 *:: आपको क्या करना है? ::*\nवेबसाइट के 'Track' विकल्प में जाकर लाल रंग के (+) बटन से सही दस्तावेज़ अपलोड करें।`;
                 else if(d.status === "Done") body = `\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${d.note || 'आपका कार्य पूर्ण हो गया है।'}"_`;
-                else if(d.vcTime) body = `\n\n⏰ *वीडियो कॉल का तय समय:* आज ${d.vcTime}\n🌐 *:: जुड़ने का सुरक्षित लिंक (Google Meet) ::*\n👉 ${GOOGLE_MEET_TEXT_LINK}\n_(नोट: केवल इसी लिंक से जुड़ें)_`;
+                else if(d.vcTime) body = `\n\n⏰ *वीडियो कॉल का तय समय:* आज ${d.vcTime}\n🌐 *:: जुड़ने का सुरक्षित लिंक (Google Meet) ::*\n👉 ${GOOGLE_MEET_TEXT_LINK}\n_(नोट: कृपया केवल इसी लिंक से जुड़ें)_`;
                 else body = `\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${d.note || 'कार्य प्रगति पर है।'}"_`;
                 
-                let footer = `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *DPSG टीम*`;
+                let footer = `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *धन्यवाद!*\n*DPSG टीम*`;
                 if(target === 'owner' || target === 'group') header = `🔔 *[ OWNER / GROUP ALERT ]*\n` + header;
                 return encodeURIComponent(`${header}\n${title}${bio}${body}${footer}`);
             };
 
+            // 🌟 PROFESSIONAL VC LINK MESSAGE
             const getVCLinkMessage = () => {
-                let msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📹 *[ LIVE VIDEO CALL LINK ]*\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n👤 *प्रिय ${editingRow?.data[4]} जी,*\nआपके आवेदन (टोकन: ${editingRow?.data[1]}) के संदर्भ में, हमारे अधिकारी आपसे वीडियो कॉल पर जुड़ना चाहते हैं।\n\n🌐 *:: जुड़ने का सुरक्षित लिंक ::*\n👉 ${GOOGLE_MEET_TEXT_LINK}\n\n_(नोट: कृपया ऊपर दिए गए लिंक पर क्लिक करें और जुड़ें।)_\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *DPSG टीम*`;
+                let msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📹 *[ LIVE VIDEO CALL LINK ]*\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n👤 *प्रिय ${editingRow?.data[4]} जी,*\nआपके आवेदन (टोकन: ${editingRow?.data[1]}) के संदर्भ में, हमारे अधिकारी आपसे वीडियो कॉल पर जुड़ना चाहते हैं।\n\n🌐 *:: जुड़ने का सुरक्षित लिंक ::*\n👉 ${GOOGLE_MEET_TEXT_LINK}\n\n_(नोट: कृपया ऊपर दिए गए लिंक पर क्लिक करें और मीटिंग में जुड़ें।)_\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *धन्यवाद!*\n*DPSG टीम*`;
                 return encodeURIComponent(msg);
             };
 
@@ -488,7 +486,7 @@
 
                                 <div className="bg-emerald-50 p-5 rounded-xl border border-dashed border-emerald-200 mb-6">
                                     <p className="text-sm text-emerald-700 font-bold mb-3">⚠️ टोकन नंबर WhatsApp पर सुरक्षित करें</p>
-                                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`🏢 *DPSG E-MITRA*\n━━━━━━━━━━━━━━━━\nमैंने अभी एक आवेदन किया है:\n👤 नाम: ${formData.name}\n🔖 टोकन: \`${successToken}\`\nकृपया जाँच करें!`)}`} target="_blank" className="corp-btn btn-success w-full">
+                                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🟢 *[ नया आवेदन प्रस्तुत किया गया ]*\nनमस्कार! मैंने अभी आपके पोर्टल पर एक नया आवेदन किया है。\n\n👤 *मेरा नाम:* ${formData.name}\n📞 *मोबाइल:* ${formData.mobile}\n🎯 *आवेदन की सेवा:* ${selectedService}\n🔖 *मेरा ट्रैकिंग टोकन:* \`${successToken}\`\n\nकृपया मेरे आवेदन की जाँच करें।\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *धन्यवाद!*\n*DPSG टीम*`)}`} target="_blank" className="corp-btn btn-success w-full">
                                         <i className="fa-brands fa-whatsapp mr-2 text-lg"></i> WhatsApp पर भेजें
                                     </a>
                                 </div>
