@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DPSG E-Mitra Portal | Professional Services</title>
+    <title>DPSG | Premium E-Mitra Portal</title>
     
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -12,34 +12,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
-        /* 🌟 White Professional Theme (E-Mitra Style) */
-        body { font-family: 'Poppins', sans-serif; background: #f0f4f8; color: #333333; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        /* 🌟 Premium Corporate Theme */
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: #1e293b; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
         
-        .glass-panel { background: #ffffff; border-radius: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid #0A3D91; }
+        .glass-panel { background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-top: 4px solid #0f172a; }
         
-        .click-anim { transition: all 0.15s ease-in-out; cursor: pointer; }
-        .click-anim:active { transform: scale(0.96); }
+        .click-anim { transition: all 0.1s ease-in-out; cursor: pointer; }
+        .click-anim:active { transform: scale(0.97); }
         
-        .marquee-alert { background: #0A3D91; color: #fff; font-weight: 700; padding: 10px 0; border-bottom: 3px solid #FFD700; font-size: 15px; z-index: 100000;}
+        .marquee-alert { background: #0f172a; color: #f8fafc; font-weight: 600; padding: 8px 0; border-bottom: 2px solid #fbbf24; font-size: 14px; z-index: 100000;}
         
         /* 📞 FLOATING BUTTONS */
-        .floating-bar { position: fixed; right: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 15px; z-index: 9999; }
-        .float-btn { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; transition: 0.2s; border: 2px solid #fff; }
-        .float-btn:hover { transform: scale(1.1); }
-        .float-vc { background: #dc2626; animation: pulseRed 2s infinite; }
-        .float-wa { background: #25D366; }
-        .float-call { background: #2563eb; }
-        .float-insta { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .floating-bar { position: fixed; right: 15px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 12px; z-index: 9999; }
+        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; transition: 0.2s; }
+        .float-btn:hover { transform: translateY(-3px); }
+        .float-vc { background: #ef4444; animation: pulseRed 2s infinite; }
+        .float-wa { background: #10b981; }
+        .float-call { background: #3b82f6; }
+        .float-insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
         
-        @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.6); } 70% { box-shadow: 0 0 0 20px rgba(220, 38, 38, 0); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); } }
-        .fade-in { animation: fadeIn 0.4s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); } 70% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Custom Inputs */
-        .custom-input { width: 100%; background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid #cbd5e1; font-weight: 600; color: #1e293b; outline: none; transition: 0.3s; font-size: 16px;}
-        .custom-input:focus { border-color: #0A3D91; box-shadow: 0 0 0 3px rgba(10, 61, 145, 0.1); background: #ffffff;}
+        /* Corporate Inputs */
+        .corp-input { width: 100%; background: #f8fafc; padding: 12px 16px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: 500; color: #0f172a; outline: none; transition: 0.2s; font-size: 15px;}
+        .corp-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); background: #ffffff;}
+        
+        /* Corporate Button */
+        .corp-btn { padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 15px; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-primary { background: #0f172a; color: white; }
+        .btn-primary:hover { background: #1e293b; }
+        .btn-success { background: #10b981; color: white; }
+        .btn-success:hover { background: #059669; }
     </style>
 </head>
 <body>
@@ -48,7 +55,7 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // 🚨 आपकी नई और असली Google Script लिंक
+        // 🚨 आपकी पक्की Google Script लिंक
         const API_URL = "https://script.google.com/macros/s/AKfycbwbHtLzdvs1dP9sVvGRxEcJyGUdRf4r3ptGp-x4uYyjBJNJQEM8goWDm0nCxNFA6Fy0XQ/exec";
         const WHATSAPP_NUMBER = "917229874128"; 
         const GROUP_WHATSAPP_LINK = "https://wa.me/917229874128"; 
@@ -102,22 +109,24 @@
             const [showVCModal, setShowVCModal] = useState(false);
             const [vcData, setVcData] = useState({name:'', mobile:'', aadhaar:'', problem:'', medium:'Google Meet'});
 
-            // 🔐 STAFF LOGIN & OTP STATES
+            // 🔐 STAFF LOGIN 
             const [isStaffLoggedIn, setIsStaffLoggedIn] = useState(false);
             const [staffId, setStaffId] = useState('');
             const [staffPass, setStaffPass] = useState('');
             const [showOtpInput, setShowOtpInput] = useState(false);
             const [staffOtp, setStaffOtp] = useState('');
             const [generatedOtp, setGeneratedOtp] = useState('');
-            
             const [pendingList, setPendingList] = useState([]);
             
-            // 🛑 STAFF UPDATE & PAYMENT STATES
+            // 🛑 FULL STAFF UPDATE STATES (Old Details Restored)
             const [editingRow, setEditingRow] = useState(null);
             const [staffUpdateData, setStaffUpdateData] = useState({status: '', vcTime: '', note: '', sendBackReason: '', newVerifyDate: '', emitraToken: ''});
+            
             const [payMode, setPayMode] = useState('Cash');
             const [payAmt, setPayAmt] = useState('');
+            const [upiId, setUpiId] = useState('');
             const [payVerified, setPayVerified] = useState(false);
+            
             const [isUpdating, setIsUpdating] = useState(false);
             const staffCertRef = useRef(null);
 
@@ -133,7 +142,7 @@
             const handleFileSelect = (e) => {
                 const files = Array.from(e.target.files);
                 files.forEach(file => {
-                    if (file.size > 15 * 1024 * 1024) { alert("फाइल 15MB से छोटी होनी चाहिए!"); return; }
+                    if (file.size > 15 * 1024 * 1024) return alert("फाइल 15MB से छोटी होनी चाहिए!");
                     const reader = new FileReader();
                     reader.onload = (ev) => {
                         setUploadedFiles(prev => [...prev, { name: file.name, base64: ev.target.result, mimeType: file.type }]);
@@ -152,19 +161,17 @@
                 };
                 const res = await callAPI(payload);
                 setIsUploading(false);
-                if(res.status === "SUCCESS") {
-                    setSuccessToken(res.token); 
-                    setView('SUCCESS'); 
-                } else alert("❌ Error: " + res.message);
+                if(res.status === "SUCCESS") { setSuccessToken(res.token); setView('SUCCESS'); } 
+                else alert("❌ Error: " + res.message);
             };
 
             const resetAndGoHome = () => {
                 setView('HOME'); setSuccessToken(''); setFormData({name:'', mobile:'', address:'', problemDesc:'', lastDate:'', vipId:''}); setDynamicTextData({}); setUploadedFiles([]);
             };
 
-            // 🔍 TRACKING FIX (Trim & UpperCase)
+            // 🔍 TRACKING FIX: Space Trim & UpperCase Logic
             const trackStatus = async () => {
-                if(!trackToken) { alert("टोकन नंबर डालें!"); return; }
+                if(!trackToken) return alert("टोकन नंबर डालें!");
                 setIsTracking(true);
                 const cleanToken = trackToken.trim().toUpperCase();
                 const res = await callAPI({action: "TRACK_STATUS", token: cleanToken});
@@ -197,17 +204,13 @@
                 if(!staffId || !staffPass) return alert("ID और Password डालें!");
                 const res = await callAPI({action: "STAFF_LOGIN", userId: staffId, password: staffPass});
                 if(res.status === "SUCCESS") {
-                    setGeneratedOtp(res.otp);
-                    setShowOtpInput(true);
-                    alert("📲 OTP आपके एडमिन टेलीग्राम पर भेज दिया गया है!");
+                    setGeneratedOtp(res.otp); setShowOtpInput(true); alert("📲 OTP आपके एडमिन टेलीग्राम पर भेज दिया गया है!");
                 } else { alert("❌ ID या पासवर्ड गलत है!"); }
             };
 
             const verifyStaffOTP = () => {
-                if(staffOtp === generatedOtp) {
-                    setIsStaffLoggedIn(true);
-                    fetchPendingList();
-                } else { alert("❌ गलत OTP!"); }
+                if(staffOtp === generatedOtp) { setIsStaffLoggedIn(true); fetchPendingList(); } 
+                else alert("❌ गलत OTP!");
             };
 
             // 📊 DAILY REPORT LOGIC
@@ -221,22 +224,48 @@
             const fetchPendingList = async () => {
                 const res = await callAPI({action: "GET_ALL_PENDING"});
                 if(res.status === "SUCCESS") {
-                    const filteredList = res.list.filter(item => item.data[2] !== 'Done');
-                    setPendingList(filteredList);
+                    setPendingList(res.list.filter(item => item.data[2] !== 'Done'));
                 }
             };
 
             const openStaffEdit = (item) => {
                 setEditingRow(item);
-                setStaffUpdateData({status: item.data[2], vcTime: item.data[24] === "N/A" ? "" : item.data[24], note: item.data[28], sendBackReason: item.data[19], newVerifyDate: item.data[26] === "लागू नहीं" ? "" : item.data[26], emitraToken: item.data[20]});
-                setPayMode('Cash'); setPayAmt(''); setPayVerified(false);
+                // 🛑 Restoring ALL Old Fields exactly as they were
+                setStaffUpdateData({
+                    status: item.data[2], 
+                    vcTime: item.data[24] === "N/A" ? "" : item.data[24], 
+                    note: item.data[28], 
+                    sendBackReason: item.data[19], 
+                    newVerifyDate: item.data[26] === "लागू नहीं" ? "" : item.data[26], 
+                    emitraToken: item.data[20]
+                });
+                setPayMode('Cash'); setPayAmt(''); setUpiId(''); setPayVerified(false);
             };
 
             // 💸 PAYMENT LOCK LOGIC
+            const isPaymentLocked = () => {
+                if(!editingRow) return false;
+                const amt = editingRow.data[30];
+                return amt && amt !== "" && amt !== "0" && amt !== "FREE";
+            };
+
             const isUpdateDisabled = () => {
                 if(isUpdating) return true;
+                if(isPaymentLocked()) return false; 
                 if(payMode !== 'Free' && !payVerified) return true;
                 return false;
+            };
+
+            // 📲 WhatsApp Payment Request Generator
+            const sendPaymentRequest = () => {
+                if(!payAmt) return alert("पहले अमाउंट दर्ज करें!");
+                let msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार ${editingRow.data[4]} जी,\nआपके फॉर्म (टोकन: ${editingRow.data[1]}) की जाँच हो गई है।\n\n💸 *इस कार्य की फीस:* ₹${payAmt}\n`;
+                if(payMode === 'UPI') {
+                    if(!upiId) return alert("कृपया UPI ID भी डालें!");
+                    msg += `\nकृपया नीचे दी गई UPI ID पर पेमेंट करें:\n👉 *UPI ID:* ${upiId}\n\n_(पेमेंट करने के बाद कृपया स्क्रीनशॉट भेजें)_`;
+                } else { msg += `\nकृपया अपनी फीस ई-मित्र केंद्र पर जमा कराएं।`; }
+                msg += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 धन्यवाद!`;
+                window.open(`https://wa.me/91${editingRow.data[5]}?text=${encodeURIComponent(msg)}`, '_blank');
             };
 
             const submitStaffUpdate = async () => {
@@ -245,9 +274,12 @@
                     action: "STAFF_UPDATE_FORM", staffId: staffId, sheetName: editingRow.sheetName, rowIdx: editingRow.rowIdx, token: editingRow.data[1], 
                     newStatus: staffUpdateData.status, vcTime: staffUpdateData.vcTime, staffNote: staffUpdateData.note, 
                     sendBackReason: staffUpdateData.sendBackReason, emitraToken: staffUpdateData.emitraToken, lastDate: staffUpdateData.newVerifyDate, 
-                    vcStatus: staffUpdateData.vcTime ? "Approved" : editingRow.data[22],
-                    paymentMode: payMode, paymentAmount: payMode === 'Free' ? 'FREE' : payAmt
+                    vcStatus: staffUpdateData.vcTime ? "Approved" : editingRow.data[22]
                 };
+                
+                if(!isPaymentLocked()) {
+                    payload.paymentMode = payMode; payload.paymentAmount = payMode === 'Free' ? 'FREE' : payAmt;
+                }
                 
                 if(staffCertRef.current && staffCertRef.current.files[0]) {
                     const file = staffCertRef.current.files[0];
@@ -264,26 +296,15 @@
                 const res = await callAPI(payload);
                 setIsUpdating(false);
                 if(res.status === "SUCCESS") { 
-                    setFinalMsgData({
-                        token: editingRow.data[1], name: editingRow.data[4], mobile: editingRow.data[5],
-                        service: editingRow.data[8], status: staffUpdateData.status, note: staffUpdateData.note,
-                        vcTime: staffUpdateData.vcTime, reason: staffUpdateData.sendBackReason, 
-                        vip: editingRow.data[3] || 'N/A', extra: editingRow.data[9] || editingRow.data[10] || editingRow.data[11] || ''
-                    });
+                    setFinalMsgData({ token: editingRow.data[1], name: editingRow.data[4], mobile: editingRow.data[5], service: editingRow.data[8], status: staffUpdateData.status, note: staffUpdateData.note, vcTime: staffUpdateData.vcTime, reason: staffUpdateData.sendBackReason, vip: editingRow.data[3] || 'N/A', extra: editingRow.data[9] || editingRow.data[10] || editingRow.data[11] || '' });
                     setShowMandatoryPopup(true); 
-                } else {
-                    alert("❌ अपडेट में समस्या आई!");
-                }
+                } else alert("❌ अपडेट में समस्या आई!");
             };
 
             const closeMandatoryPopup = () => {
-                setShowMandatoryPopup(false);
-                setPopupClicks({customer: false, owner: false, group: false});
-                setEditingRow(null); 
-                fetchPendingList();
+                setShowMandatoryPopup(false); setPopupClicks({customer: false, owner: false, group: false}); setEditingRow(null); fetchPendingList();
             };
 
-            // 🔗 404 CLEAN LINK FIX
             const getLink = (markdown) => {
                 const match = markdown ? markdown.match(/(https:\/\/drive\.google\.com\/[^\s\)]+)/) : null;
                 return match ? match[1] : null;
@@ -292,29 +313,16 @@
             const getFullDetailMessage = (target) => {
                 let d = finalMsgData;
                 let header = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा" | "उचित मूल्य, बेहतरीन सेवा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
-                let title = d.status === "Send Back" ? `⚠️ *[ ACTION REQUIRED: फॉर्म में कमी पाई गई है ]*` : 
-                            d.status === "Done" ? `✅ *[ WORK SUCCESSFULLY COMPLETED ]*` : 
-                            d.vcTime ? `📹 *[ VIDEO CALL SCHEDULED - समय तय किया गया ]*` : `🔄 *[ WORK STATUS UPDATED ]*`;
-                
+                let title = d.status === "Send Back" ? `⚠️ *[ ACTION REQUIRED: फॉर्म में कमी पाई गई है ]*` : d.status === "Done" ? `✅ *[ WORK SUCCESSFULLY COMPLETED ]*` : d.vcTime ? `📹 *[ VIDEO CALL SCHEDULED - समय तय किया गया ]*` : `🔄 *[ WORK STATUS UPDATED ]*`;
                 let bio = `\n👤 *:: ग्राहक का विवरण ::*\n🔹 *टोकन नंबर:* ${d.token}\n🔹 *नाम:* ${d.name}\n🔹 *मोबाइल:* ${d.mobile}\n🔹 *सेवा:* ${d.service}\n🔹 *Membership ID:* ${d.vip || 'सामान्य ग्राहक'}\n🔹 *अन्य जानकारी:* ${d.extra || 'N/A'}`;
-                
                 let body = "";
-                if(d.status === "Send Back") {
-                    body = `\n\n🛑 *:: कमी का कारण (Reason) ::*\n_"${d.reason || 'दस्तावेज़ सही नहीं हैं'}"_\n\n🔄 *:: आपको क्या करना है? ::*\nवेबसाइट के 'Track' विकल्प में जाकर लाल रंग के (+) बटन से सही दस्तावेज़ अपलोड करें।`;
-                } else if(d.status === "Done") {
-                    body = `\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${d.note || 'आपका कार्य पूर्ण हो गया है।'}"_`;
-                } else if(d.vcTime) {
-                    body = `\n\n⏰ *वीडियो कॉल का तय समय:* आज ${d.vcTime}\n🌐 *:: जुड़ने का सुरक्षित लिंक (Google Meet) ::*\n👉 ${GOOGLE_MEET_TEXT_LINK}\n_(नोट: केवल इसी लिंक से जुड़ें)_`;
-                } else {
-                    body = `\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${d.note || 'कार्य प्रगति पर है।'}"_`;
-                }
-
+                if(d.status === "Send Back") body = `\n\n🛑 *:: कमी का कारण (Reason) ::*\n_"${d.reason || 'दस्तावेज़ सही नहीं हैं'}"_\n\n🔄 *:: आपको क्या करना है? ::*\nवेबसाइट के 'Track' विकल्प में जाकर लाल रंग के (+) बटन से सही दस्तावेज़ अपलोड करें।`;
+                else if(d.status === "Done") body = `\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${d.note || 'आपका कार्य पूर्ण हो गया है।'}"_`;
+                else if(d.vcTime) body = `\n\n⏰ *वीडियो कॉल का तय समय:* आज ${d.vcTime}\n🌐 *:: जुड़ने का सुरक्षित लिंक (Google Meet) ::*\n👉 ${GOOGLE_MEET_TEXT_LINK}\n_(नोट: केवल इसी लिंक से जुड़ें)_`;
+                else body = `\n\n👨‍💻 *:: DPSG स्टाफ का नोट ::*\n_"${d.note || 'कार्य प्रगति पर है।'}"_`;
+                
                 let footer = `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🙏 *DPSG टीम*`;
-                
-                if(target === 'owner' || target === 'group') {
-                    header = `🔔 *[ OWNER / GROUP ALERT ]*\n` + header;
-                }
-                
+                if(target === 'owner' || target === 'group') header = `🔔 *[ OWNER / GROUP ALERT ]*\n` + header;
                 return encodeURIComponent(`${header}\n${title}${bio}${body}${footer}`);
             };
 
@@ -326,8 +334,8 @@
             const reqs = SERVICE_REQUIREMENTS[selectedService] || { texts: [], docs: ['अतिरिक्त दस्तावेज़ (यदि हो)'], askDate: false };
 
             return (
-                <div className="min-h-screen pb-32">
-                    <div className="marquee-alert fixed top-0 w-full shadow-md">
+                <div className="min-h-screen pb-24">
+                    <div className="marquee-alert fixed top-0 w-full shadow-sm">
                         <marquee>🏢 DIGITAL PROBLEM SOLUTION GROUP : "आपकी समस्या, समाधान हमारा" | ⏰ महा-अलर्ट: पेंशन भौतिक सत्यापन शुरू हो गया है! 🚩</marquee>
                     </div>
 
@@ -339,37 +347,37 @@
                     </div>
 
                     {showVCModal && (
-                        <div className="fixed inset-0 bg-black/80 z-[99999] flex justify-center items-center p-4 fade-in">
-                            <div className="bg-white p-8 w-full max-w-md rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.3)] border-t-8 border-red-600">
-                                <div className="flex justify-between items-center mb-6">
-                                    <h3 className="text-2xl font-black text-red-600 uppercase"><i className="fa-solid fa-video mr-2"></i> Live Video Call</h3>
-                                    <i onClick={()=>setShowVCModal(false)} className="fa-solid fa-times text-3xl text-gray-400 cursor-pointer click-anim hover:text-red-600"></i>
+                        <div className="fixed inset-0 bg-slate-900/80 z-[99999] flex justify-center items-center p-4 fade-in">
+                            <div className="bg-white p-6 w-full max-w-md rounded-xl shadow-2xl border-t-4 border-red-500">
+                                <div className="flex justify-between items-center mb-5">
+                                    <h3 className="text-xl font-bold text-slate-800 uppercase"><i className="fa-solid fa-video text-red-500 mr-2"></i> Live Video Call</h3>
+                                    <i onClick={()=>setShowVCModal(false)} className="fa-solid fa-times text-2xl text-slate-400 cursor-pointer hover:text-red-500"></i>
                                 </div>
                                 <form onSubmit={submitDirectVC} className="space-y-4">
-                                    <input required type="text" placeholder="पूरा नाम *" onChange={e=>setVcData({...vcData, name:e.target.value})} className="custom-input" />
-                                    <input required type="tel" placeholder="मोबाइल नंबर *" onChange={e=>setVcData({...vcData, mobile:e.target.value})} className="custom-input" />
-                                    <input required type="text" placeholder="आधार कार्ड नंबर *" onChange={e=>setVcData({...vcData, aadhaar:e.target.value})} className="custom-input" />
-                                    <textarea required placeholder="क्या जानकारी चाहिए? *" onChange={e=>setVcData({...vcData, problem:e.target.value})} className="custom-input"></textarea>
-                                    <button type="submit" className="click-anim w-full bg-red-600 text-white font-black py-4 rounded-xl text-xl uppercase shadow-md hover:bg-red-700">रिक्वेस्ट भेजें</button>
+                                    <input required type="text" placeholder="पूरा नाम *" onChange={e=>setVcData({...vcData, name:e.target.value})} className="corp-input" />
+                                    <input required type="tel" placeholder="मोबाइल नंबर *" onChange={e=>setVcData({...vcData, mobile:e.target.value})} className="corp-input" />
+                                    <input required type="text" placeholder="आधार कार्ड नंबर *" onChange={e=>setVcData({...vcData, aadhaar:e.target.value})} className="corp-input" />
+                                    <textarea required placeholder="क्या जानकारी चाहिए? *" onChange={e=>setVcData({...vcData, problem:e.target.value})} className="corp-input"></textarea>
+                                    <button type="submit" className="corp-btn w-full bg-red-500 text-white hover:bg-red-600">रिक्वेस्ट भेजें</button>
                                 </form>
                             </div>
                         </div>
                     )}
 
-                    <div className="p-4 max-w-7xl mx-auto mt-20 fade-in">
+                    <div className="p-4 max-w-6xl mx-auto mt-16 fade-in">
                         {/* 🏠 HOME */}
                         {view === 'HOME' && (
                             <div>
-                                <div className="text-center mb-12 border-b-2 border-gray-200 pb-8 mt-6">
-                                    <h2 className="text-3xl md:text-4xl font-black text-[#0A3D91] uppercase tracking-wide drop-shadow-sm">Digital Problem Solution Group</h2>
-                                    <h1 className="text-7xl md:text-[120px] font-black text-[#FFD700] mt-2 drop-shadow-md">DPSG</h1>
-                                    <p className="text-gray-600 font-bold text-lg mt-2">"आपकी समस्या, समाधान हमारा"</p>
+                                <div className="text-center mb-10 pb-6 mt-6">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 uppercase tracking-wide">Digital Problem Solution Group</h2>
+                                    <h1 className="text-6xl md:text-8xl font-black text-[#0f172a] mt-1 tracking-tighter">DPSG<span className="text-amber-500">.</span></h1>
+                                    <p className="text-slate-500 font-medium mt-2 tracking-wide">"आपकी समस्या, समाधान हमारा"</p>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {DEPARTMENTS.map(dept => (
-                                        <div key={dept.id} onClick={() => { setSelectedDept(dept); setView('DEPT'); }} className="click-anim glass-panel p-8 text-center hover:bg-gray-50 transition" style={{borderTopColor: dept.color}}>
-                                            <i className={`fa-solid ${dept.icon} text-6xl mb-5 block drop-shadow-sm`} style={{color: dept.color}}></i>
-                                            <h3 className="text-xl font-black uppercase tracking-wide text-gray-800">{dept.name}</h3>
+                                        <div key={dept.id} onClick={() => { setSelectedDept(dept); setView('DEPT'); }} className="click-anim glass-panel p-6 text-center hover:bg-slate-50 transition border-t-4" style={{borderTopColor: dept.color}}>
+                                            <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 bg-slate-100"><i className={`fa-solid ${dept.icon} text-3xl`} style={{color: dept.color}}></i></div>
+                                            <h3 className="text-base font-bold uppercase text-slate-800 tracking-wide">{dept.name}</h3>
                                         </div>
                                     ))}
                                 </div>
@@ -378,14 +386,14 @@
 
                         {/* 📋 SERVICE LIST */}
                         {view === 'DEPT' && selectedDept && (
-                            <div className="max-w-5xl mx-auto">
-                                <button onClick={() => setView('HOME')} className="click-anim text-[#0A3D91] font-black mb-8 bg-white px-6 py-3 rounded-xl border border-gray-200 text-lg shadow-sm hover:bg-gray-50"><i className="fa-solid fa-arrow-left mr-2"></i> होम पर जाएं</button>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div className="max-w-4xl mx-auto">
+                                <button onClick={() => setView('HOME')} className="click-anim text-slate-600 font-bold mb-6 hover:text-slate-900"><i className="fa-solid fa-arrow-left mr-2"></i> होम पर जाएं</button>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {selectedDept.services.map((srv, idx) => {
                                         let boxColor = INNER_COLORS[idx % INNER_COLORS.length];
                                         return (
-                                        <div key={srv} onClick={() => { setSelectedService(srv); setView('FORM'); }} className="click-anim bg-white border-l-[6px] p-6 rounded-xl flex justify-between items-center shadow-md hover:shadow-lg transition" style={{borderLeftColor: boxColor}}>
-                                            <span className="font-bold text-lg text-gray-800">{srv}</span> <i className="fa-solid fa-chevron-right text-xl" style={{color: boxColor}}></i>
+                                        <div key={srv} onClick={() => { setSelectedService(srv); setView('FORM'); }} className="click-anim bg-white border-l-[4px] p-5 rounded-lg flex justify-between items-center shadow-sm hover:shadow-md transition" style={{borderLeftColor: boxColor}}>
+                                            <span className="font-semibold text-[15px] text-slate-700">{srv}</span> <i className="fa-solid fa-chevron-right text-sm text-slate-400"></i>
                                         </div>
                                     )})}
                                 </div>
@@ -394,58 +402,69 @@
 
                         {/* 📝 FORM */}
                         {view === 'FORM' && (
-                            <div className="max-w-4xl mx-auto">
-                                <button onClick={() => setView('DEPT')} className="click-anim text-[#0A3D91] font-black mb-6 text-lg"><i className="fa-solid fa-arrow-left mr-2"></i> वापस</button>
-                                <div className="glass-panel p-8 md:p-10 shadow-xl">
-                                    <h2 className="text-2xl font-black text-[#0A3D91] mb-6 border-b-2 border-gray-100 pb-4">{selectedService}</h2>
+                            <div className="max-w-3xl mx-auto">
+                                <button onClick={() => setView('DEPT')} className="click-anim text-slate-600 font-bold mb-5"><i className="fa-solid fa-arrow-left mr-2"></i> वापस</button>
+                                <div className="glass-panel p-6 md:p-8">
+                                    <h2 className="text-xl font-bold text-slate-800 mb-6 border-b border-slate-200 pb-3">{selectedService}</h2>
                                     
-                                    <div className="bg-yellow-50 p-6 rounded-xl border border-yellow-300 mb-8 shadow-sm">
-                                        <label className="text-yellow-700 font-black mb-2 block uppercase text-sm"><i className="fa-solid fa-crown mr-2"></i> Membership ID (प्रीमियम ग्राहकों के लिए)</label>
-                                        <input type="text" placeholder="अपना मेंबरशिप नंबर डालें (यदि हो)" onChange={e=>setFormData({...formData, vipId:e.target.value})} className="custom-input border-yellow-300 focus:border-yellow-500 bg-white" />
+                                    <div className="bg-amber-50/50 p-5 rounded-lg border border-amber-200 mb-6">
+                                        <label className="text-amber-800 font-bold mb-2 block text-xs uppercase"><i className="fa-solid fa-crown mr-2"></i> Membership ID (प्रीमियम ग्राहकों के लिए)</label>
+                                        <input type="text" placeholder="अपना मेंबरशिप नंबर डालें (यदि हो)" onChange={e=>setFormData({...formData, vipId:e.target.value})} className="corp-input border-amber-200 focus:border-amber-400" />
                                     </div>
 
-                                    <form onSubmit={submitForm} className="space-y-6">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <input required type="text" placeholder="पूरा नाम *" onChange={e=>setFormData({...formData, name:e.target.value})} className="custom-input" />
-                                            <input required type="tel" placeholder="मोबाइल नंबर *" onChange={e=>setFormData({...formData, mobile:e.target.value})} className="custom-input" />
+                                    <form onSubmit={submitForm} className="space-y-5">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                            <input required type="text" placeholder="पूरा नाम *" onChange={e=>setFormData({...formData, name:e.target.value})} className="corp-input" />
+                                            <input required type="tel" placeholder="मोबाइल नंबर *" onChange={e=>setFormData({...formData, mobile:e.target.value})} className="corp-input" />
                                         </div>
-                                        <input required type="text" placeholder="पूरा पता (Address) *" onChange={e=>setFormData({...formData, address:e.target.value})} className="custom-input" />
+                                        <input required type="text" placeholder="पूरा पता (Address) *" onChange={e=>setFormData({...formData, address:e.target.value})} className="corp-input" />
 
-                                        {reqs.askDate && (
-                                            <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
-                                                <label className="text-blue-800 font-black mb-2 block uppercase text-sm"><i className="fa-regular fa-calendar-check mr-2"></i> पिछली सत्यापन/पॉलिसी तिथि चुनें</label>
-                                                <input type="date" onChange={e=>setFormData({...formData, lastDate:e.target.value})} className="custom-input bg-white" />
+                                        {/* 🔥 BANKING PAN CARD & AADHAAR 🔥 */}
+                                        {selectedDept?.id === 'Bank' && (
+                                            <div className="bg-blue-50/50 p-5 rounded-lg border border-blue-100">
+                                                <h3 className="text-blue-800 font-bold mb-3 text-sm uppercase"><i className="fa-solid fa-building-columns mr-2"></i> बैंकिंग हेतु आवश्यक जानकारी</h3>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <input required type="text" placeholder="पैन कार्ड नंबर डालें *" onChange={e=>setDynamicTextData({...dynamicTextData, 'पैन कार्ड नंबर': e.target.value})} className="corp-input" />
+                                                    <input required type="number" placeholder="आधार कार्ड नंबर डालें *" onChange={e=>setDynamicTextData({...dynamicTextData, 'आधार नंबर': e.target.value})} className="corp-input" />
+                                                </div>
                                             </div>
                                         )}
 
-                                        {reqs.texts.length > 0 && (
-                                            <div className="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                                                <h3 className="text-gray-800 font-black mb-4 uppercase text-lg"><i className="fa-solid fa-circle-info text-blue-500 mr-2"></i> पक्की जानकारी डालें:</h3>
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                        {reqs.askDate && (
+                                            <div className="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                                                <label className="text-slate-700 font-bold mb-2 block text-xs uppercase"><i className="fa-regular fa-calendar-check mr-2"></i> पिछली सत्यापन/पॉलिसी तिथि चुनें</label>
+                                                <input type="date" onChange={e=>setFormData({...formData, lastDate:e.target.value})} className="corp-input" />
+                                            </div>
+                                        )}
+
+                                        {reqs.texts.length > 0 && selectedDept?.id !== 'Bank' && (
+                                            <div className="bg-slate-50 p-5 rounded-lg border border-slate-200">
+                                                <h3 className="text-slate-700 font-bold mb-3 text-sm uppercase"><i className="fa-solid fa-info-circle text-blue-500 mr-2"></i> पक्की जानकारी डालें:</h3>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                     {reqs.texts.map(lbl => (
-                                                        <input required key={lbl} type="text" placeholder={`${lbl} डालें *`} onChange={e=>setDynamicTextData({...dynamicTextData, [lbl]: e.target.value})} className="custom-input" />
+                                                        <input required key={lbl} type="text" placeholder={`${lbl} डालें *`} onChange={e=>setDynamicTextData({...dynamicTextData, [lbl]: e.target.value})} className="corp-input" />
                                                     ))}
                                                 </div>
                                             </div>
                                         )}
 
-                                        <textarea required rows="4" placeholder="✍️ समस्या या कार्य का विवरण... *" onChange={e=>setFormData({...formData, problemDesc:e.target.value})} className="custom-input"></textarea>
+                                        <textarea required rows="3" placeholder="✍️ समस्या या कार्य का विवरण... *" onChange={e=>setFormData({...formData, problemDesc:e.target.value})} className="corp-input"></textarea>
 
-                                        <div className="border-t-2 border-gray-100 pt-8 mt-8">
-                                            <h3 className="text-gray-800 font-black uppercase mb-4 text-xl"><i className="fa-solid fa-folder-open text-[#FFD700] mr-2"></i> दस्तावेज़ अपलोड करें</h3>
-                                            <p className="text-sm text-gray-500 mb-4 font-bold">ज़रूरी: {reqs.docs.join(", ")}</p>
-                                            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+                                        <div className="border-t border-slate-200 pt-6 mt-6">
+                                            <h3 className="text-slate-800 font-bold uppercase mb-3 text-sm"><i className="fa-solid fa-folder-open text-amber-500 mr-2"></i> दस्तावेज़ अपलोड करें</h3>
+                                            <p className="text-xs text-slate-500 mb-4 font-medium">ज़रूरी: {selectedDept?.id === 'Bank' ? 'लाइव फोटो, आधार दोनों तरफ, पैन कार्ड' : reqs.docs.join(", ")}</p>
+                                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                                 {uploadedFiles.map((f, i) => (
-                                                    <div key={i} className="bg-green-50 p-4 rounded-xl border border-green-300 text-center truncate"><i className="fa-solid fa-check text-green-600 text-2xl mb-2"></i><p className="text-xs font-bold text-green-700">{f.name}</p></div>
+                                                    <div key={i} className="bg-emerald-50 p-3 rounded-lg border border-emerald-200 text-center truncate"><i className="fa-solid fa-check text-emerald-600 text-lg mb-1 block"></i><span className="text-[10px] font-bold text-emerald-700">{f.name}</span></div>
                                                 ))}
-                                                <div onClick={()=>fileInputRef.current.click()} className="click-anim bg-gray-50 border-2 border-dashed border-gray-300 p-5 rounded-xl text-center flex flex-col justify-center items-center h-28 cursor-pointer hover:bg-gray-100">
-                                                    <i className="fa-solid fa-plus text-3xl text-gray-400 mb-2"></i><p className="text-xs text-gray-500 font-bold uppercase">Add File</p>
+                                                <div onClick={()=>fileInputRef.current.click()} className="click-anim bg-slate-50 border border-dashed border-slate-300 p-3 rounded-lg text-center flex flex-col justify-center items-center h-20 cursor-pointer hover:bg-slate-100">
+                                                    <i className="fa-solid fa-plus text-xl text-slate-400 mb-1"></i><span className="text-[10px] text-slate-500 font-bold uppercase">Add File</span>
                                                 </div>
                                                 <input type="file" multiple ref={fileInputRef} onChange={handleFileSelect} className="hidden" accept="image/*,application/pdf" />
                                             </div>
                                         </div>
 
-                                        <button type="submit" disabled={isUploading} className={`w-full font-black py-5 rounded-xl text-xl uppercase tracking-widest mt-8 shadow-md transition ${isUploading ? 'bg-gray-300 text-gray-500' : 'click-anim bg-[#0A3D91] text-white hover:bg-[#082d6b]'}`}>
+                                        <button type="submit" disabled={isUploading} className={`w-full corp-btn mt-6 ${isUploading ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'btn-primary'}`}>
                                             {isUploading ? <><i className="fa-solid fa-spinner fa-spin mr-2"></i> Please Wait...</> : "फॉर्म सबमिट करें"}
                                         </button>
                                     </form>
@@ -455,59 +474,61 @@
 
                         {/* ✅ SUCCESS */}
                         {view === 'SUCCESS' && (
-                            <div className="max-w-2xl mx-auto glass-panel p-10 text-center shadow-xl fade-in border-t-8 border-green-500">
-                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <i className="fa-solid fa-check-double text-4xl text-green-600"></i>
+                            <div className="max-w-xl mx-auto glass-panel p-8 text-center shadow-lg fade-in">
+                                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                                    <i className="fa-solid fa-check text-2xl text-emerald-600"></i>
                                 </div>
-                                <h2 className="text-3xl font-black mb-3 uppercase text-gray-800">Application Submitted!</h2>
-                                <p className="text-gray-500 text-lg mb-6 font-bold">आपका काम सफलतापूर्वक बुक हो गया है।</p>
+                                <h2 className="text-2xl font-bold mb-2 text-slate-800">Application Submitted!</h2>
+                                <p className="text-slate-500 text-sm mb-6">आपका काम सफलतापूर्वक बुक हो गया है।</p>
                                 
-                                <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 mb-8 shadow-sm">
-                                    <p className="text-sm text-gray-500 font-black uppercase mb-2">आपका ट्रैकिंग टोकन नंबर:</p>
-                                    <p className="text-3xl md:text-4xl font-black text-[#0A3D91] tracking-wider">{successToken}</p>
+                                <div className="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
+                                    <p className="text-xs text-slate-500 font-bold uppercase mb-1">आपका ट्रैकिंग टोकन नंबर:</p>
+                                    <p className="text-2xl font-black text-slate-800 tracking-wider">{successToken}</p>
                                 </div>
 
-                                <div className="bg-green-50 p-6 rounded-2xl border border-dashed border-green-400 mb-8">
-                                    <p className="text-lg text-green-700 font-black mb-4">⚠️ महत्वपूर्ण: अपना टोकन नंबर WhatsApp पर सुरक्षित करें!</p>
-                                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार! मैंने अभी आपके पोर्टल पर एक नया आवेदन किया है।\n\n👤 *मेरा नाम:* ${formData.name}\n📞 *मोबाइल:* ${formData.mobile}\n🎯 *आवेदन की सेवा:* ${selectedService}\n🔖 *मेरा ट्रैकिंग टोकन:* \`${successToken}\`\n\nकृपया मेरे आवेदन की जाँच करें। धन्यवाद!`)}`} target="_blank" className="click-anim block w-full bg-[#25D366] text-white font-black py-4 rounded-xl text-xl uppercase shadow-md hover:bg-green-600">
-                                        <i className="fa-brands fa-whatsapp mr-2"></i> 🟢 WhatsApp पर सेव करें
+                                <div className="bg-emerald-50 p-5 rounded-xl border border-dashed border-emerald-200 mb-6">
+                                    <p className="text-sm text-emerald-700 font-bold mb-3">⚠️ टोकन नंबर WhatsApp पर सुरक्षित करें</p>
+                                    <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`🏢 *DPSG E-MITRA*\n━━━━━━━━━━━━━━━━\nमैंने अभी एक आवेदन किया है:\n👤 नाम: ${formData.name}\n🔖 टोकन: \`${successToken}\`\nकृपया जाँच करें!`)}`} target="_blank" className="corp-btn btn-success w-full">
+                                        <i className="fa-brands fa-whatsapp mr-2 text-lg"></i> WhatsApp पर भेजें
                                     </a>
                                 </div>
 
-                                <button onClick={resetAndGoHome} className="click-anim text-[#0A3D91] font-bold text-lg"><i className="fa-solid fa-arrow-left mr-2"></i> होम पेज पर वापस जाएं</button>
+                                <button onClick={resetAndGoHome} className="text-slate-600 font-semibold text-sm hover:text-slate-900"><i className="fa-solid fa-arrow-left mr-2"></i> होम पेज पर वापस</button>
                             </div>
                         )}
 
                         {/* 🔍 TRACKING */}
                         {view === 'TRACK' && (
-                            <div className="max-w-2xl mx-auto glass-panel p-8 md:p-10 text-center shadow-xl">
-                                <h2 className="text-3xl font-black mb-8 uppercase text-[#0A3D91]">Live Tracking</h2>
-                                <input type="text" placeholder="टोकन नंबर (उदा: DPSG-...)" onChange={e=>setTrackToken(e.target.value)} className="custom-input text-center font-black uppercase mb-6 text-xl" />
-                                <button onClick={trackStatus} disabled={isTracking} className="click-anim w-full bg-blue-600 text-white font-black py-5 rounded-xl text-xl uppercase shadow-md hover:bg-blue-700">
-                                    {isTracking ? <><i className="fa-solid fa-spinner fa-spin mr-2"></i> Searching...</> : <><i className="fa-solid fa-magnifying-glass mr-2"></i> स्टेटस चेक करें</>}
+                            <div className="max-w-xl mx-auto glass-panel p-8 text-center shadow-lg">
+                                <h2 className="text-2xl font-bold mb-6 text-slate-800">Live Tracking</h2>
+                                <input type="text" placeholder="टोकन नंबर (उदा: DPSG-...)" onChange={e=>setTrackToken(e.target.value)} className="corp-input text-center font-bold uppercase mb-4" />
+                                <button onClick={trackStatus} disabled={isTracking} className="corp-btn btn-primary w-full">
+                                    {isTracking ? <><i className="fa-solid fa-spinner fa-spin mr-2"></i> Searching...</> : <><i className="fa-solid fa-search mr-2"></i> स्टेटस चेक करें</>}
                                 </button>
 
                                 {trackResult && (
-                                    <div className="mt-8 bg-white p-6 rounded-2xl border border-gray-200 text-left shadow-md">
-                                        <p className="text-lg font-bold text-gray-600">नाम: <span className="text-gray-900 ml-2 font-black">{trackResult[4]}</span></p>
-                                        <p className="text-lg font-bold text-gray-600 mt-3">स्थिति: <span className={`ml-2 px-4 py-1.5 rounded-full text-sm font-black uppercase ${trackResult[2]==='Done'?'bg-green-100 text-green-700':trackResult[2]==='Send Back'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700'}`}>{trackResult[2]}</span></p>
+                                    <div className="mt-6 bg-white p-5 rounded-xl border border-slate-200 text-left shadow-sm">
+                                        <div className="flex justify-between items-center border-b border-slate-100 pb-3 mb-3">
+                                            <p className="text-sm font-semibold text-slate-600">नाम: <span className="text-slate-900 font-bold">{trackResult[4]}</span></p>
+                                            <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${trackResult[2]==='Done'?'bg-emerald-100 text-emerald-700':trackResult[2]==='Send Back'?'bg-red-100 text-red-700':'bg-amber-100 text-amber-700'}`}>{trackResult[2]}</span>
+                                        </div>
                                         
-                                        <div className="bg-gray-50 p-5 rounded-xl border border-gray-200 mt-6">
-                                            <p className="text-[#0A3D91] text-sm font-black uppercase mb-2">👨‍💻 स्टाफ का नोट:</p>
-                                            <p className="text-gray-800 text-lg font-bold">{trackResult[28]}</p>
+                                        <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                            <p className="text-slate-500 text-[10px] font-bold uppercase mb-1">स्टाफ का नोट:</p>
+                                            <p className="text-slate-800 text-sm font-semibold">{trackResult[28]}</p>
                                         </div>
 
                                         {trackResult[27] && trackResult[27] !== "लागू नहीं" && (
-                                            <div className="bg-blue-50 p-5 rounded-xl border border-blue-200 mt-5 text-center">
-                                                <p className="text-blue-800 font-bold text-xs uppercase">अगली सत्यापन/रिन्यूअल तिथि:</p>
-                                                <p className="text-[#0A3D91] font-black text-2xl mt-1">{trackResult[27]}</p>
+                                            <div className="mt-3 flex justify-between items-center bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                                <span className="text-blue-800 font-semibold text-[10px] uppercase">अगली देय तिथि:</span>
+                                                <span className="text-blue-900 font-bold text-sm">{trackResult[27]}</span>
                                             </div>
                                         )}
 
                                         {trackResult[2] === "Send Back" && (
-                                            <div className="bg-red-50 p-6 rounded-xl border border-dashed border-red-300 text-center mt-5">
-                                                <p className="text-lg text-red-600 font-black mb-4">⚠️ कमी: {trackResult[19]}</p>
-                                                <button onClick={()=>extraDocRef.current.click()} className="click-anim bg-red-600 text-white px-8 py-3 rounded-full font-black uppercase text-sm shadow-md"><i className="fa-solid fa-plus mr-2"></i> दस्तावेज़ जोड़ें (+)</button>
+                                            <div className="bg-red-50 p-4 rounded-lg border border-dashed border-red-200 text-center mt-4">
+                                                <p className="text-sm text-red-600 font-bold mb-3">⚠️ कमी: {trackResult[19]}</p>
+                                                <button onClick={()=>extraDocRef.current.click()} className="corp-btn bg-red-600 text-white hover:bg-red-700 text-xs py-2"><i className="fa-solid fa-plus mr-2"></i> दस्तावेज़ जोड़ें</button>
                                                 <input type="file" ref={extraDocRef} onChange={handleExtraUpload} className="hidden" accept="image/*,application/pdf" />
                                             </div>
                                         )}
@@ -518,196 +539,205 @@
 
                         {/* 👨‍💻 STAFF PANEL */}
                         {view === 'STAFF' && (
-                            <div className="max-w-6xl mx-auto">
+                            <div className="max-w-5xl mx-auto">
                                 {!isStaffLoggedIn ? (
-                                    <div className="glass-panel p-8 md:p-10 max-w-lg mx-auto text-center shadow-xl border-t-8 border-red-600">
-                                        <h2 className="text-3xl font-black mb-8 uppercase text-gray-800"><i className="fa-solid fa-shield-halved text-red-600 mr-2"></i> Staff Login</h2>
+                                    <div className="glass-panel p-8 max-w-sm mx-auto text-center shadow-lg">
+                                        <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4"><i className="fa-solid fa-lock text-slate-600 text-xl"></i></div>
+                                        <h2 className="text-xl font-bold mb-6 text-slate-800">Staff Login</h2>
                                         
                                         {!showOtpInput ? (
                                             <div className="fade-in">
-                                                <input type="text" placeholder="Staff ID" onChange={e=>setStaffId(e.target.value)} className="custom-input mb-5 text-center" />
-                                                <input type="password" placeholder="Password" onChange={e=>setStaffPass(e.target.value)} className="custom-input mb-8 text-center" />
-                                                <button onClick={requestStaffOTP} className="click-anim w-full bg-red-600 text-white font-black py-4 rounded-xl uppercase text-lg shadow-md hover:bg-red-700">📲 Request OTP</button>
+                                                <input type="text" placeholder="Staff ID" onChange={e=>setStaffId(e.target.value)} className="corp-input mb-4 text-center" />
+                                                <input type="password" placeholder="Password" onChange={e=>setStaffPass(e.target.value)} className="corp-input mb-5 text-center" />
+                                                <button onClick={requestStaffOTP} className="corp-btn btn-primary w-full">Request OTP</button>
                                             </div>
                                         ) : (
-                                            <div className="fade-in bg-yellow-50 p-6 rounded-xl border border-yellow-300">
-                                                <label className="block text-yellow-800 font-bold mb-3">📩 टेलीग्राम पर आया 4 अंकों का OTP डालें:</label>
-                                                <input type="number" placeholder="****" onChange={e=>setStaffOtp(e.target.value)} className="custom-input mb-5 text-center text-2xl tracking-widest" />
-                                                <button onClick={verifyStaffOTP} className="click-anim w-full bg-green-600 text-white font-black py-4 rounded-xl uppercase text-lg shadow-md hover:bg-green-700">✅ Verify & Login</button>
+                                            <div className="fade-in">
+                                                <p className="text-xs font-semibold text-slate-500 mb-3">Telegram OTP दर्ज करें</p>
+                                                <input type="number" placeholder="****" onChange={e=>setStaffOtp(e.target.value)} className="corp-input mb-4 text-center tracking-widest text-lg font-bold" />
+                                                <button onClick={verifyStaffOTP} className="corp-btn btn-success w-full">Verify & Login</button>
                                             </div>
                                         )}
                                     </div>
                                 ) : (
-                                    <div className="glass-panel p-6 md:p-10 shadow-xl relative">
+                                    <div className="glass-panel p-6 shadow-xl relative">
                                         
                                         {/* 🛑 MANDATORY POPUP */}
                                         {showMandatoryPopup && (
-                                            <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[999999] flex justify-center items-center p-4 fade-in">
-                                                <div className="bg-white p-8 w-full max-w-lg rounded-2xl shadow-2xl border-t-8 border-green-500 text-center">
-                                                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
-                                                        <i className="fa-solid fa-check text-4xl text-green-600"></i>
-                                                    </div>
-                                                    <h3 className="text-2xl font-black text-gray-800 uppercase mb-2">Update Successful</h3>
-                                                    <p className="text-red-600 font-bold mb-6 text-xs bg-red-50 p-3 rounded-xl border border-red-200">⚠️ अनिवार्य: कृपया इन तीनों जगह सूचित करें, तभी यह स्क्रीन हटेगी।</p>
+                                            <div className="fixed inset-0 bg-slate-900/80 z-[999999] flex justify-center items-center p-4 fade-in">
+                                                <div className="bg-white p-6 w-full max-w-md rounded-xl shadow-2xl border-t-4 border-emerald-500 text-center">
+                                                    <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4"><i className="fa-solid fa-check text-emerald-600 text-xl"></i></div>
+                                                    <h3 className="text-lg font-bold text-slate-800 uppercase mb-1">Update Successful</h3>
+                                                    <p className="text-red-500 font-semibold mb-5 text-[10px] uppercase">⚠️ अनिवार्य: तीनों जगह सूचित करें</p>
                                                     
-                                                    <div className="space-y-4 mb-8">
-                                                        <a href={`https://wa.me/91${finalMsgData.mobile}?text=${getFullDetailMessage('customer')}`} target="_blank" onClick={()=>setPopupClicks({...popupClicks, customer:true})} className={`flex justify-center items-center w-full py-4 rounded-xl font-black text-lg transition ${popupClicks.customer ? 'bg-green-100 border border-green-300 text-green-700' : 'bg-[#25D366] text-white shadow-md'}`}>
-                                                            <i className="fa-brands fa-whatsapp mr-3 text-2xl"></i> 1. ग्राहक को सूचित करें {popupClicks.customer && "✅"}
+                                                    <div className="space-y-3 mb-6">
+                                                        <a href={`https://wa.me/91${finalMsgData.mobile}?text=${getFullDetailMessage('customer')}`} target="_blank" onClick={()=>setPopupClicks({...popupClicks, customer:true})} className={`flex justify-center items-center w-full py-3 rounded-lg font-semibold text-sm transition ${popupClicks.customer ? 'bg-emerald-50 text-emerald-600' : 'bg-[#10b981] text-white'}`}>
+                                                            <i className="fa-brands fa-whatsapp mr-2 text-lg"></i> 1. ग्राहक को सूचित करें {popupClicks.customer && "✅"}
                                                         </a>
-                                                        <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${getFullDetailMessage('owner')}`} target="_blank" onClick={()=>setPopupClicks({...popupClicks, owner:true})} className={`flex justify-center items-center w-full py-4 rounded-xl font-black text-lg transition ${popupClicks.owner ? 'bg-blue-100 border border-blue-300 text-blue-700' : 'bg-blue-600 text-white shadow-md'}`}>
-                                                            <i className="fa-brands fa-whatsapp mr-3 text-2xl"></i> 2. Owner को सूचित करें {popupClicks.owner && "✅"}
+                                                        <a href={`https://wa.me/${WHATSAPP_NUMBER}?text=${getFullDetailMessage('owner')}`} target="_blank" onClick={()=>setPopupClicks({...popupClicks, owner:true})} className={`flex justify-center items-center w-full py-3 rounded-lg font-semibold text-sm transition ${popupClicks.owner ? 'bg-blue-50 text-blue-600' : 'bg-[#3b82f6] text-white'}`}>
+                                                            <i className="fa-brands fa-whatsapp mr-2 text-lg"></i> 2. Owner को सूचित करें {popupClicks.owner && "✅"}
                                                         </a>
-                                                        <a href={GROUP_WHATSAPP_LINK} target="_blank" onClick={()=>setPopupClicks({...popupClicks, group:true})} className={`flex justify-center items-center w-full py-4 rounded-xl font-black text-lg transition ${popupClicks.group ? 'bg-indigo-100 border border-indigo-300 text-indigo-700' : 'bg-indigo-600 text-white shadow-md'}`}>
-                                                            <i className="fa-brands fa-whatsapp mr-3 text-2xl"></i> 3. ग्रुप में सूचित करें {popupClicks.group && "✅"}
+                                                        <a href={GROUP_WHATSAPP_LINK} target="_blank" onClick={()=>setPopupClicks({...popupClicks, group:true})} className={`flex justify-center items-center w-full py-3 rounded-lg font-semibold text-sm transition ${popupClicks.group ? 'bg-slate-100 text-slate-600' : 'bg-[#0f172a] text-white'}`}>
+                                                            <i className="fa-brands fa-whatsapp mr-2 text-lg"></i> 3. ग्रुप में सूचित करें {popupClicks.group && "✅"}
                                                         </a>
                                                     </div>
                                                     
-                                                    <button onClick={closeMandatoryPopup} disabled={!(popupClicks.customer && popupClicks.owner && popupClicks.group)} className={`w-full py-4 rounded-xl font-black uppercase text-xl transition ${popupClicks.customer && popupClicks.owner && popupClicks.group ? 'bg-[#0A3D91] text-white shadow-md click-anim' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}>
-                                                        {popupClicks.customer && popupClicks.owner && popupClicks.group ? "ओके, डन करें" : "तीनों बटन दबाएं..."}
+                                                    <button onClick={closeMandatoryPopup} disabled={!(popupClicks.customer && popupClicks.owner && popupClicks.group)} className={`w-full py-3 rounded-lg font-bold text-sm transition ${popupClicks.customer && popupClicks.owner && popupClicks.group ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}>
+                                                        {popupClicks.customer && popupClicks.owner && popupClicks.group ? "डन करें" : "बटन दबाएं..."}
                                                     </button>
                                                 </div>
                                             </div>
                                         )}
 
-                                        <div className="flex flex-col md:flex-row justify-between items-center border-b-2 border-gray-100 pb-6 mb-8 gap-4">
-                                            <h2 className="text-2xl font-black text-gray-800 uppercase"><i className="fa-solid fa-laptop-code mr-3 text-[#0A3D91]"></i> Control Room</h2>
-                                            <div className="flex gap-3">
-                                                {/* 📊 DAILY REPORT BUTTON */}
-                                                <button onClick={triggerDailyReport} className="bg-[#17a2b8] text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-[#138496] shadow-sm"><i className="fa-solid fa-chart-pie mr-2"></i> Daily Report</button>
-                                                <button onClick={fetchPendingList} className="bg-white text-gray-700 px-5 py-2.5 rounded-xl border border-gray-300 font-bold text-sm hover:bg-gray-50 shadow-sm"><i className="fa-solid fa-rotate mr-2"></i> Refresh</button>
+                                        <div className="flex flex-col sm:flex-row justify-between items-center border-b border-slate-200 pb-4 mb-6 gap-3">
+                                            <h2 className="text-xl font-bold text-slate-800"><i className="fa-solid fa-server mr-2 text-slate-400"></i> Control Room</h2>
+                                            <div className="flex gap-2 w-full sm:w-auto">
+                                                <button onClick={triggerDailyReport} className="corp-btn bg-amber-500 text-white hover:bg-amber-600 flex-1 sm:flex-none text-xs py-2"><i className="fa-solid fa-chart-pie mr-2"></i> Report</button>
+                                                <button onClick={fetchPendingList} className="corp-btn bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 flex-1 sm:flex-none text-xs py-2"><i className="fa-solid fa-rotate mr-2"></i> Refresh</button>
                                             </div>
                                         </div>
 
                                         {!editingRow ? (
-                                            <div className="space-y-4">
+                                            <div className="space-y-3">
                                                 {pendingList.map((item, idx) => (
-                                                    <div key={idx} onClick={()=>openStaffEdit(item)} className="click-anim bg-white p-5 rounded-xl border border-gray-200 border-l-[6px] shadow-sm hover:shadow-md cursor-pointer flex flex-col md:flex-row justify-between items-start md:items-center transition" style={{borderLeftColor: item.data[2]==='Send Back'?'#ef4444':'#f59e0b'}}>
-                                                        <div className="mb-3 md:mb-0">
-                                                            <p className="font-black text-gray-800 text-xl">{item.data[4]} <span className="text-xs font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded border border-gray-200 ml-2">{item.data[1]}</span></p>
-                                                            <p className="text-sm font-bold text-[#0A3D91] mt-1">{item.data[8]}</p>
+                                                    <div key={idx} onClick={()=>openStaffEdit(item)} className="click-anim bg-white p-4 rounded-lg border border-slate-200 border-l-[4px] shadow-sm hover:shadow-md cursor-pointer flex justify-between items-center transition" style={{borderLeftColor: item.data[2]==='Send Back'?'#ef4444':'#f59e0b'}}>
+                                                        <div>
+                                                            <p className="font-bold text-slate-800 text-sm">{item.data[4]} <span className="text-[10px] font-semibold text-slate-400 ml-1">{item.data[1]}</span></p>
+                                                            <p className="text-xs font-semibold text-blue-600 mt-0.5">{item.data[8]}</p>
                                                         </div>
-                                                        <span className={`text-xs font-black uppercase px-3 py-1 rounded-full ${item.data[2]==='Send Back' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}`}>{item.data[2]}</span>
+                                                        <span className={`text-[10px] font-bold uppercase px-2 py-1 rounded ${item.data[2]==='Send Back' ? 'bg-red-50 text-red-600' : 'bg-amber-50 text-amber-600'}`}>{item.data[2]}</span>
                                                     </div>
                                                 ))}
-                                                {pendingList.length === 0 && <div className="text-center py-16"><i className="fa-solid fa-mug-hot text-6xl text-gray-300 mb-4 block"></i><p className="text-gray-400 text-xl font-black uppercase">कोई काम पेंडिंग नहीं है!</p></div>}
+                                                {pendingList.length === 0 && <div className="text-center py-10"><p className="text-slate-400 text-sm font-semibold">कोई काम पेंडिंग नहीं है!</p></div>}
                                             </div>
                                         ) : (
                                             <div className="fade-in">
-                                                <button onClick={()=>setEditingRow(null)} className="text-[#0A3D91] font-bold mb-6 hover:underline text-sm"><i className="fa-solid fa-arrow-left mr-1"></i> वापस लिस्ट पर</button>
+                                                <button onClick={()=>setEditingRow(null)} className="text-slate-500 font-semibold mb-4 text-xs hover:text-slate-800"><i className="fa-solid fa-arrow-left mr-1"></i> वापस लिस्ट पर</button>
                                                 
-                                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                                                    {/* 📝 CLEAR BIO DATA */}
-                                                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm">
-                                                        <h3 className="text-[#0A3D91] font-black text-lg uppercase mb-5 border-b border-gray-200 pb-3"><i className="fa-solid fa-address-card mr-2 text-gray-500"></i> ग्राहक की पूरी डिटेल</h3>
+                                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+                                                    {/* 📝 BIO DATA PANEL */}
+                                                    <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                                                        <h3 className="text-slate-800 font-bold text-sm uppercase mb-4"><i className="fa-solid fa-user-circle mr-2 text-slate-400"></i> ग्राहक विवरण</h3>
                                                         
-                                                        <div className="space-y-3 mb-6">
-                                                            <div className="bg-white p-3 rounded-lg border border-gray-200 flex justify-between items-center shadow-sm">
-                                                                <span className="text-gray-500 font-bold uppercase text-[10px]">नाम व मोबाइल:</span>
-                                                                <span className="text-gray-800 font-black text-sm">{editingRow.data[4]} | {editingRow.data[5]}</span>
+                                                        <div className="space-y-2 mb-4">
+                                                            <div className="bg-white p-2.5 rounded border border-slate-100 flex justify-between">
+                                                                <span className="text-slate-500 font-semibold text-[10px] uppercase">नाम व मोबाइल:</span><span className="text-slate-800 font-bold text-xs">{editingRow.data[4]} | {editingRow.data[5]}</span>
                                                             </div>
-                                                            <div className="bg-white p-3 rounded-lg border border-gray-200 flex justify-between items-center shadow-sm">
-                                                                <span className="text-gray-500 font-bold uppercase text-[10px]">सर्विस का नाम:</span>
-                                                                <span className="text-[#0A3D91] font-black text-sm">{editingRow.data[8]}</span>
+                                                            <div className="bg-white p-2.5 rounded border border-slate-100 flex justify-between">
+                                                                <span className="text-slate-500 font-semibold text-[10px] uppercase">सर्विस:</span><span className="text-blue-600 font-bold text-xs">{editingRow.data[8]}</span>
                                                             </div>
                                                             
-                                                            {editingRow.data[9] && (
-                                                                <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 flex justify-between items-center">
-                                                                    <span className="text-blue-600 font-bold uppercase text-[10px]">डिटेल 1:</span><span className="text-blue-900 font-black text-sm">{editingRow.data[9]}</span>
-                                                                </div>
-                                                            )}
-                                                            {editingRow.data[10] && (
-                                                                <div className="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center">
-                                                                    <span className="text-green-600 font-bold uppercase text-[10px]">डिटेल 2:</span><span className="text-green-900 font-black text-sm">{editingRow.data[10]}</span>
-                                                                </div>
-                                                            )}
+                                                            {editingRow.data[9] && <div className="bg-white p-2.5 rounded border border-slate-100 flex justify-between"><span className="text-slate-500 font-semibold text-[10px] uppercase">डिटेल 1:</span><span className="text-slate-800 font-bold text-xs">{editingRow.data[9]}</span></div>}
+                                                            {editingRow.data[10] && <div className="bg-white p-2.5 rounded border border-slate-100 flex justify-between"><span className="text-slate-500 font-semibold text-[10px] uppercase">डिटेल 2:</span><span className="text-slate-800 font-bold text-xs">{editingRow.data[10]}</span></div>}
                                                             
-                                                            {/* 🔥 PROBLEM COLUMN SHOWN CLEARLY */}
-                                                            <div className="bg-red-50 p-4 rounded-lg border border-red-200 mt-3">
-                                                                <span className="text-red-500 font-bold uppercase text-[10px] block mb-1">समस्या / कार्य विवरण:</span>
-                                                                <span className="text-red-900 font-bold text-sm italic block">{editingRow.data[14]}</span>
+                                                            {/* 🔥 PROBLEM COLUMN */}
+                                                            <div className="bg-red-50 p-3 rounded border border-red-100 mt-2">
+                                                                <span className="text-red-500 font-bold uppercase text-[10px] block mb-1">समस्या विवरण:</span>
+                                                                <span className="text-red-800 font-semibold text-xs">{editingRow.data[14]}</span>
                                                             </div>
                                                         </div>
                                                         
-                                                        {/* 🔗 CLEAN CLICKABLE LINKS */}
-                                                        <p className="text-xs text-gray-500 font-black uppercase mb-2">अपलोड किये गए दस्तावेज़:</p>
-                                                        <div className="grid grid-cols-2 gap-3">
+                                                        <p className="text-[10px] text-slate-500 font-bold uppercase mb-2">दस्तावेज़:</p>
+                                                        <div className="grid grid-cols-2 gap-2">
                                                             {[15,16,17,18].map(col => {
                                                                 const link = getLink(editingRow.data[col]);
-                                                                if(link) return <a key={col} href={link} target="_blank" className="bg-white border border-gray-300 p-3 rounded-lg text-center text-gray-700 text-xs font-bold hover:bg-gray-50 hover:border-[#0A3D91] transition shadow-sm"><i className="fa-solid fa-file-pdf block text-xl mb-1 text-red-500"></i> View File</a>
+                                                                if(link) return <a key={col} href={link} target="_blank" className="bg-white border border-slate-200 p-2 rounded text-center text-slate-600 text-[10px] font-bold hover:bg-slate-100 transition"><i className="fa-solid fa-file-pdf mr-1 text-red-400"></i> View</a>
                                                                 return null;
                                                             })}
                                                         </div>
                                                     </div>
 
-                                                    {/* 🚨 QUICK ACTIONS */}
-                                                    <div className="bg-gray-50 p-6 rounded-2xl border border-gray-200 shadow-sm flex flex-col justify-start">
-                                                        <h3 className="text-gray-800 font-black text-lg uppercase mb-5 border-b border-gray-200 pb-3"><i className="fa-solid fa-bolt text-[#FFD700] mr-2"></i> Quick Actions</h3>
-                                                        <div className="space-y-4">
-                                                            <a href={GOOGLE_MEET_WEB_LINK} target="_blank" className="click-anim flex justify-center items-center w-full bg-red-600 text-white py-3 rounded-xl font-bold text-sm shadow-sm hover:bg-red-700">
-                                                                <i className="fa-solid fa-video mr-2"></i> खुद वीडियो कॉल से जुड़ें
-                                                            </a>
-                                                            <a href={`https://wa.me/91${editingRow.data[5]}?text=${getVCLinkMessage()}`} target="_blank" className="click-anim flex justify-center items-center w-full bg-[#25D366] text-white py-3 rounded-xl font-bold text-sm shadow-sm hover:bg-green-600">
-                                                                <i className="fa-brands fa-whatsapp text-lg mr-2"></i> 📹 ग्राहक को लिंक भेजें
-                                                            </a>
+                                                    {/* 🚨 ACTIONS & GALLA (Grid Right Side) */}
+                                                    <div className="space-y-5">
+                                                        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                                                            <h3 className="text-slate-800 font-bold text-sm uppercase mb-3"><i className="fa-solid fa-bolt text-amber-500 mr-2"></i> Quick Actions</h3>
+                                                            <div className="grid grid-cols-2 gap-2">
+                                                                <a href={GOOGLE_MEET_WEB_LINK} target="_blank" className="corp-btn bg-red-50 text-red-600 hover:bg-red-100 text-[11px] py-2 border border-red-200"><i className="fa-solid fa-video mr-1.5"></i> VC Join</a>
+                                                                <a href={`https://wa.me/91${editingRow.data[5]}?text=${getVCLinkMessage()}`} target="_blank" className="corp-btn bg-emerald-50 text-emerald-600 hover:bg-emerald-100 text-[11px] py-2 border border-emerald-200"><i className="fa-brands fa-whatsapp mr-1.5"></i> Send Link</a>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* 🔥 GALLA PAYMENT BOX */}
+                                                        <div className="bg-amber-50 p-5 rounded-xl border border-amber-200 shadow-sm">
+                                                            <div className="flex justify-between items-center mb-3">
+                                                                <h4 className="text-amber-800 font-bold uppercase text-xs"><i className="fa-solid fa-indian-rupee-sign mr-1"></i> गल्ले का हिसाब</h4>
+                                                                {isPaymentLocked() && <span className="bg-slate-800 text-white px-2 py-0.5 rounded text-[9px] font-bold uppercase"><i className="fa-solid fa-lock mr-1"></i>Locked</span>}
+                                                            </div>
+                                                            
+                                                            {isPaymentLocked() ? (
+                                                                <div className="bg-white p-3 rounded border border-amber-100 text-center text-slate-600 font-semibold text-xs">पेमेंट दर्ज है (₹{editingRow.data[30]})</div>
+                                                            ) : (
+                                                                <div>
+                                                                    <div className="grid grid-cols-2 gap-2 mb-2">
+                                                                        <select value={payMode} onChange={e=>setPayMode(e.target.value)} className="corp-input py-2 text-xs">
+                                                                            <option value="Cash">नकद (Cash)</option><option value="UPI">UPI / QR</option><option value="Free">मुफ्त</option><option value="Discount">छूट (Discount)</option>
+                                                                        </select>
+                                                                        {payMode !== 'Free' && <input type="number" value={payAmt} onChange={e=>setPayAmt(e.target.value)} placeholder="₹ अमाउंट" className="corp-input py-2 text-xs" />}
+                                                                    </div>
+                                                                    {payMode === 'UPI' && <input type="text" value={upiId} onChange={e=>setUpiId(e.target.value)} placeholder="UPI ID डालें" className="corp-input py-2 text-xs mb-2" />}
+                                                                    {payMode !== 'Free' && (
+                                                                        <>
+                                                                            <button onClick={sendPaymentRequest} className="w-full bg-[#10b981] text-white font-bold py-2 rounded mb-2 text-xs"><i className="fa-brands fa-whatsapp mr-1"></i> WhatsApp Request</button>
+                                                                            <label className="flex items-center gap-2 bg-emerald-50 p-2 rounded border border-emerald-100 cursor-pointer">
+                                                                                <input type="checkbox" checked={payVerified} onChange={(e)=>setPayVerified(e.target.checked)} className="accent-emerald-600" />
+                                                                                <span className="text-emerald-800 font-bold text-[10px] uppercase">मैंने पेमेंट चेक कर लिया है</span>
+                                                                            </label>
+                                                                        </>
+                                                                    )}
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                {/* 🔄 UPDATE SECTION & GALLA */}
-                                                <div className="bg-white p-6 md:p-8 rounded-2xl border border-gray-200 shadow-lg">
-                                                    <h3 className="text-[#0A3D91] font-black text-xl uppercase mb-6"><i className="fa-solid fa-pen-to-square mr-2"></i> Update Status & Payment</h3>
+                                                {/* 🔄 RESTORED FULL UPDATE SECTION */}
+                                                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                                    <h3 className="text-slate-800 font-bold text-sm uppercase mb-4"><i className="fa-solid fa-pen-to-square mr-2 text-blue-500"></i> Update Form Data</h3>
                                                     
-                                                    {/* 💸 GALLA PAYMENT BOX */}
-                                                    <div className="bg-amber-50 p-5 rounded-xl border border-amber-200 mb-6 shadow-sm">
-                                                        <h4 className="text-amber-800 font-black uppercase text-sm mb-3"><i className="fa-solid fa-indian-rupee-sign mr-2"></i> गल्ले का हिसाब (Payment)</h4>
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
-                                                            <div>
-                                                                <label className="text-amber-700 font-bold text-xs uppercase mb-1 block">पेमेंट का तरीका:</label>
-                                                                <select value={payMode} onChange={e=>setPayMode(e.target.value)} className="custom-input py-3">
-                                                                    <option value="Cash">💵 नकद (Cash)</option>
-                                                                    <option value="UPI">📱 ऑनलाइन (UPI / QR)</option>
-                                                                    <option value="Free">🎁 मुफ्त (Free / No Charge)</option>
-                                                                    <option value="Discount">🏷️ डिस्काउंट (Discounted)</option>
-                                                                </select>
-                                                            </div>
-                                                            {payMode !== 'Free' && (
-                                                                <div>
-                                                                    <label className="text-amber-700 font-bold text-xs uppercase mb-1 block">अमाउंट (₹):</label>
-                                                                    <input type="number" value={payAmt} onChange={e=>setPayAmt(e.target.value)} placeholder="उदा: 500" className="custom-input py-3" />
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                        {payMode !== 'Free' && (
-                                                            <div className="flex items-center gap-3 bg-green-50 p-3 rounded-lg border border-green-200 mt-2">
-                                                                <input type="checkbox" id="payLock" checked={payVerified} onChange={(e)=>setPayVerified(e.target.checked)} className="w-5 h-5 cursor-pointer accent-green-600" />
-                                                                <label htmlFor="payLock" className="text-green-800 font-bold text-sm cursor-pointer">✅ मैंने पेमेंट / कैश चेक कर लिया है (Verified)</label>
-                                                            </div>
-                                                        )}
-                                                    </div>
-
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                                         <div>
-                                                            <label className="text-gray-500 font-bold text-xs uppercase ml-1 mb-1 block">Work Status</label>
-                                                            <select value={staffUpdateData.status} onChange={e=>setStaffUpdateData({...staffUpdateData, status:e.target.value})} className="custom-input py-3">
-                                                                <option>Pending</option><option>In Process</option><option className="text-red-600">Send Back</option><option className="text-green-600">Done</option>
+                                                            <label className="text-slate-500 font-bold text-[10px] uppercase ml-1 block mb-1">Status</label>
+                                                            <select value={staffUpdateData.status} onChange={e=>setStaffUpdateData({...staffUpdateData, status:e.target.value})} className="corp-input py-2 text-sm">
+                                                                <option>Pending</option><option>In Process</option><option className="text-red-600">Send Back</option><option className="text-emerald-600">Done</option>
                                                             </select>
                                                         </div>
-                                                        <div>
-                                                            <label className="text-gray-500 font-bold text-xs uppercase ml-1 mb-1 block">Staff Note</label>
-                                                            <input type="text" value={staffUpdateData.note} onChange={e=>setStaffUpdateData({...staffUpdateData, note:e.target.value})} placeholder="e.g. Please wait..." className="custom-input py-3" />
+                                                        <div className="md:col-span-2">
+                                                            <label className="text-slate-500 font-bold text-[10px] uppercase ml-1 block mb-1">Staff Note</label>
+                                                            <input type="text" value={staffUpdateData.note} onChange={e=>setStaffUpdateData({...staffUpdateData, note:e.target.value})} placeholder="e.g. Please wait..." className="corp-input py-2 text-sm" />
                                                         </div>
                                                     </div>
-                                                    
+
                                                     {staffUpdateData.status === "Send Back" && (
-                                                        <div className="mb-5">
-                                                            <label className="text-red-500 font-bold text-xs uppercase ml-1 mb-1 block">Reason for Rejection</label>
-                                                            <input type="text" value={staffUpdateData.sendBackReason} onChange={e=>setStaffUpdateData({...staffUpdateData, sendBackReason:e.target.value})} placeholder="Send Back Reason..." className="custom-input py-3 border-red-300 bg-red-50 text-red-800" />
+                                                        <div className="mb-4">
+                                                            <label className="text-red-500 font-bold text-[10px] uppercase ml-1 block mb-1">Reason for Rejection</label>
+                                                            <input type="text" value={staffUpdateData.sendBackReason} onChange={e=>setStaffUpdateData({...staffUpdateData, sendBackReason:e.target.value})} placeholder="Reason..." className="corp-input py-2 text-sm border-red-200 bg-red-50" />
                                                         </div>
                                                     )}
 
-                                                    {/* 🔒 VERIFICATION LOCK ON BUTTON */}
-                                                    <button onClick={submitStaffUpdate} disabled={isUpdateDisabled()} className={`w-full font-black py-4 rounded-xl text-lg uppercase tracking-wider shadow-md transition-all ${isUpdateDisabled() ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'click-anim bg-[#0A3D91] text-white hover:bg-[#082d6b]'}`}>
-                                                        {isUpdating ? <><i className="fa-solid fa-spinner fa-spin mr-2"></i> Updating Data...</> : <><i className="fa-solid fa-check-double mr-2"></i> Update Data & Message</>}
+                                                    {/* 🔥 OLD DETAILS RESTORED HERE IN A GRID 🔥 */}
+                                                    <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-5">
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label className="text-slate-600 font-bold text-[10px] uppercase mb-1 block">अगली सत्यापन तिथि (Next Date):</label>
+                                                                <input type="date" value={staffUpdateData.newVerifyDate} onChange={e=>setStaffUpdateData({...staffUpdateData, newVerifyDate:e.target.value})} className="corp-input py-2 text-sm bg-white" />
+                                                            </div>
+                                                            <div>
+                                                                <label className="text-slate-600 font-bold text-[10px] uppercase mb-1 block">ई-मित्र टोकन / रसीद नंबर:</label>
+                                                                <input type="text" value={staffUpdateData.emitraToken} onChange={e=>setStaffUpdateData({...staffUpdateData, emitraToken:e.target.value})} placeholder="Token No..." className="corp-input py-2 text-sm bg-white" />
+                                                            </div>
+                                                            <div>
+                                                                <label className="text-slate-600 font-bold text-[10px] uppercase mb-1 block">वीडियो कॉल का समय (VC Time):</label>
+                                                                <input type="text" value={staffUpdateData.vcTime} onChange={e=>setStaffUpdateData({...staffUpdateData, vcTime:e.target.value})} placeholder="उदा: 04:30 PM" className="corp-input py-2 text-sm bg-white" />
+                                                            </div>
+                                                            <div className="relative pt-4">
+                                                                <input type="file" ref={staffCertRef} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*,application/pdf" />
+                                                                <div className="bg-white p-2 rounded border border-dashed border-slate-400 text-center text-slate-500 font-semibold text-xs hover:bg-slate-100 transition"><i className="fa-solid fa-upload mr-1"></i> Upload Certificate</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button onClick={submitStaffUpdate} disabled={isUpdateDisabled()} className={`w-full corp-btn ${isUpdateDisabled() ? 'bg-slate-200 text-slate-400 cursor-not-allowed' : 'btn-primary shadow-lg hover:shadow-xl'}`}>
+                                                        {isUpdating ? <><i className="fa-solid fa-spinner fa-spin mr-2"></i> Updating...</> : <><i className="fa-solid fa-cloud-arrow-up mr-2"></i> Update Complete Form</>}
                                                     </button>
                                                 </div>
                                             </div>
@@ -719,10 +749,10 @@
                     </div>
 
                     {/* 📱 BOTTOM NAV */}
-                    <div className="fixed bottom-0 w-full bg-white border-t border-gray-200 p-2 flex justify-around items-center z-50 shadow-[0_-5px_15px_rgba(0,0,0,0.05)]">
-                        <div onClick={() => setView('HOME')} className={`cursor-pointer py-2 px-6 rounded-xl flex flex-col items-center transition ${view==='HOME'||view==='DEPT'||view==='FORM'||view==='SUCCESS'?'bg-blue-50 text-[#0A3D91]':'text-gray-500 hover:bg-gray-50'}`}><i className="fa-solid fa-house text-xl mb-1"></i><span className="text-[10px] font-black uppercase">Home</span></div>
-                        <div onClick={() => setView('TRACK')} className={`cursor-pointer py-2 px-6 rounded-xl flex flex-col items-center transition ${view==='TRACK'?'bg-blue-50 text-[#0A3D91]':'text-gray-500 hover:bg-gray-50'}`}><i className="fa-solid fa-satellite-dish text-xl mb-1"></i><span className="text-[10px] font-black uppercase">Track</span></div>
-                        <div onClick={() => setView('STAFF')} className={`cursor-pointer py-2 px-6 rounded-xl flex flex-col items-center transition ${view==='STAFF'?'bg-red-50 text-red-600':'text-gray-500 hover:bg-gray-50'}`}><i className="fa-solid fa-user-shield text-xl mb-1"></i><span className="text-[10px] font-black uppercase">Staff</span></div>
+                    <div className="fixed bottom-0 w-full bg-white border-t border-slate-200 p-1.5 flex justify-around items-center z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.03)] pb-safe">
+                        <div onClick={() => setView('HOME')} className={`cursor-pointer py-1.5 px-6 rounded-lg flex flex-col items-center transition ${view==='HOME'||view==='DEPT'||view==='FORM'||view==='SUCCESS'?'text-[#0f172a] bg-slate-100':'text-slate-400'}`}><i className="fa-solid fa-house text-lg mb-0.5"></i><span className="text-[9px] font-bold uppercase">Home</span></div>
+                        <div onClick={() => setView('TRACK')} className={`cursor-pointer py-1.5 px-6 rounded-lg flex flex-col items-center transition ${view==='TRACK'?'text-[#0f172a] bg-slate-100':'text-slate-400'}`}><i className="fa-solid fa-satellite-dish text-lg mb-0.5"></i><span className="text-[9px] font-bold uppercase">Track</span></div>
+                        <div onClick={() => setView('STAFF')} className={`cursor-pointer py-1.5 px-6 rounded-lg flex flex-col items-center transition ${view==='STAFF'?'text-[#0f172a] bg-slate-100':'text-slate-400'}`}><i className="fa-solid fa-user-shield text-lg mb-0.5"></i><span className="text-[9px] font-bold uppercase">Staff</span></div>
                     </div>
                 </div>
             );
