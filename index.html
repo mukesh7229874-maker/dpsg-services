@@ -55,8 +55,8 @@
     <script type="text/babel">
         const { useState, useRef } = React;
 
-        // 🚨 आपकी पक्की Google Script लिंक
-        const API_URL = "https://script.google.com/macros/s/AKfycbwbHtLzdvs1dP9sVvGRxEcJyGUdRf4r3ptGp-x4uYyjBJNJQEM8goWDm0nCxNFA6Fy0XQ/exec";
+        // 🚨 आपकी नई और 100% सुरक्षित Google Script लिंक 🚨
+        const API_URL = "https://script.google.com/macros/s/AKfycbwMn38RZXkv8tlvYA8i1wVGm-wmeZYwUDoy2jE9D-QjqIYqkbt5fDg9P2tiZCj55Ap3/exec";
         const WHATSAPP_NUMBER = "917229874128"; 
         const GROUP_WHATSAPP_LINK = "https://wa.me/917229874128"; 
         
@@ -110,13 +110,13 @@
             const [showVCModal, setShowVCModal] = useState(false);
             const [vcData, setVcData] = useState({name:'', mobile:'', aadhaar:'', problem:'', medium:'Google Meet'});
 
-            // 🔐 STAFF LOGIN 
+            // 🔐 STAFF LOGIN (Secured states)
             const [isStaffLoggedIn, setIsStaffLoggedIn] = useState(false);
             const [staffId, setStaffId] = useState('');
             const [staffPass, setStaffPass] = useState('');
+            const [sessionToken, setSessionToken] = useState(''); // 🚨 नई सीक्रेट चाबी (Session Token)
             const [showOtpInput, setShowOtpInput] = useState(false);
             const [staffOtp, setStaffOtp] = useState('');
-            const [generatedOtp, setGeneratedOtp] = useState('');
             const [pendingList, setPendingList] = useState([]);
             
             // 🛑 FULL STAFF UPDATE STATES (Old Details Restored)
@@ -199,30 +199,42 @@
                 if(res.status === "SUCCESS") { alert("✅ रिक्वेस्ट भेज दी गई है!"); setShowVCModal(false); }
             };
 
+            // 🚨 100% सुरक्षित सर्वर-साइड लॉगिन 🚨
             const requestStaffOTP = async () => {
                 if(!staffId || !staffPass) return alert("ID और Password डालें!");
                 const res = await callAPI({action: "STAFF_LOGIN", userId: staffId, password: staffPass});
                 if(res.status === "SUCCESS") {
-                    setGeneratedOtp(res.otp); setShowOtpInput(true); alert("📲 OTP आपके एडमिन टेलीग्राम पर भेज दिया गया है!");
+                    setShowOtpInput(true); alert("📲 OTP आपके एडमिन टेलीग्राम पर भेज दिया गया है!");
                 } else { alert("❌ ID या पासवर्ड गलत है!"); }
             };
 
-            const verifyStaffOTP = () => {
-                if(staffOtp === generatedOtp) { setIsStaffLoggedIn(true); fetchPendingList(); } 
-                else alert("❌ गलत OTP!");
+            // 🚨 100% सुरक्षित OTP चेकर और सेशन टोकन 🚨
+            const verifyStaffOTP = async () => {
+                const res = await callAPI({action: "VERIFY_OTP", userId: staffId, otp: staffOtp});
+                if(res.status === "SUCCESS") { 
+                    setSessionToken(res.sessionToken); // 🔑 चाबी मिल गई!
+                    setIsStaffLoggedIn(true); 
+                    fetchPendingList(res.sessionToken); 
+                } 
+                else alert("❌ गलत OTP या समय समाप्त!");
             };
 
+            // 🚨 सुरक्षित डेली रिपोर्ट 🚨
             const triggerDailyReport = async () => {
                 if(confirm("क्या आप आज की गल्ला व कार्य रिपोर्ट टेलीग्राम पर भेजना चाहते हैं?")) {
-                    const res = await callAPI({action: "DAILY_REPORT"});
+                    const res = await callAPI({action: "DAILY_REPORT", sessionToken: sessionToken});
                     if(res.status === "SUCCESS") alert("✅ रिपोर्ट सफलतापूर्वक टेलीग्राम पर भेज दी गई है!");
+                    else alert("❌ " + res.message);
                 }
             };
 
-            const fetchPendingList = async () => {
-                const res = await callAPI({action: "GET_ALL_PENDING"});
+            // 🚨 सुरक्षित पेंडिंग लिस्ट (चाबी के साथ) 🚨
+            const fetchPendingList = async (token = sessionToken) => {
+                const res = await callAPI({action: "GET_ALL_PENDING", sessionToken: token});
                 if(res.status === "SUCCESS") {
                     setPendingList(res.list.filter(item => item.data[2] !== 'Done'));
+                } else {
+                    alert("❌ " + res.message);
                 }
             };
 
@@ -255,7 +267,7 @@
             // 🌟 PROFESSIONAL PAYMENT REQUEST MESSAGE
             const sendPaymentRequest = () => {
                 if(!payAmt) return alert("पहले अमाउंट दर्ज करें!");
-                let msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार ${editingRow.data[4]} जी,\nआपके आवेदन (टोकन: ${editingRow.data[1]}) की जाँच सफलतापूर्वक कर ली गई है।\n\n💸 *इस कार्य की कुल फीस:* ₹${payAmt}\n`;
+                let msg = `🏢 *DIGITAL PROBLEM SOLUTION GROUP (DPSG)* 🏢\n🌟 _"आपकी समस्या, समाधान हमारा"_ 🌟\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nनमस्कार ${editingRow.data[4]} जी,\nआपके आवेदन (टोकन: ${editingRow.data[1]}) की जाँच सफलतापूर्वक कर ली गई है。\n\n💸 *इस कार्य की कुल फीस:* ₹${payAmt}\n`;
                 if(payMode === 'UPI') {
                     if(!upiId) return alert("कृपया UPI ID भी डालें!");
                     msg += `\nकृपया नीचे दी गई UPI ID पर अपना भुगतान करें:\n👉 *UPI ID:* ${upiId}\n\n_(नोट: भुगतान करने के बाद कृपया स्क्रीनशॉट इसी नंबर पर भेजें।)_`;
@@ -264,10 +276,11 @@
                 window.open(`https://wa.me/91${editingRow.data[5]}?text=${encodeURIComponent(msg)}`, '_blank');
             };
 
+            // 🚨 सुरक्षित स्टाफ अपडेट (चाबी के साथ) 🚨
             const submitStaffUpdate = async () => {
                 setIsUpdating(true);
                 let payload = { 
-                    action: "STAFF_UPDATE_FORM", staffId: staffId, sheetName: editingRow.sheetName, rowIdx: editingRow.rowIdx, token: editingRow.data[1], 
+                    action: "STAFF_UPDATE_FORM", sessionToken: sessionToken, staffId: staffId, sheetName: editingRow.sheetName, rowIdx: editingRow.rowIdx, token: editingRow.data[1], 
                     newStatus: staffUpdateData.status, vcTime: staffUpdateData.vcTime, staffNote: staffUpdateData.note, 
                     sendBackReason: staffUpdateData.sendBackReason, emitraToken: staffUpdateData.emitraToken, lastDate: staffUpdateData.newVerifyDate, 
                     vcStatus: staffUpdateData.vcTime ? "Approved" : editingRow.data[22]
